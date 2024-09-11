@@ -43,6 +43,7 @@
     let monsterY = window.innerHeight - 50; // Monster's initial Y position (at bottom)
     let mouseX = monsterX; // Mouse X position
     const speed = 0.02; // Monster's movement speed
+    const stopThreshold = 1; // Threshold to stop movement
     let isMoving = false;
 
     // Function to handle mouse movement (desktop)
@@ -87,12 +88,12 @@
     function moveMonster() {
       const deltaX = mouseX - monsterX;
 
-      if (Math.abs(deltaX) > 1) {
+      if (Math.abs(deltaX) > stopThreshold) {
         monsterX += deltaX * speed;
         monster.style.left = `${monsterX}px`; // Apply new X position
       } else {
         if (isMoving) {
-          monster.classList.remove('walking');
+          monster.classList.remove('walking'); // Stop walking
           isMoving = false;
         }
       }
