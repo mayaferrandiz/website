@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-11T12:30:32-04:00</updated>
+    <updated>2024-09-11T14:01:39-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -91,8 +91,8 @@
 <script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
 <!-- Use it like any other HTML element -->
 <model-viewer
-  id="mv-shark"
-   src="shark.glb"
+  id="mv-laserbox"
+   src="/laserbox.glb"
   camera-controls
 ></model-viewer></div>
 
