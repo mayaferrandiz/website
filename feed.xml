@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-11T12:12:48-04:00</updated>
+    <updated>2024-09-11T12:30:32-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -43,16 +43,62 @@
         <media:content url="https://maya.cloud/media/posts/5/signal-2024-09-10-232236_002-2.jpeg" medium="image" />
 
         <updated>2024-09-10T22:49:38-04:00</updated>
-            <summary></summary>
+            <summary>
+                <![CDATA[
+                        <img src="https://maya.cloud/media/posts/5/signal-2024-09-10-232236_002-2.jpeg" alt="" />
+                    Description This is a project I made
+                ]]>
+            </summary>
         <content type="html">
             <![CDATA[
                     <p><img src="https://maya.cloud/media/posts/5/signal-2024-09-10-232236_002-2.jpeg" class="type:primaryImage" alt="" /></p>
                 
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="https://maya.cloud/media/posts/5/signal-2024-09-10-232236_002.jpeg" height="2048" width="1536" alt=""  sizes="(max-width: 1920px) 100vw, 1920px" srcset="https://maya.cloud/media/posts/5/responsive/signal-2024-09-10-232236_002-xs.jpeg 640w ,https://maya.cloud/media/posts/5/responsive/signal-2024-09-10-232236_002-sm.jpeg 768w ,https://maya.cloud/media/posts/5/responsive/signal-2024-09-10-232236_002-md.jpeg 1024w ,https://maya.cloud/media/posts/5/responsive/signal-2024-09-10-232236_002-lg.jpeg 1366w ,https://maya.cloud/media/posts/5/responsive/signal-2024-09-10-232236_002-xl.jpeg 1600w ,https://maya.cloud/media/posts/5/responsive/signal-2024-09-10-232236_002-2xl.jpeg 1920w">
+  <div class="post__toc">
+    
+    <ul>
+      <li><a href="#description">Description</a></li><li><a href="#images">Images</a></li><li><a href="#code">Code</a></li><li><a href="#3d-model">3D Model</a></li>
+    </ul>
+  </div>
+  
+
+    <h2 id="description">
+      Description
+    </h2>
+
+  <p>
+    This is a project I made
+  </p>
+
+    <h2 id="images">
+      Images
+    </h2>
+
+  <div  class="gallery-wrapper">
+    <div class="gallery" data-columns="3">
       
-    </figure>
-<div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="no" style="width:100%; height:1675px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Flaserbox%2Fblob%2Fmain%2Flaserbox.ino&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
+    </div>
+  </div>
+
+    <h2 id="code">
+      Code
+    </h2>
+<div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" style="width:100%; height:500px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Flaserbox%2Fblob%2Fmain%2Flaserbox.ino&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
+
+    <h2 id="3d-model">
+      3D Model
+    </h2>
+<div><script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<script nomodule src="https://unpkg.com/@google/model-viewer/dist/model-viewer-legacy.js"></script>
+<!-- Use it like any other HTML element -->
+<model-viewer
+  id="mv-shark"
+   src="shark.glb"
+  camera-controls
+></model-viewer></div>
+
+  <p>
+    
+  </p>
             ]]>
         </content>
     </entry>
