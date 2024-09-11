@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animated Monster with States</title>
+  <style>
+    body, html {
+      margin: 0;
+      overflow: hidden;
+      height: 100%;
+      cursor: none;
+    }
+    canvas {
+      display: block;
+      background-color: #f0f0f0;
+    }
+    #monster {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background: '/monster-idle.png' no-repeat center;
+      background-size: contain;
+      transition: transform 0.2s ease;
+    }
+    .walking {
+      background: '/monster-idle.png' no-repeat center;
+      background-size: contain;
+    }
+    .jumping {
+      background: '/monster-idle.png' no-repeat center;
+      background-size: contain;
+    }
+  </style>
+</head>
+<body>
+  <div id="monster"></div>
+
+  <script>
+    const monster = document.getElementById('monster');
+    let monsterX = window.innerWidth / 2; // Monster's initial X position
+    let monsterY = window.innerHeight / 2; // Monster's initial Y position
+    let mouseX = monsterX; // Mouse X position
+    let mouseY = monsterY; // Mouse Y position
+
+    const speed = 0.02; // Monster's movement speed (slower than the mouse)
+    let isMoving = false;
+
+    // Update the mouse target position on movement
+    document.addEventListener('mousemove', function(event) {
+      mouseX = event.pageX - 25; // Adjusting for the monster's size
+      mouseY = event.pageY - 25;
+
+      // Set walking animation if not already moving
+      if (!isMoving) {
+        monster.classList.add('walking');
+        isMoving = true;
+      }
+    });
+
+    // Jump animation on click
+    document.addEventListener('click', function() {
+      monster.classList.add('jumping');
+      monster.classList.remove('walking'); // Stop walking while jumping
+
+      setTimeout(() => {
+        monster.classList.remove('jumping');
+        if (isMoving) {
+          monster.classList.add('walking'); // Resume walking if the monster is moving
+        }
+      }, 300);
+    });
+
+    // Function to update monster position
+    function moveMonster() {
+      const deltaX = mouseX - monsterX;
+      const deltaY = mouseY - monsterY;
+
+      // If monster is far enough from the mouse, move it and continue walking
+      if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
+        monsterX += deltaX * speed;
+        monsterY += deltaY * speed;
+
+        // Apply the new position to the monster's CSS
+        monster.style.left = `${monsterX}px`;
+        monster.style.top = `${monsterY}px`;
+      } else {
+        // Stop the walking animation when the monster catches up to the mouse
+        if (isMoving) {
+          monster.classList.remove('walking');
+          isMoving = false;
+        }
+      }
+
+      requestAnimationFrame(moveMonster);
+    }
+
+    // Start the monster movement
+    moveMonster();
+  </script>
+</body>
+</html>
