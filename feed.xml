@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-11T15:04:09-04:00</updated>
+    <updated>2024-09-11T15:07:35-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -67,7 +67,7 @@
 <!-- Use it like any other HTML element -->
 <model-viewer
   id="mv-laserbox"
-  src="laserbox.glb"
+  src="/laserbox.glb"
   camera-controls
 ></model-viewer>
 </div>
