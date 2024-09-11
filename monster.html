@@ -15,62 +15,18 @@
       width: 32px; /* Width of a single frame */
       height: 32px; /* Height of a single frame */
       background: url('Pink_Monster_Idle_4.png') no-repeat 0 0; /* Default to idle animation */
-      background-size: 400%; /* 4 frames for idle */
       bottom: 0;
       will-change: transform, background-position;
     }
 
-    .walking, .idle {
-      animation: monster-animation 0.8s steps(4) infinite; /* Use same animation for both states */
-    }
-
-    .walking {
-      background: url('Pink_Monster_Walk_6.png') no-repeat 0 0;
-      background-size: 600%; /* 6 frames for walking */
-      animation: walk-animation 0.6s steps(6) infinite;
-    }
-
-    .jumping {
-      background: url('Pink_Monster_Jump_8.png') no-repeat 0 0;
-      background-size: 800%; /* 8 frames for jumping */
-      animation: jump-animation 0.8s steps(8) 1;
-    }
-
-    @keyframes walk-animation {
-      from {
-        background-position: 0 0;
-      }
-      to {
-        background-position: -600% 0;
-      }
-    }
-
-    @keyframes jump-animation {
-      from {
-        background-position: 0 0;
-      }
-      to {
-        background-position: -800% 0;
-      }
-    }
-
-    @keyframes monster-animation {
-      from {
-        background-position: 0 0;
-      }
-      to {
-        background-position: -400% 0;
-      }
-    }
-
-    body {
+/*    body {
       background: url('https://example.com/background_image.jpg') no-repeat center center;
       background-size: cover;
-    }
+    }*/
   </style>
 </head>
 <body>
-  <div id="monster" class="idle"></div>
+  <div id="monster"></div>
 
   <script>
     const monster = document.getElementById('monster');
@@ -82,6 +38,24 @@
     const stopThreshold = 1; // Threshold to stop movement
     let isMoving = false;
     let isJumping = false; // Track if the monster is jumping
+    let currentFrame = 0;
+    let totalFrames = 4; // Number of frames for idle animation
+    let frameInterval = 200; // Time between frames in ms
+    let lastFrameTime = Date.now();
+
+    // Function to manually cycle through frames
+    function updateFrame() {
+      const now = Date.now();
+      if (now - lastFrameTime > frameInterval) {
+        currentFrame = (currentFrame + 1) % totalFrames;
+        lastFrameTime = now;
+        monster.style.backgroundPosition = `-${currentFrame * 32}px 0`; // Move background position
+      }
+      requestAnimationFrame(updateFrame);
+    }
+
+    // Start the frame update loop
+    updateFrame();
 
     // Function to handle mouse movement (desktop)
     function handleMouseMove(event) {
@@ -99,8 +73,10 @@
       }
 
       if (!isMoving) {
-        monster.classList.remove('idle');
-        monster.classList.add('walking');
+        // Switch to walking animation
+        monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')";
+        totalFrames = 6; // Number of frames for walking
+        frameInterval = 100; // Faster frame rate for walking
         isMoving = true;
       }
     }
@@ -122,8 +98,10 @@
       }
 
       if (!isMoving) {
-        monster.classList.remove('idle');
-        monster.classList.add('walking');
+        // Switch to walking animation
+        monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')";
+        totalFrames = 6; // Number of frames for walking
+        frameInterval = 100; // Faster frame rate for walking
         isMoving = true;
       }
     }
@@ -133,8 +111,9 @@
       if (isJumping) return; // Prevent multiple jumps
 
       isJumping = true;
-      monster.classList.add('jumping');
-      monster.classList.remove('walking'); // Stop walking while jumping
+      monster.style.backgroundImage = "url('Pink_Monster_Jump_8.png')"; // Switch to jumping animation
+      totalFrames = 8; // Number of frames for jumping
+      frameInterval = 80; // Faster frame rate for jumping
 
       // Simulate jump by moving the monster upward and back down
       setTimeout(() => {
@@ -143,13 +122,16 @@
 
       setTimeout(() => {
         monster.style.transform = monster.style.transform.replace(' translateY(-50px)', ''); // Land back at bottom
-        monster.classList.remove('jumping');
         isJumping = false;
 
         if (isMoving) {
-          monster.classList.add('walking');
+          monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')"; // Switch back to walking
+          totalFrames = 6;
+          frameInterval = 100;
         } else {
-          monster.classList.add('idle'); // Switch back to idle class
+          monster.style.backgroundImage = "url('Pink_Monster_Idle_4.png')"; // Switch back to idle
+          totalFrames = 4;
+          frameInterval = 200;
         }
       }, 800); // Match the duration of the jump animation (0.8s)
     }
@@ -164,9 +146,11 @@
         monster.style.left = `${monsterX}px`; // Apply new X position
       } else {
         if (isMoving && !isJumping) {
-          monster.classList.remove('walking'); // Stop walking
+          // Switch to idle animation
+          monster.style.backgroundImage = "url('Pink_Monster_Idle_4.png')";
+          totalFrames = 4;
+          frameInterval = 200;
           isMoving = false;
-          monster.classList.add('idle'); // Switch to idle class
         }
       }
 
