@@ -24,9 +24,18 @@
       background: url('https://example.com/background_image.jpg') no-repeat center center;
       background-size: cover;
     }
+
+    /* Preload background images */
+    .preload {
+      background-image: url('Pink_Monster_Idle_4.png'), url('Pink_Monster_Walk_6.png'), url('Pink_Monster_Jump_8.png');
+      display: none;
+    }
   </style>
 </head>
 <body>
+  <!-- Preload background images to avoid flickering -->
+  <div class="preload"></div>
+
   <div id="monster"></div>
 
   <script>
@@ -36,9 +45,10 @@
     let mouseX = monsterX; // Mouse X position
     let lastDirection = 'right'; // To track the direction of movement
     const speed = 3; // Constant speed (pixels per frame)
-    const stopThreshold = 5; // Threshold to stop movement (increased slightly for smoother stop)
+    const stopThreshold = 5; // Threshold to stop movement
     let isMoving = false;
     let isJumping = false; // Track if the monster is jumping
+    let isLanding = false; // Track if the monster is landing
     let currentFrame = 0;
     let totalFrames = 4; // Number of frames for idle animation
     let frameInterval = 200; // Time between frames in ms
@@ -60,8 +70,6 @@
 
     // Function to handle mouse movement (desktop)
     function handleMouseMove(event) {
-      if (isJumping) return; // Don't change animation while jumping
-
       mouseX = event.pageX - 16; // Adjust for monster width (half of 32px)
 
       // Check direction and flip sprite if necessary
@@ -73,19 +81,19 @@
         lastDirection = 'right';
       }
 
-      if (!isMoving) {
-        // Switch to walking animation
-        monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')";
-        totalFrames = 6; // Number of frames for walking
-        frameInterval = 100; // Faster frame rate for walking
+      if (!isMoving && !isJumping) {
+        // Switch to walking animation with a slight delay to avoid flickering
+        setTimeout(() => {
+          monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')";
+          totalFrames = 6; // Number of frames for walking
+          frameInterval = 100; // Faster frame rate for walking
+        }, 50); // Delay switching to the walking animation to prevent flicker
         isMoving = true;
       }
     }
 
     // Function to handle screen taps (mobile)
     function handleTouchMove(event) {
-      if (isJumping) return; // Don't change animation while jumping
-
       const touch = event.touches[0];
       mouseX = touch.pageX - 16;
 
@@ -98,18 +106,20 @@
         lastDirection = 'right';
       }
 
-      if (!isMoving) {
-        // Switch to walking animation
-        monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')";
-        totalFrames = 6; // Number of frames for walking
-        frameInterval = 100; // Faster frame rate for walking
+      if (!isMoving && !isJumping) {
+        // Switch to walking animation with a slight delay to avoid flickering
+        setTimeout(() => {
+          monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')";
+          totalFrames = 6; // Number of frames for walking
+          frameInterval = 100; // Faster frame rate for walking
+        }, 50); // Delay switching to the walking animation to prevent flicker
         isMoving = true;
       }
     }
 
     // Function to handle click/jump (desktop & mobile)
     function handleClick(event) {
-      if (isJumping) return; // Prevent multiple jumps
+      if (isJumping || isLanding) return; // Prevent multiple jumps or landing interruptions
 
       isJumping = true;
       monster.style.backgroundImage = "url('Pink_Monster_Jump_8.png')"; // Switch to jumping animation
@@ -118,20 +128,26 @@
 
       // Smooth jump animation
       monster.style.transform += ' translateY(-50px)'; // Jump up
+
+      // Vertical movement (jump and land)
       setTimeout(() => {
         monster.style.transform = monster.style.transform.replace(' translateY(-50px)', ''); // Land back at bottom
         isJumping = false;
+        isLanding = true; // Set landing state
 
-        if (isMoving) {
-          monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')"; // Switch back to walking
-          totalFrames = 6;
-          frameInterval = 100;
-        } else {
-          monster.style.backgroundImage = "url('Pink_Monster_Idle_4.png')"; // Switch back to idle
-          totalFrames = 4;
-          frameInterval = 200;
-        }
-      }, 600); // Match the duration of the jump transition (slightly reduced for smoother landing)
+        setTimeout(() => {
+          isLanding = false; // Reset landing state after complete
+          if (isMoving) {
+            monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')"; // Switch back to walking
+            totalFrames = 6;
+            frameInterval = 100;
+          } else {
+            monster.style.backgroundImage = "url('Pink_Monster_Idle_4.png')"; // Switch back to idle
+            totalFrames = 4;
+            frameInterval = 200;
+          }
+        }, 50); // Delay switching back to walking/idle to prevent flicker
+      }, 600); // Match the duration of the jump transition
     }
 
     // Function to update monster position (X-axis only)
@@ -139,18 +155,23 @@
       const deltaX = mouseX - monsterX;
       const distanceToMove = Math.abs(deltaX); // Absolute distance between cursor and monster
 
-      // Move monster only if it's farther than the threshold to prevent jitter
-      if (distanceToMove > stopThreshold) {
+      // Keep moving horizontally even if the monster reaches the cursor midair
+      if (isJumping || distanceToMove > stopThreshold) {
         // Calculate direction and move a fixed speed toward the cursor
         monsterX += speed * Math.sign(deltaX);
         monster.style.left = `${monsterX}px`; // Apply new X position
-      } else {
-        if (isMoving && !isJumping) {
-          // Switch to idle animation
-          monster.style.backgroundImage = "url('Pink_Monster_Idle_4.png')";
-          totalFrames = 4;
-          frameInterval = 200;
-          isMoving = false;
+      }
+
+      // Only stop movement once the jump/landing is complete
+      if (!isJumping && !isLanding && distanceToMove <= stopThreshold) {
+        if (isMoving) {
+          // Switch to idle animation with a slight delay to prevent flickering
+          setTimeout(() => {
+            monster.style.backgroundImage = "url('Pink_Monster_Idle_4.png')";
+            totalFrames = 4;
+            frameInterval = 200;
+            isMoving = false;
+          }, 50); // Delay switching to idle to prevent flicker
         }
       }
 
