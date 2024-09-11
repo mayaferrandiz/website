@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monster Following X-Axis</title>
+  <title>Monster Mobile Compatibility</title>
   <style>
     body, html {
       margin: 0;
@@ -14,16 +14,16 @@
       position: absolute;
       width: 50px;
       height: 50px;
-      background: url('monster_idle.png') no-repeat center;
+      background: url('monster-idle.png') no-repeat center;
       background-size: contain;
       transition: transform 0.2s ease;
     }
     .walking {
-      background: url('monster_idle.png') no-repeat center;
+      background: url('monster-idle.png') no-repeat center;
       background-size: contain;
     }
     .jumping {
-      background: url('monster_idle.png') no-repeat center;
+      background: url('monster-idle.png') no-repeat center;
       background-size: contain;
     }
   </style>
@@ -36,23 +36,30 @@
     let monsterX = window.innerWidth / 2; // Monster's initial X position
     let monsterY = window.innerHeight / 2; // Monster's fixed Y position
     let mouseX = monsterX; // Mouse X position
-
     const speed = 0.02; // Monster's movement speed (slower than the mouse)
     let isMoving = false;
 
-    // Update the mouse target position on movement (only X-axis)
-    document.addEventListener('mousemove', function(event) {
-      mouseX = event.pageX - 25; // Adjusting for the monster's width
-
-      // Set walking animation if not already moving
+    // Function to handle mouse movement (desktop)
+    function handleMouseMove(event) {
+      mouseX = event.pageX - 25; // Adjust for monster width
       if (!isMoving) {
         monster.classList.add('walking');
         isMoving = true;
       }
-    });
+    }
 
-    // Jump animation on click (only Y-axis movement)
-    document.addEventListener('click', function() {
+    // Function to handle screen taps (mobile)
+    function handleTouchMove(event) {
+      const touch = event.touches[0]; // Get the first touch point
+      mouseX = touch.pageX - 25; // Adjust for monster width
+      if (!isMoving) {
+        monster.classList.add('walking');
+        isMoving = true;
+      }
+    }
+
+    // Function to handle click/jump (desktop & mobile)
+    function handleClick(event) {
       monster.classList.add('jumping');
       monster.classList.remove('walking'); // Stop walking while jumping
 
@@ -65,12 +72,11 @@
         monster.style.transform = 'translateY(0px)';
         monster.classList.remove('jumping');
 
-        // Resume walking if the monster is still moving
         if (isMoving) {
-          monster.classList.add('walking');
+          monster.classList.add('walking'); // Resume walking if the monster is still moving
         }
       }, 300);
-    });
+    }
 
     // Function to update monster position (only X-axis)
     function moveMonster() {
@@ -79,11 +85,9 @@
       // If monster is far enough from the mouse, move it on the X-axis
       if (Math.abs(deltaX) > 1) {
         monsterX += deltaX * speed;
-
-        // Apply the new X position to the monster's CSS
-        monster.style.left = `${monsterX}px`;
+        monster.style.left = `${monsterX}px`; // Apply new X position
       } else {
-        // Stop the walking animation when the monster catches up on the X-axis
+        // Stop walking when the monster catches up
         if (isMoving) {
           monster.classList.remove('walking');
           isMoving = false;
@@ -93,8 +97,15 @@
       requestAnimationFrame(moveMonster);
     }
 
-    // Start the monster movement
+    // Start monster movement animation loop
     moveMonster();
+
+    // Event listeners for mouse and touch inputs
+    document.addEventListener('mousemove', handleMouseMove); // Desktop mouse move
+    document.addEventListener('click', handleClick); // Desktop click
+
+    document.addEventListener('touchmove', handleTouchMove); // Mobile touch move
+    document.addEventListener('touchstart', handleClick); // Mobile tap to jump
   </script>
 </body>
 </html>
