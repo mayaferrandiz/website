@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monster Sprite Sheet Animation Fix</title>
   <style>
     body, html {
       margin: 0;
@@ -19,12 +18,11 @@
       background-size: 400%; /* 4 frames for idle */
       bottom: 0;
       transform-origin: center bottom;
-      will-change: transform, background-position; /* Optimization to prevent flickering */
+      will-change: transform, background-position; /* Optimization */
     }
 
     .idle {
-      background: url('Pink_Monster_Idle_4.png') no-repeat 0 0;
-      background-size: 400%; /* 4 frames for idle */
+      animation: idle-animation 1s steps(4) infinite; /* 4 frames for idle */
     }
 
     .walking {
@@ -37,6 +35,15 @@
       background: url('Pink_Monster_Jump_8.png') no-repeat 0 0; /* Jumping animation */
       background-size: 800%; /* 8 frames for jumping */
       animation: jump-animation 0.8s steps(8) 1;
+    }
+
+    @keyframes idle-animation {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: -400% 0; /* Move through all 4 frames */
+      }
     }
 
     @keyframes walk-animation {
