@@ -3,31 +3,10 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-10T22:49:38-04:00</updated>
+    <updated>1969-12-31T19:00:00-05:00</updated>
     <author>
         <name>Maya</name>
     </author>
     <id>https://maya.cloud</id>
 
-    <entry>
-        <title>Laser Box</title>
-        <author>
-            <name>Maya</name>
-        </author>
-        <link href="https://maya.cloud/laser-box/"/>
-        <id>https://maya.cloud/laser-box/</id>
-
-        <updated>2024-09-10T22:49:38-04:00</updated>
-            <summary></summary>
-        <content type="html">
-            <![CDATA[
-                
-    <figure class="post__image post__image--center">
-      <img loading="lazy" src="" height="" width="" alt=""  data-is-external-image="true">
-      
-    </figure>
-<div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="no" style="width:100%; height:1675px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Flaserbox%2Fblob%2Fmain%2Flaserbox.ino&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
-            ]]>
-        </content>
-    </entry>
 </feed>
