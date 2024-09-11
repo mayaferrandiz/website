@@ -14,36 +14,26 @@
       position: absolute;
       width: 32px; /* Width of a single frame */
       height: 32px; /* Height of a single frame */
-      background: url('Pink_Monster_Idle_4.png') no-repeat 0 0; /* Idle animation */
+      background: url('Pink_Monster_Idle_4.png') no-repeat 0 0; /* Default to idle animation */
       background-size: 400%; /* 4 frames for idle */
       bottom: 0;
-      transform-origin: center bottom;
-      will-change: transform, background-position; /* Optimization */
+      will-change: transform, background-position;
     }
 
-    .idle {
-      animation: idle-animation 1s steps(4) infinite; /* 4 frames for idle */
+    .walking, .idle {
+      animation: monster-animation 0.8s steps(4) infinite; /* Use same animation for both states */
     }
 
     .walking {
-      background: url('Pink_Monster_Walk_6.png') no-repeat 0 0; /* Walking animation */
+      background: url('Pink_Monster_Walk_6.png') no-repeat 0 0;
       background-size: 600%; /* 6 frames for walking */
       animation: walk-animation 0.6s steps(6) infinite;
     }
 
     .jumping {
-      background: url('Pink_Monster_Jump_8.png') no-repeat 0 0; /* Jumping animation */
+      background: url('Pink_Monster_Jump_8.png') no-repeat 0 0;
       background-size: 800%; /* 8 frames for jumping */
       animation: jump-animation 0.8s steps(8) 1;
-    }
-
-    @keyframes idle-animation {
-      from {
-        background-position: 0 0;
-      }
-      to {
-        background-position: -400% 0; /* Move through all 4 frames */
-      }
     }
 
     @keyframes walk-animation {
@@ -51,7 +41,7 @@
         background-position: 0 0;
       }
       to {
-        background-position: -600% 0; /* Move through all 6 frames */
+        background-position: -600% 0;
       }
     }
 
@@ -60,14 +50,23 @@
         background-position: 0 0;
       }
       to {
-        background-position: -800% 0; /* Move through all 8 frames */
+        background-position: -800% 0;
       }
     }
 
-/*    body {
+    @keyframes monster-animation {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: -400% 0;
+      }
+    }
+
+    body {
       background: url('https://example.com/background_image.jpg') no-repeat center center;
       background-size: cover;
-    }*/
+    }
   </style>
 </head>
 <body>
