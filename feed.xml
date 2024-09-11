@@ -3,36 +3,12 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-11T14:03:21-04:00</updated>
+    <updated>2024-09-11T14:14:29-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
     <id>https://maya.cloud</id>
 
-    <entry>
-        <title>Test3</title>
-        <author>
-            <name>Maya</name>
-        </author>
-        <link href="https://maya.cloud/portfolio/test3/"/>
-        <id>https://maya.cloud/portfolio/test3/</id>
-
-        <updated>2024-09-11T12:12:48-04:00</updated>
-            <summary></summary>
-        <content></content>
-    </entry>
-    <entry>
-        <title>Test</title>
-        <author>
-            <name>Maya</name>
-        </author>
-        <link href="https://maya.cloud/portfolio/test/"/>
-        <id>https://maya.cloud/portfolio/test/</id>
-
-        <updated>2024-09-11T12:12:40-04:00</updated>
-            <summary></summary>
-        <content></content>
-    </entry>
     <entry>
         <title>Laser Box</title>
         <author>
@@ -46,7 +22,7 @@
             <summary>
                 <![CDATA[
                         <img src="https://maya.cloud/media/posts/5/signal-2024-09-10-232236_002-2.jpeg" alt="" />
-                    Description This is a project I made
+                    Description This piece is my attempt to capture the effect of a laser cutting through fog, complete with cryptic messages in the background. The casing is 3D printed from sparkly pink bioplastic, and is brought to life by the following components:
                 ]]>
             </summary>
         <content type="html">
@@ -66,8 +42,12 @@
     </h2>
 
   <p>
-    This is a project I made
+    This piece is my attempt to capture the effect of a laser cutting through fog, complete with cryptic messages in the background. The casing is 3D printed from sparkly pink bioplastic, and is brought to life by the following components:
   </p>
+
+  <ul>
+    <li><a href="https://www.adafruit.com/product/3500" target="_blank" class="extlink extlink-icon-5 "  >Adafruit Trinket M0</a></li><li><a href="https://www.sparkfun.com/products/16919" target="_blank" class="extlink extlink-icon-5 "  >SparkFun Qwiic Alphanumeric Display - Pink</a><br></li><li><a href="https://wiki.seeedstudio.com/Grove-Water_Atomization/" target="_blank" class=" extlink extlink-icon-5 "  >Grove Water Atomization Module</a></li><li><a href="https://www.adafruit.com/product/169" target="_blank" class="extlink extlink-icon-5 "  >SG92R Micro Servo</a></li><li>1" x 1" square mirrors</li><br>
+  </ul>
 
     <h2 id="images">
       Images
