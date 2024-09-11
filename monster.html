@@ -3,32 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monster Sprite Sheet Animation with Direction Facing</title>
+  <title>Monster Sprite Sheet Animation Fix</title>
   <style>
     body, html {
       margin: 0;
       overflow: hidden;
       height: 100%;
     }
+
     #monster {
       position: absolute;
       width: 32px; /* Width of a single frame */
       height: 32px; /* Height of a single frame */
       background: url('Pink_Monster_Idle_4.png') no-repeat 0 0; /* Idle animation */
       background-size: 400%; /* 4 frames for idle */
-      transition: transform 0.2s ease;
       bottom: 0;
+      transform-origin: center bottom;
+      will-change: transform, background-position; /* Optimization to prevent flickering */
     }
+
+    .idle {
+      background: url('Pink_Monster_Idle_4.png') no-repeat 0 0;
+      background-size: 400%; /* 4 frames for idle */
+    }
+
     .walking {
       background: url('Pink_Monster_Walk_6.png') no-repeat 0 0; /* Walking animation */
       background-size: 600%; /* 6 frames for walking */
       animation: walk-animation 0.6s steps(6) infinite;
     }
+
     .jumping {
       background: url('Pink_Monster_Jump_8.png') no-repeat 0 0; /* Jumping animation */
       background-size: 800%; /* 8 frames for jumping */
       animation: jump-animation 0.8s steps(8) 1;
     }
+
     @keyframes walk-animation {
       from {
         background-position: 0 0;
@@ -37,6 +47,7 @@
         background-position: -600% 0; /* Move through all 6 frames */
       }
     }
+
     @keyframes jump-animation {
       from {
         background-position: 0 0;
@@ -45,14 +56,15 @@
         background-position: -800% 0; /* Move through all 8 frames */
       }
     }
-    /*body {
+
+/*    body {
       background: url('https://example.com/background_image.jpg') no-repeat center center;
       background-size: cover;
     }*/
   </style>
 </head>
 <body>
-  <div id="monster"></div>
+  <div id="monster" class="idle"></div>
 
   <script>
     const monster = document.getElementById('monster');
@@ -63,11 +75,14 @@
     const speed = 0.02; // Monster's movement speed
     const stopThreshold = 1; // Threshold to stop movement
     let isMoving = false;
+    let isJumping = false; // Track if the monster is jumping
 
     // Function to handle mouse movement (desktop)
     function handleMouseMove(event) {
+      if (isJumping) return; // Don't change animation while jumping
+
       mouseX = event.pageX - 16; // Adjust for monster width (half of 32px)
-      
+
       // Check direction and flip sprite if necessary
       if (mouseX < monsterX && lastDirection === 'right') {
         monster.style.transform = 'scaleX(-1)'; // Face left
@@ -78,6 +93,7 @@
       }
 
       if (!isMoving) {
+        monster.classList.remove('idle');
         monster.classList.add('walking');
         isMoving = true;
       }
@@ -85,9 +101,11 @@
 
     // Function to handle screen taps (mobile)
     function handleTouchMove(event) {
+      if (isJumping) return; // Don't change animation while jumping
+
       const touch = event.touches[0];
       mouseX = touch.pageX - 16;
-      
+
       // Check direction and flip sprite if necessary
       if (mouseX < monsterX && lastDirection === 'right') {
         monster.style.transform = 'scaleX(-1)'; // Face left
@@ -98,6 +116,7 @@
       }
 
       if (!isMoving) {
+        monster.classList.remove('idle');
         monster.classList.add('walking');
         isMoving = true;
       }
@@ -105,6 +124,9 @@
 
     // Function to handle click/jump (desktop & mobile)
     function handleClick(event) {
+      if (isJumping) return; // Prevent multiple jumps
+
+      isJumping = true;
       monster.classList.add('jumping');
       monster.classList.remove('walking'); // Stop walking while jumping
 
@@ -116,11 +138,12 @@
       setTimeout(() => {
         monster.style.transform = monster.style.transform.replace(' translateY(-50px)', ''); // Land back at bottom
         monster.classList.remove('jumping');
+        isJumping = false;
+
         if (isMoving) {
           monster.classList.add('walking');
         } else {
-          monster.style.background = "url('Pink_Monster_Idle_4.png') no-repeat 0 0"; // Switch back to idle sprite
-          monster.style.backgroundSize = '400%';
+          monster.classList.add('idle'); // Switch back to idle class
         }
       }, 800); // Match the duration of the jump animation (0.8s)
     }
@@ -134,12 +157,10 @@
         monsterX += deltaX * speed;
         monster.style.left = `${monsterX}px`; // Apply new X position
       } else {
-        if (isMoving) {
+        if (isMoving && !isJumping) {
           monster.classList.remove('walking'); // Stop walking
           isMoving = false;
-          // Switch back to idle sprite when monster stops walking
-          monster.style.background = "url('Pink_Monster_Idle_4.png') no-repeat 0 0";
-          monster.style.backgroundSize = '400%';
+          monster.classList.add('idle'); // Switch to idle class
         }
       }
 
