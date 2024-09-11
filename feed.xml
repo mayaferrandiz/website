@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-11T14:50:24-04:00</updated>
+    <updated>2024-09-11T15:04:09-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -22,7 +22,7 @@
             <summary>
                 <![CDATA[
                         <img src="https://maya.cloud/media/posts/5/signal-2024-09-10-232236_002-2.jpeg" alt="" />
-                    Description This piece is my attempt to capture the effect of a laser cutting through fog, complete with cryptic messages in the background. The casing is 3D printed from sparkly pink bioplastic, and is brought to life by the following components:
+                    Description This piece is my attempt to capture the effect of a&hellip;
                 ]]>
             </summary>
         <content type="html">
@@ -67,7 +67,7 @@
 <!-- Use it like any other HTML element -->
 <model-viewer
   id="mv-laserbox"
-  src="/laserbox.glb"
+  src="laserbox.glb"
   camera-controls
 ></model-viewer>
 </div>
