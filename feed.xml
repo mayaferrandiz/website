@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-11T18:08:20-04:00</updated>
+    <updated>2024-09-11T18:11:37-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -22,7 +22,7 @@
             <summary>
                 <![CDATA[
                         <img src="https://maya.cloud/media/posts/11/Pink_Monster_Walk_6.png" alt="" />
-                    Description This little cutie lives on my website! Sprites sourced from Craftpix.net.
+                    Description This little cutie lives on my website! Watch out, it might&hellip;
                 ]]>
             </summary>
         <content type="html">
@@ -42,7 +42,7 @@
     </h2>
 
   <p>
-    This little cutie lives on my website!
+    This little cutie lives on my website! Watch out, it might cause trouble...
   </p>
 
     <h2 id="sprites">
@@ -66,8 +66,8 @@
       </a>
       
     </figure><figure class="gallery__item">
-      <a href="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Jump_8-2.png" data-size="256x32">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Jump_8-2-thumbnail.png" height="32" width="256" alt="" >
+      <a href="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Walk_6.png" data-size="192x32">
+        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Walk_6-thumbnail.png" height="32" width="192" alt="" >
       </a>
       
     </figure>
@@ -81,7 +81,7 @@
   <p>
     This code is 100% AI-written by ChatGPT 4o Mini. Prompt engineering by Maya.
   </p>
-<div><div class="post__iframe"><iframe loading="lazy" frameborder="0" scrolling="no" style="width:100%; height:3460px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Fwebsite%2Fblob%2Fmain%2Fmonster.html&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
+<div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" style="width:100%; height:500px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Fwebsite%2Fblob%2Fmain%2Fmonster.html&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe>
 </div>
 
   <p>
