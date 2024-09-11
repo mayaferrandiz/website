@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monster at Bottom with Background</title>
+  <title>Monster Sprite Sheet Animation</title>
   <style>
     body, html {
       margin: 0;
@@ -12,26 +12,51 @@
     }
     #monster {
       position: absolute;
-      width: 50px;
-      height: 50px;
-      background: url('monster-idle.png') no-repeat center;
-      background-size: contain;
-      transition: transform 0.2s ease;
-      bottom: 0; /* Positioning the monster at the bottom */
+      width: 32px; /* Width of a single frame */
+      height: 32px; /* Height of a single frame */
+      background: url('Pink_Monster_Idle_4.png') no-repeat 0 0; /* Placeholder URL */
+      background-size: 400%;
+      animation: idle-animation 0.4s steps(4) infinite;
+      bottom: 0;
     }
     .walking {
-      background: url('monster-idle.png') no-repeat center;
-      background-size: contain;
+      animation: walk-animation 0.6s steps(6) infinite; /* 6 frames for walking */
+      background: url('Pink_Monster_Walk_6.png') no-repeat 0 0; /* Placeholder URL */
+      background-size: 600%; /* Updated for 6 frames of walking */
     }
     .jumping {
-      background: url('monster-idle.png') no-repeat center;
-      background-size: contain;
+      animation: jump-animation 0.8s steps(8) 1; /* 8 frames for jumping */
+      background: url('Pink_Monster_Jump_8.png') no-repeat 0 0; /* Placeholder URL */
+      background-size: 800%; /* Updated for 8 frames of jumping */
     }
-    /* Setting background image for the iframe */
-    body {
-      /*background: url('https://example.com/background_image.jpg') no-repeat center center;
-      background-size: cover;*/
+    @keyframes idle-animation {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: -400% 0; /* Move through all 6 frames */
+      }
     }
+    @keyframes walk-animation {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: -600% 0; /* Move through all 6 frames */
+      }
+    }
+    @keyframes jump-animation {
+      from {
+        background-position: 0 0;
+      }
+      to {
+        background-position: -800% 0; /* Move through all 8 frames */
+      }
+    }
+    /*body {
+      background: url('https://example.com/background_image.jpg') no-repeat center center;
+      background-size: cover;
+    }*/
   </style>
 </head>
 <body>
@@ -40,15 +65,15 @@
   <script>
     const monster = document.getElementById('monster');
     let monsterX = window.innerWidth / 2; // Monster's initial X position
-    let monsterY = window.innerHeight - 50; // Monster's initial Y position (at bottom)
+    const monsterY = window.innerHeight - 32; // Monster's Y position (at bottom)
     let mouseX = monsterX; // Mouse X position
     const speed = 0.02; // Monster's movement speed
-    const stopThreshold = 1; // Threshold to stop movement
+    const stopThreshold = 2; // Threshold to stop movement
     let isMoving = false;
 
     // Function to handle mouse movement (desktop)
     function handleMouseMove(event) {
-      mouseX = event.pageX - 25; // Adjust for monster width
+      mouseX = event.pageX - 16; // Adjust for monster width (half of 32px)
       if (!isMoving) {
         monster.classList.add('walking');
         isMoving = true;
@@ -58,7 +83,7 @@
     // Function to handle screen taps (mobile)
     function handleTouchMove(event) {
       const touch = event.touches[0];
-      mouseX = touch.pageX - 25;
+      mouseX = touch.pageX - 16;
       if (!isMoving) {
         monster.classList.add('walking');
         isMoving = true;
@@ -68,7 +93,7 @@
     // Function to handle click/jump (desktop & mobile)
     function handleClick(event) {
       monster.classList.add('jumping');
-      monster.classList.remove('walking');
+      monster.classList.remove('walking'); // Stop walking while jumping
 
       // Simulate jump by moving the monster upward and back down
       setTimeout(() => {
@@ -81,13 +106,14 @@
         if (isMoving) {
           monster.classList.add('walking');
         }
-      }, 300);
+      }, 800); // Match the duration of the jump animation (0.8s)
     }
 
     // Function to update monster position (X-axis only)
     function moveMonster() {
       const deltaX = mouseX - monsterX;
 
+      // Move monster only if it's farther than the threshold to prevent jitter
       if (Math.abs(deltaX) > stopThreshold) {
         monsterX += deltaX * speed;
         monster.style.left = `${monsterX}px`; // Apply new X position
