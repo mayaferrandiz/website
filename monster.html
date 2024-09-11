@@ -16,13 +16,14 @@
       height: 32px; /* Height of a single frame */
       background: url('Pink_Monster_Idle_4.png') no-repeat 0 0; /* Default to idle animation */
       bottom: 0;
+      transition: transform 0.3s ease-in-out; /* Smooth transitions for jumping */
       will-change: transform, background-position;
     }
 
-/*    body {
+    body {
       background: url('https://example.com/background_image.jpg') no-repeat center center;
       background-size: cover;
-    }*/
+    }
   </style>
 </head>
 <body>
@@ -34,8 +35,8 @@
     const monsterY = window.innerHeight - 32; // Monster's Y position (at bottom)
     let mouseX = monsterX; // Mouse X position
     let lastDirection = 'right'; // To track the direction of movement
-    const speed = 0.02; // Monster's movement speed
-    const stopThreshold = 1; // Threshold to stop movement
+    const speed = 3; // Constant speed (pixels per frame)
+    const stopThreshold = 5; // Threshold to stop movement (increased slightly for smoother stop)
     let isMoving = false;
     let isJumping = false; // Track if the monster is jumping
     let currentFrame = 0;
@@ -115,11 +116,8 @@
       totalFrames = 8; // Number of frames for jumping
       frameInterval = 80; // Faster frame rate for jumping
 
-      // Simulate jump by moving the monster upward and back down
-      setTimeout(() => {
-        monster.style.transform += ' translateY(-50px)'; // Jump up
-      }, 0);
-
+      // Smooth jump animation
+      monster.style.transform += ' translateY(-50px)'; // Jump up
       setTimeout(() => {
         monster.style.transform = monster.style.transform.replace(' translateY(-50px)', ''); // Land back at bottom
         isJumping = false;
@@ -133,16 +131,18 @@
           totalFrames = 4;
           frameInterval = 200;
         }
-      }, 800); // Match the duration of the jump animation (0.8s)
+      }, 600); // Match the duration of the jump transition (slightly reduced for smoother landing)
     }
 
     // Function to update monster position (X-axis only)
     function moveMonster() {
       const deltaX = mouseX - monsterX;
+      const distanceToMove = Math.abs(deltaX); // Absolute distance between cursor and monster
 
       // Move monster only if it's farther than the threshold to prevent jitter
-      if (Math.abs(deltaX) > stopThreshold) {
-        monsterX += deltaX * speed;
+      if (distanceToMove > stopThreshold) {
+        // Calculate direction and move a fixed speed toward the cursor
+        monsterX += speed * Math.sign(deltaX);
         monster.style.left = `${monsterX}px`; // Apply new X position
       } else {
         if (isMoving && !isJumping) {
