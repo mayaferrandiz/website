@@ -33,7 +33,7 @@
   <script>
     const monster = document.getElementById('monster');
     let monsterX = window.innerWidth / 2; // Monster's initial X position
-    let mouseX = monsterX; // Mouse X position
+    let destinationX = monsterX; // Destination X position based on cursor or touch drag
     let lastDirection = 'right'; // To track the direction of movement
     const speed = 2; // Constant speed (pixels per frame)
     const movementThreshold = 5; // Threshold to start or stop movement
@@ -87,7 +87,6 @@
 
     function handleTouchMove(event) {
       const touchX = event.touches[0].pageX;
-      mouseX = touchX - 16; // Adjust for monster width (half of 32px)
 
       if (Math.abs(touchX - initialTouchX) > movementThreshold) { // Detect drag if movement is significant
         isDragging = true; // Mark as a drag, prevent jump
@@ -109,7 +108,7 @@
 
       // If the monster is moving, determine the jump direction based on cursor position
       if (isWalking) {
-        jumpDirection = Math.sign(mouseX - monsterX); // Horizontal direction during jump
+        jumpDirection = Math.sign(destinationX - monsterX); // Horizontal direction during jump
       } else {
         // If idle, jump straight up with no horizontal movement
         jumpDirection = 0; // No horizontal movement if jumping from idle
@@ -145,7 +144,7 @@
 
     // General function to handle both mouse and touch movements
     function handleMove(xPosition) {
-      mouseX = xPosition - 16; // Adjust for monster width (half of 32px)
+      destinationX = xPosition - 16; // Adjust for monster width (half of 32px)
 
       if (!isJumping) {
         // Update monster orientation
@@ -164,10 +163,10 @@
     }
 
     function updateMonsterOrientation() {
-      if (mouseX < monsterX && lastDirection === 'right') {
+      if (destinationX < monsterX && lastDirection === 'right') {
         monster.style.transform = 'scaleX(-1)'; // Face left
         lastDirection = 'left';
-      } else if (mouseX > monsterX && lastDirection === 'left') {
+      } else if (destinationX > monsterX && lastDirection === 'left') {
         monster.style.transform = 'scaleX(1)'; // Face right
         lastDirection = 'right';
       }
@@ -175,7 +174,7 @@
 
     // Function to update monster position (X-axis only)
     function moveMonster() {
-      const deltaX = mouseX - monsterX;
+      const deltaX = destinationX - monsterX;
 
       // Use jumpDirection during the jump
       if (isJumping) {
