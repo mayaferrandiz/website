@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-11T21:34:31-04:00</updated>
+    <updated>2024-09-12T10:50:23-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -44,7 +44,7 @@
   <p>
     This little cutie lives on my website! Watch out, it might cause trouble...
   </p>
-<div><div class="post__iframe"><iframe loading="lazy" src="monster.html" width="400px" height="200px" frameborder="0"></iframe></div></div>
+<div><div class="post__iframe"><iframe loading="lazy" src="https://maya.cloud/monster.html" width="400px" height="200px" frameborder="0"></iframe></div></div>
 
     <h2 id="sprites">
       Sprites
