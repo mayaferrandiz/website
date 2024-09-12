@@ -70,12 +70,13 @@
 
     const niceMessages = ["You're really cool!", "You're awesome!", "Thanks for playing with me!", "Let's keep having fun!"];
     const hungerStates = {
-      full: { upperBound:100, lowerBound:51, speed:2, jumpHeight:75, message:getNiceMessage, updateInterval:2000 },
-      hungry: { upperBound:50, lowerBound:1, speed:1, jumpHeight: 37.5, message:(() => "I'm getting hungry..."), updateInterval:2000 },
-      empty: { upperBound:0, lowerBound:-Infinity, speed:0, jumpHeight:0, message:(() => "I'm hungry! Go find me a cookie >:)"), updateInterval:Infinity }
+      full: { name:'full', upperBound:100, lowerBound:51, speed:2, jumpHeight:75, message:getNiceMessage, updateInterval:2000 },
+      hungry: { name:'hungry', upperBound:50, lowerBound:1, speed:1, jumpHeight: 37.5, message:(() => "I'm getting hungry..."), updateInterval:2000 },
+      empty: { name:'empty', upperBound:0, lowerBound:-Infinity, speed:0, jumpHeight:0, message:(() => "I'm hungry! Go find me a cookie >:)"), updateInterval:Infinity }
     }
 
-    let hunger = parseInt(localStorage.getItem('monsterHunger')) || 500; // Persist hunger
+    let currentHungerState;
+    let hunger = parseInt(localStorage.getItem('monsterHunger')) || 100; // Persist hunger
     let speed;
     let jumpHeight;
     let message;
@@ -108,31 +109,32 @@
         messageBubble.innerText = message; // Update the text
         messageBubble.style.opacity = 1; // Fade in the message
 
-        // Fade out the message after 3 seconds
-        fadeTimeout = setTimeout(() => {
-          messageBubble.style.opacity = 0;
-        }, 3000);
+        if (currentHungerState !== 'empty'){
+          fadeTimeout = setTimeout(() => {
+            messageBubble.style.opacity = 0;
+          }, 2000);
+        }
       }, 500); // Small delay before showing the new message
     }
 
     // Update the message bubble and handle hunger effects
     function updateHungerState() {
       const now = Date.now();
-      let message;
 
-      Object.values(hungerStates).forEach(state => {
-        if (hunger > state.lowerBound && hunger <= state.upperBound && now-lastMessageTime > state.updateInterval){
-
+      for (let key in hungerStates){
+        const state = hungerStates[key];
+        if (hunger > state.lowerBound && hunger <= state.upperBound){
+          currentHungerState = state.name;
           speed = state.speed;
-          jumpHeight = state.jumpHeight
+          jumpHeight = state.jumpHeight;
           message = state.message();
 
-          if (messageBubble.innerText != message){
-            showMessage(message)
+          if (now - lastMessageTime > state.updateInterval && messageBubble.innerText !== message) {
+            showMessage(message);
             lastMessageTime = now;
           }
         }
-      })
+      }
     }
 
     // Store hunger in localStorage
@@ -142,11 +144,12 @@
 
     // Handle hunger depletion when the monster walks
     function depleteHungerFromWalk() {
-      walkedDistance += 1;
+      walkedDistance += Math.abs(destinationX - monsterX);
       if (walkedDistance >= window.innerWidth) {
         hunger -= hungerDepletionPerScreenWalk;
         walkedDistance = 0; // Reset walked distance
         saveHunger();
+        updateHungerState();
       }
     }
 
@@ -154,6 +157,7 @@
       if (hunger > 0) {
         hunger -= hungerDepletionPerJump;
         saveHunger();
+        updateHungerState();
       }
     }
 
