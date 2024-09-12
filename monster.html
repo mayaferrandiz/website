@@ -71,8 +71,8 @@
     const niceMessages = ["You're really cool!", "You're awesome!", "Thanks for playing with me!", "Let's keep having fun!"];
     const hungerStates = {
       full: { upperBound:100, lowerBound:51, speed:2, jumpHeight:75, message:getNiceMessage, updateInterval:2000 },
-      hungry: { upperBound:50, lowerBound:1, speed:1, jumpHeight: 37.5, message:(() => "I'm getting hungry..."), updateInterval:0 },
-      empty: { upperBound:0, lowerBound:-1000, speed:0, jumpHeight:0, message:(() => "I'm hungry! Go find me a cookie >:)"), updateInterval:0 }
+      hungry: { upperBound:50, lowerBound:1, speed:1, jumpHeight: 37.5, message:(() => "I'm getting hungry..."), updateInterval:2000 },
+      empty: { upperBound:0, lowerBound:-Infinity, speed:0, jumpHeight:0, message:(() => "I'm hungry! Go find me a cookie >:)"), updateInterval:Infinity }
     }
 
     let hunger = parseInt(localStorage.getItem('monsterHunger')) || 500; // Persist hunger
@@ -142,7 +142,7 @@
 
     // Handle hunger depletion when the monster walks
     function depleteHungerFromWalk() {
-      walkedDistance += Math.abs(destinationX - monsterX);
+      walkedDistance += 1;
       if (walkedDistance >= window.innerWidth) {
         hunger -= hungerDepletionPerScreenWalk;
         walkedDistance = 0; // Reset walked distance
