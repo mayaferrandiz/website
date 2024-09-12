@@ -24,23 +24,52 @@
       background: url('monster-background.webp') no-repeat center center;
       background-size: 100% 100%;
     }
+
+    #messageBubble {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 24px;
+      color: red;
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 30px;
+      padding: 10px 20px;
+      opacity: 0;
+      z-index: 10;
+      transition: opacity 0.2s ease-in, opacity 5s ease-out;
+      display: inline-block;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
   </style>
 </head>
 <body>
 
+  <div id="messageBubble"></div>
   <div id="monster"></div>
 
   <script>
     const monster = document.getElementById('monster');
+    const messageBubble = document.getElementById('messageBubble');
     let monsterX = window.innerWidth / 2; // Monster's initial X position
     let destinationX = monsterX; // Destination X position based on cursor or touch drag
     let isDragging = false; // Track if user is dragging on mobile
 
-    const speed = 2; // Constant speed
     let movementThreshold; // Movement threshold
     const touchThreshold = 10;
     const cursorThreshold = 5;
     let direction = 0; // left: -1, right: 1, idle = 0
+
+    let hunger = parseInt(localStorage.getItem('monsterHunger')) || 100; // Persist hunger
+    let speed = 2; // Initial speed
+    let jumpHeight = 75; // Initial jump height
+    const hungerDepletionPerJump = 10;
+    const hungerDepletionPerScreenWalk = 10;
+    let walkedDistance = 0;
+    let jumpingBlocked = false; // Flag to block jumping when hungry
+    let fadeTimeout; // Timeout reference for fade
 
     const animations = {
       idle: { frames: 4, frameInterval: 200, url: 'Pink_Monster_Idle_4.png', name: 'idle' },
@@ -53,6 +82,68 @@
     let frameInterval;
     let lastFrameTime = Date.now();
     let currentFrame = 0;
+
+    // Store hunger in localStorage
+    function saveHunger() {
+      localStorage.setItem('monsterHunger', hunger);
+    }
+
+    // Update the message bubble and handle hunger effects
+    function updateHungerMessage() {
+      if (hunger <= 50 && hunger > 0) {
+        messageBubble.innerText = "I'm getting hungry...";
+        messageBubble.style.color = 'black';
+        messageBubble.style.opacity = 1;
+        speed = 1; // Slow down the monster
+        jumpHeight = 37.5; // Reduce jump height
+      } else if (hunger <= 0) {
+        hunger = 0;
+        speed = 0; // Stop the monster
+        jumpHeight = 0; // No jump
+        messageBubble.innerText = "I'm hungry! Go find me a cookie >:)";
+        messageBubble.style.color = 'black';
+        messageBubble.style.opacity = 1;
+      } else {
+        messageBubble.style.opacity = 0; // Hide message if hunger is above 50
+        speed = 2; // Normal speed
+        jumpHeight = 75; // Normal jump height
+      }
+    }
+
+    updateHungerMessage();
+
+    // Handle hunger depletion when the monster walks
+    function depleteHungerFromWalk() {
+      walkedDistance += Math.abs(destinationX - monsterX);
+      if (walkedDistance >= window.innerWidth) {
+        hunger -= hungerDepletionPerScreenWalk;
+        walkedDistance = 0; // Reset walked distance
+        saveHunger();
+        updateHungerMessage();
+      }
+    }
+
+    function depleteHungerFromJump(){
+      if (hunger > 0) {
+        hunger -= hungerDepletionPerJump;
+        saveHunger();
+        updateHungerMessage();
+      }
+    }
+
+    // Periodically check if food has been collected
+    setInterval(handleFoodReplenishment, 1000); // Check every second
+
+    // Handle hunger replenishment triggered by food collection
+    function handleFoodReplenishment() {
+      const foodCollected = localStorage.getItem('foodCollected');
+      if (foodCollected) {
+        hunger = 100; // Replenish hunger to 100
+        saveHunger();
+        updateHungerMessage(); // Update the message and reset monster state
+        localStorage.removeItem('foodCollected'); // Clear the food collected flag
+      }
+    }
 
     // Animation frame updater
     function updateFrame() {
@@ -76,7 +167,6 @@
     }
 
     function updateDirection() {
-
       const deltaX = destinationX - monsterX;
 
       if (currentAnimation === 'idle') direction = 0
@@ -90,7 +180,7 @@
     }
 
     function moveTo(x){
-      monsterX += x
+      monsterX += x;
       monster.style.left = `${monsterX}px`;
     }
 
@@ -99,29 +189,32 @@
 
     // Move the monster based on destinationX
     function moveMonster() {
-      const deltaX = destinationX - monsterX;
+      if (hunger > 0){
+        const deltaX = destinationX - monsterX;
 
-      if (currentAnimation === 'jump') moveTo(speed * direction)
-      else if (currentAnimation === 'walk') {
-        if (Math.abs(deltaX) > movementThreshold) {
-          updateDirection();
-          moveTo(speed * Math.sign(deltaX))
-        } else {
-          switchAnimation(animations.idle); // Stop walking if close to destination
-        }
-      } else if (currentAnimation === 'idle') {
-        if (Math.abs(deltaX) > movementThreshold) {
-          switchAnimation(animations.walk); // Start walking if far from destination
+        if (currentAnimation === 'jump') moveTo(speed * direction);
+        else if (currentAnimation === 'walk') {
+          if (Math.abs(deltaX) > movementThreshold) {
+            updateDirection();
+            depleteHungerFromWalk();
+            moveTo(speed * Math.sign(deltaX));
+          } else {
+            switchAnimation(animations.idle); // Stop walking if close to destination
+          }
+        } else if (currentAnimation === 'idle') {
+          if (Math.abs(deltaX) > movementThreshold) {
+            switchAnimation(animations.walk); // Start walking if far from destination
+          }
         }
       }
-
       requestAnimationFrame(moveMonster);
     }
 
     // Jump the monster
     function jumpMonster() {
-      if (currentAnimation !== 'jump') {
+      if (currentAnimation !== 'jump' && hunger > 0) {
         updateDirection();
+        depleteHungerFromJump();
         switchAnimation(animations.jump);
 
         // Apply jump transformation
@@ -141,6 +234,36 @@
           }, animations.jump.frameInterval * animations.jump.frames / 2);
         }, animations.jump.frameInterval * animations.jump.frames / 2);
       }
+    }
+
+    // Track the jump and manage jump count
+    function trackJump() {
+      const now = Date.now();
+      jumpTimes.push(now);
+      jumpTimes = jumpTimes.filter(time => now - time < 30000); // Filter jumps within 30 seconds
+      jumpCounter = jumpTimes.length;
+    }
+
+    // Display the "I'm tired" message and block further jumps
+    function displayTiredMessage() {
+      clearTimeout(fadeTimeout); // Clear any ongoing fade-out
+
+      // Show message immediately
+      tiredMessage.style.transition = 'opacity 0.2s ease-in'; // Quick fade-in
+      tiredMessage.style.opacity = 1; // Make message visible
+      jumpingBlocked = true;
+
+      // Start the fade-out after a short delay, making it fade out over 5 seconds
+      fadeTimeout = setTimeout(() => {
+        tiredMessage.style.transition = 'opacity 5s ease-out'; // Gradual fade-out
+        tiredMessage.style.opacity = 0; // Fade out message gradually
+
+        setTimeout(() => {
+          jumpTimes = []; // Reset jumps
+          jumpCounter = 0;
+          jumpingBlocked = false; // Allow jumps after message fades out
+        }, 5000); // Allow jumping again after 5 seconds
+      }, 500); // Start fade-out process after a short delay to ensure visibility
     }
 
     // Mouse and touch event listeners
