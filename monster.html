@@ -35,8 +35,8 @@
     let monsterX = window.innerWidth / 2; // Monster's initial X position
     let mouseX = monsterX; // Mouse X position
     let lastDirection = 'right'; // To track the direction of movement
-    const speed = 3; // Constant speed (pixels per frame)
-    const stopThreshold = 5; // Threshold to stop movement
+    const speed = 2; // Constant speed (pixels per frame)
+    const movementThreshold = 5; // Threshold to start or stop movement
     let isWalking = false;
     let isJumping = false; // Track if the monster is jumping
     let jumpDirection = 0; // Track the horizontal direction of the jump (0 for vertical jumps)
@@ -81,7 +81,7 @@
 
     // Handle the tap and drag behavior on mobile
     function handleTouchStart(event) {
-      isDragging = false; // Reset dragging state
+      if (!isWalking) isDragging = false; // Reset dragging state
       initialTouchX = event.touches[0].pageX; // Store the initial touch position
     }
 
@@ -89,7 +89,7 @@
       const touchX = event.touches[0].pageX;
       mouseX = touchX - 16; // Adjust for monster width (half of 32px)
 
-      if (Math.abs(touchX - initialTouchX) > 10) { // Detect drag if movement is significant
+      if (Math.abs(touchX - initialTouchX) > movementThreshold) { // Detect drag if movement is significant
         isDragging = true; // Mark as a drag, prevent jump
         handleMove(touchX); // Move monster based on drag
       }
@@ -181,7 +181,7 @@
       if (isJumping) {
         monsterX += speed * jumpDirection; // Continue moving horizontally in the jump direction
         monster.style.left = `${monsterX}px`; // Apply new X position
-      } else if (Math.abs(deltaX) > stopThreshold) {
+      } else if (Math.abs(deltaX) > movementThreshold) {
         // On the ground, move toward the cursor
         updateMonsterOrientation();
         monsterX += speed * Math.sign(deltaX);
@@ -189,7 +189,7 @@
       }
 
       // Only stop horizontal movement once the jump and landing are complete
-      if (isWalking && !isJumping && Math.abs(deltaX) <= stopThreshold) {
+      if (isWalking && !isJumping && Math.abs(deltaX) <= movementThreshold) {
         // Switch to idle animation with a slight delay to prevent flickering
         setTimeout(() => {
           monster.style.backgroundImage = "url('Pink_Monster_Idle_4.png')";
