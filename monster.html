@@ -144,9 +144,9 @@
 
     // General function to handle both mouse and touch movements
     function handleMove(xPosition) {
-      destinationX = xPosition - 16; // Adjust for monster width (half of 32px)
-
       if (!isJumping) {
+        destinationX = xPosition - 16; // Adjust for monster width (half of 32px)
+
         // Update monster orientation
         updateMonsterOrientation();
 
@@ -181,7 +181,7 @@
         monsterX += speed * jumpDirection; // Continue moving horizontally in the jump direction
         monster.style.left = `${monsterX}px`; // Apply new X position
       } else if (Math.abs(deltaX) > movementThreshold) {
-        // On the ground, move toward the cursor
+        // On the ground, move toward the cursor or touch position
         updateMonsterOrientation();
         monsterX += speed * Math.sign(deltaX);
         monster.style.left = `${monsterX}px`; // Apply new X position
