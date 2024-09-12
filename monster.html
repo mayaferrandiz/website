@@ -62,7 +62,7 @@
     const cursorThreshold = 5;
     let direction = 0; // left: -1, right: 1, idle = 0
 
-    let hunger = parseInt(localStorage.getItem('monsterHunger')) || 100; // Persist hunger
+    let hunger = parseInt(localStorage.getItem('monsterHunger')) || 500; // Persist hunger
     let speed = 2; // Initial speed
     let jumpHeight = 75; // Initial jump height
     const hungerDepletionPerJump = 10;
@@ -111,7 +111,7 @@
       const now = Date.now();
       let message;
 
-      for (state in hungerStates){
+      Object.values(hungerStates).forEach(state => {
         if (hunger > state.lowerBound && hunger <= state.upperBound && now-lastUpdatedTime > state.updateInterval){
 
           speed = state.speed;
@@ -122,6 +122,7 @@
             messageBubble.innerText = message;
             messageBubble.style.color = 'black';
             messageBubble.style.opacity = 1;
+            lastUpdatedTime = now;
             // setTimeout(() => {
             //   messageBubble.style.opacity = 0;
             // },state.updateInterval)
