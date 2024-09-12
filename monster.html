@@ -206,34 +206,45 @@
             switchAnimation(animations.walk); // Start walking if far from destination
           }
         }
+      } else {
+        switchAnimation(animations.idle);
       }
       requestAnimationFrame(moveMonster);
     }
 
     // Jump the monster
     function jumpMonster() {
-      if (currentAnimation !== 'jump' && hunger > 0) {
-        updateDirection();
-        depleteHungerFromJump();
-        switchAnimation(animations.jump);
 
-        // Apply jump transformation
-        monster.style.transform += ' translateY(-75px)';
+      if (hunger > 0){
 
-        setTimeout(() => {
-          // Land after jump
-          monster.style.transform = monster.style.transform.replace(' translateY(-75px)', '');
+        if (currentAnimation !== 'jump') {
+        
+          updateDirection();
+          depleteHungerFromJump();
+          switchAnimation(animations.jump);
+
+          // Apply jump transformation
+          monster.style.transform += ' translateY(-75px)';
 
           setTimeout(() => {
-            // Resume walking or switch to idle after landing
-            if (Math.abs(destinationX - monsterX) > movementThreshold) {
-              switchAnimation(animations.walk);
-            } else {
-              switchAnimation(animations.idle);
-            }
+            // Land after jump
+            monster.style.transform = monster.style.transform.replace(' translateY(-75px)', '');
+
+            setTimeout(() => {
+              // Resume walking or switch to idle after landing
+              if (Math.abs(destinationX - monsterX) > movementThreshold) {
+                switchAnimation(animations.walk);
+              } else {
+                switchAnimation(animations.idle);
+              }
+            }, animations.jump.frameInterval * animations.jump.frames / 2);
           }, animations.jump.frameInterval * animations.jump.frames / 2);
-        }, animations.jump.frameInterval * animations.jump.frames / 2);
-      }
+
+        }
+
+      } else switchAnimation(animations.idle);
+
+      
     }
 
     // Track the jump and manage jump count
