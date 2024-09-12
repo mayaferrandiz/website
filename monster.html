@@ -34,163 +34,143 @@
     const monster = document.getElementById('monster');
     let monsterX = window.innerWidth / 2; // Monster's initial X position
     let destinationX = monsterX; // Destination X position based on cursor or touch drag
-    let lastDirection = 'right'; // To track the direction of movement
-    const speed = 2; // Constant speed (pixels per frame)
-    const movementThreshold = 5; // Threshold to start or stop movement
-    let isWalking = false;
-    let isJumping = false; // Track if the monster is jumping
-    let jumpDirection = 0; // Track the horizontal direction of the jump (0 for vertical jumps)
-    let currentFrame = 0;
-    let isDragging = false; // Track if the user is dragging
-    let initialTouchX = 0; // Initial touch X position for drag detection
-
-    const animationChangeBuffer = 50; // Reduce flicker
+    let isDragging = false; // Track if user is dragging on mobile
+    const speed = 2; // Constant speed
+    const movementThreshold = 5; // Movement threshold
+    let jumpDirection = 0; // Track horizontal direction while jumping
+    let lastDirection = 'right'; // Track the last movement direction
 
     const animations = {
-      idle: {
-        frames: 4,
-        frameInterval: 200
-      },
-      walk: {
-        frames: 6,
-        frameInterval: 100
-      },
-      jump: {
-        frames: 8,
-        frameInterval: 80
-      },
+      idle: { frames: 4, frameInterval: 200, url: 'Pink_Monster_Idle_4.png', name: 'idle' },
+      walk: { frames: 6, frameInterval: 100, url: 'Pink_Monster_Walk_6.png', name: 'walk' },
+      jump: { frames: 8, frameInterval: 80, url: 'Pink_Monster_Jump_8.png', name: 'jump' }
     };
-
-    let totalFrames = animations.idle.frames; // Number of frames for idle animation
-    let frameInterval = animations.idle.frameInterval; // Time between frames in ms
+    let currentAnimation = animations.idle.name;
+    let totalFrames = animations.idle.frames;
+    let frameInterval = animations.idle.frameInterval;
     let lastFrameTime = Date.now();
+    let currentFrame = 0;
 
-    // Function to manually cycle through frames
+    // Animation frame updater
     function updateFrame() {
       const now = Date.now();
       if (now - lastFrameTime > frameInterval) {
         currentFrame = (currentFrame + 1) % totalFrames;
         lastFrameTime = now;
-        monster.style.backgroundPosition = `-${currentFrame * 32}px 0`; // Move background position
+        monster.style.backgroundPosition = `-${currentFrame * 32}px 0`;
       }
       requestAnimationFrame(updateFrame);
     }
-
-    // Start the frame update loop
     updateFrame();
 
-    // Function to switch to walking animation immediately
-    function animateWalking() {
-      monster.style.backgroundImage = "url('Pink_Monster_Walk_6.png')"; // Switch to walking animation
-      totalFrames = animations.walk.frames; // Number of frames for walking
-      frameInterval = animations.walk.frameInterval; // Faster frame rate for walking
-      isWalking = true; // Set walking state
-      isJumping = false;
+    // Switch animation function
+    function switchAnimation(animation) {
+      console.log(`Switching to animation: ${animation.name}`);
+      monster.style.backgroundImage = `url('${animation.url}')`;
+      totalFrames = animation.frames;
+      frameInterval = animation.frameInterval;
+      currentAnimation = animation.name;
+      currentFrame = 0; // Reset frame to start
     }
 
-    // Function to switch to idle animation
-    function animateIdle() {
-      monster.style.backgroundImage = "url('Pink_Monster_Idle_4.png')"; // Switch to idle animation
-      totalFrames = animations.idle.frames; // Number of frames for idle
-      frameInterval = animations.idle.frameInterval; // Set idle frame rate
-      isWalking = false; // Set walking state to false
-      isJumping = false;
-    }
-
-    // Function to switch to jumping animation
-    function animateJumping() {
-      monster.style.backgroundImage = "url('Pink_Monster_Jump_8.png')"; // Switch to jumping animation
-      totalFrames = animations.jump.frames; // Number of frames for jumping
-      frameInterval = animations.jump.frameInterval; // Faster frame rate for jumping
-      isWalking = false; // Set walking state to false
-      isJumping = true;
-    }
-
-    function animateOrientation() {
-      if (destinationX < monsterX && lastDirection === 'right') {
-        monster.style.transform = 'scaleX(-1)'; // Face left
-        lastDirection = 'left';
-      } else if (destinationX > monsterX && lastDirection === 'left') {
-        monster.style.transform = 'scaleX(1)'; // Face right
-        lastDirection = 'right';
-      }
-    }
-
-    // Handle the tap and drag behavior on mobile
-    function handleTouchStart(event) {
-      if (!isWalking) isDragging = false; // Reset dragging state
-      initialTouchX = event.touches[0].pageX; // Store the initial touch position
-    }
-
-    function handleTouchMove(event) {
-      const touchX = event.touches[0].pageX;
-
-      if (Math.abs(touchX - initialTouchX) > movementThreshold) { // Detect drag if movement is significant
-        isDragging = true; // Mark as a drag, prevent jump
-        handleMove(touchX); // Move monster based on drag
-      }
-    }
-
-    function handleTouchEnd() {
-      if (!isDragging) handleJump(); // If no drag was detected, it's considered a tap, and the monster jumps
-    }
-
-    // General event handler for both click and touch events
-    function handleJump() {
-      if (isJumping) return; // Prevent multiple jumps
-      
-      animateJumping();
-      jumpDirection = isWalking ? Math.sign(destinationX - monsterX):0; // Horizontal direction during jump
-      monster.style.transform += ' translateY(-75px)'; // Jump up
-
-      setTimeout(() => {
-        monster.style.transform = monster.style.transform.replace(' translateY(-75px)', ''); // Land back at bottom
-
-        setTimeout(() => {
-          isJumping = false;
-          isWalking ? animateWalking():animateIdle(); // Return to walking after jump
-        }, animations.jump.frames * animations.jump.frameInterval/2); // Wait for jump animation to finish
-      }, animations.jump.frames * animations.jump.frameInterval/2); // Match the duration of the jump transition
-    }
-
-    // General function to handle both mouse and touch movements
-    function handleMove(xPosition) {
-      if (!isJumping) {
-        destinationX = xPosition - 16; // Adjust for monster width (half of 32px)
-        animateOrientation();
-        if (!isWalking) animateWalking();
-      }
-    }
-
-    // Function to update monster position (X-axis only)
+    // Move the monster based on destinationX
     function moveMonster() {
       const deltaX = destinationX - monsterX;
 
-      // Use jumpDirection during the jump
-      if (isJumping) {
-        monsterX += speed * jumpDirection; // Continue moving horizontally in the jump direction
-        monster.style.left = `${monsterX}px`; // Apply new X position
-      } else if (Math.abs(deltaX) > movementThreshold) {
-        // On the ground, move toward the cursor or touch position
-        animateOrientation();
-        monsterX += speed * Math.sign(deltaX);
-        monster.style.left = `${monsterX}px`; // Apply new X position
-      }
+      if (currentAnimation === 'jump') {
+        // Move horizontally while in the air if jumping
+        monsterX += speed * jumpDirection;
+        monster.style.left = `${monsterX}px`;
+      } else {
+        // If walking or idle, handle normal movement
+        if (Math.abs(deltaX) > movementThreshold) {
+          monsterX += speed * Math.sign(deltaX);
+          monster.style.left = `${monsterX}px`;
 
-      // Only stop horizontal movement once the jump and landing are complete
-      if (isWalking && !isJumping && Math.abs(deltaX) <= movementThreshold) {
-        // Switch to idle animation with a slight delay to prevent flickering. Delay switching to idle to prevent flicker
-        setTimeout(() => animateIdle(), animationChangeBuffer); 
+          // Switch to walking animation if not already walking
+          if (currentAnimation !== 'walk') {
+            switchAnimation(animations.walk);
+          }
+        }
+
+        // Change orientation to face the direction of movement
+        if (deltaX < 0 && lastDirection === 'right') {
+          monster.style.transform = 'scaleX(-1)'; // Face left
+          lastDirection = 'left';
+        } else if (deltaX > 0 && lastDirection === 'left') {
+          monster.style.transform = 'scaleX(1)'; // Face right
+          lastDirection = 'right';
+        }
+
+        // If destination is reached, switch to idle animation
+        if (currentAnimation === 'walk' && Math.abs(deltaX) <= movementThreshold) {
+          switchAnimation(animations.idle);
+        }
       }
 
       requestAnimationFrame(moveMonster);
     }
 
-    // Start the monster movement animation
-    moveMonster();
+    // Jump the monster
+    function jumpMonster() {
+      if (currentAnimation !== 'jump') {
+        switchAnimation(animations.jump);
 
-    // Event listeners for both desktop and mobile
-    document.addEventListener('mousemove', (event) => handleMove(event.pageX)); // Desktop movement
-    document.addEventListener('click', handleJump); // Desktop click
+        jumpDirection = currentAnimation === 'walk' ? Math.sign(destinationX - monsterX) : 0; // Continue horizontal movement if walking
 
-    document.addEventListener('touchstart', handleTouchStart); // Track the start of touch (mobile)
+        // Vertical jump with horizontal movement
+        monster.style.transform += ' translateY(-75px)';
+        console.log("Jumping...");
+
+        setTimeout(() => {
+          // Land after jump
+          monster.style.transform = monster.style.transform.replace(' translateY(-75px)', '');
+
+          setTimeout(() => {
+            // Resume walking or switch to idle after landing
+            if (Math.abs(destinationX - monsterX) > movementThreshold) {
+              switchAnimation(animations.walk);
+            } else {
+              switchAnimation(animations.idle);
+            }
+          }, animations.jump.frameInterval * animations.jump.frames / 2);
+        }, animations.jump.frameInterval * animations.jump.frames / 2);
+      }
+    }
+
+    // Mouse and touch event listeners
+    document.addEventListener('mousemove', (e) => {
+      destinationX = e.pageX - 16; // Adjust for monster width
+      console.log(`Mouse moved. New destination: ${destinationX}`);
+    });
+
+    document.addEventListener('click', () => {
+      console.log("Mouse clicked. Initiating jump.");
+      jumpMonster(); // Desktop click to jump
+    });
+
+    // Handle mobile touch drag and tap for jumping
+    document.addEventListener('touchstart', (e) => {
+      isDragging = false; // Reset dragging state
+      destinationX = e.touches[0].pageX - 16; // Set destination based on touch
+      console.log(`Touch started. Destination set to: ${destinationX}`);
+    });
+
+    document.addEventListener('touchmove', (e) => {
+      isDragging = true; // Mark as drag
+      destinationX = e.touches[0].pageX - 16; // Update destination as the touch moves
+      console.log(`Touch moved. New destination: ${destinationX}`);
+    });
+
+    document.addEventListener('touchend', () => {
+      if (!isDragging) {
+        console.log("Touch ended. Initiating jump.");
+        jumpMonster(); // Only jump if it was a tap, not a drag
+      }
+    });
+
+    // Start monster movement loop
+    requestAnimationFrame(moveMonster);
+  </script>
+</body>
+</html>
