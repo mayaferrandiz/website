@@ -62,77 +62,83 @@
     const cursorThreshold = 5;
     let direction = 0; // left: -1, right: 1, idle = 0
 
-    let hunger = parseInt(localStorage.getItem('monsterHunger')) || 500; // Persist hunger
-    let speed = 2; // Initial speed
-    let jumpHeight = 75; // Initial jump height
     const hungerDepletionPerJump = 10;
     const hungerDepletionPerScreenWalk = 10;
     let walkedDistance = 0;
-    let jumpingBlocked = false; // Flag to block jumping when hungry
-    let fadeTimeout; // Timeout reference for fade
+    let lastMessageTime = Date.now();
+    let fadeTimeout;
 
+    const niceMessages = ["You're really cool!", "You're awesome!", "Thanks for playing with me!", "Let's keep having fun!"];
     const hungerStates = {
-      full: { upperBound:100, lowerBound:51, speed:2, jumpHeight:75, message:niceMessage, updateInterval:2000 },
+      full: { upperBound:100, lowerBound:51, speed:2, jumpHeight:75, message:getNiceMessage, updateInterval:2000 },
       hungry: { upperBound:50, lowerBound:1, speed:1, jumpHeight: 37.5, message:(() => "I'm getting hungry..."), updateInterval:0 },
       empty: { upperBound:0, lowerBound:-1000, speed:0, jumpHeight:0, message:(() => "I'm hungry! Go find me a cookie >:)"), updateInterval:0 }
     }
+
+    let hunger = parseInt(localStorage.getItem('monsterHunger')) || 500; // Persist hunger
+    let speed;
+    let jumpHeight;
+    let message;
 
     const animations = {
       idle: { frames: 4, frameInterval: 200, url: 'Pink_Monster_Idle_4.png', name: 'idle' },
       walk: { frames: 6, frameInterval: 100, url: 'Pink_Monster_Walk_6.png', name: 'walk' },
       jump: { frames: 8, frameInterval: 80, url: 'Pink_Monster_Jump_8.png', name: 'jump' }
     };
-
     let currentAnimation;
     let totalFrames;
     let frameInterval;
     let lastFrameTime = Date.now();
     let currentFrame = 0;
 
-    const niceMessages = ["You're really cool!", "You're awesome!", "Thanks for playing with me!", "Let's keep having fun!"];
-    let currentMessageIndex = 0;
-    let lastUpdatedTime = Date.now();
-
     setInterval(handleFoodReplenishment, 1000); // Check every second
-
-    // Store hunger in localStorage
-    function saveHunger() {
-      localStorage.setItem('monsterHunger', hunger);
-    }
+    updateHungerState();
 
     // Function to show a random nice message
-    function niceMessage() {
-      currentMessageIndex = Math.floor(Math.random() * niceMessages.length);
-      return niceMessages[currentMessageIndex];
+    function getNiceMessage() {
+      return niceMessages[Math.floor(Math.random() * niceMessages.length)];
+    }
+
+    // Display a message
+    function showMessage(message) {
+      clearTimeout(fadeTimeout); // Clear any ongoing fade
+      messageBubble.style.opacity = 0; // Start by hiding the message
+
+      setTimeout(() => {
+        messageBubble.innerText = message; // Update the text
+        messageBubble.style.opacity = 1; // Fade in the message
+
+        // Fade out the message after 3 seconds
+        fadeTimeout = setTimeout(() => {
+          messageBubble.style.opacity = 0;
+        }, 3000);
+      }, 500); // Small delay before showing the new message
     }
 
     // Update the message bubble and handle hunger effects
-    function updateMessage() {
+    function updateHungerState() {
       const now = Date.now();
       let message;
 
       Object.values(hungerStates).forEach(state => {
-        if (hunger > state.lowerBound && hunger <= state.upperBound && now-lastUpdatedTime > state.updateInterval){
+        if (hunger > state.lowerBound && hunger <= state.upperBound && now-lastMessageTime > state.updateInterval){
 
           speed = state.speed;
           jumpHeight = state.jumpHeight
           message = state.message();
 
           if (messageBubble.innerText != message){
-            messageBubble.innerText = message;
-            messageBubble.style.color = 'black';
-            messageBubble.style.opacity = 1;
-            lastUpdatedTime = now;
-            // setTimeout(() => {
-            //   messageBubble.style.opacity = 0;
-            // },state.updateInterval)
+            showMessage(message)
+            lastMessageTime = now;
           }
-
         }
       })
     }
 
-    updateMessage();
+    // Store hunger in localStorage
+    function saveHunger() {
+      localStorage.setItem('monsterHunger', hunger);
+    }
 
     // Handle hunger depletion when the monster walks
     function depleteHungerFromWalk() {
@@ -157,7 +163,7 @@
       if (foodCollected) {
         hunger = 100; // Replenish hunger to 100
         saveHunger();
-        updateMessage(); // Update the message and reset monster state
+        updateHungerState(); // Update the message and reset monster state
         localStorage.removeItem('foodCollected'); // Clear the food collected flag
       }
     }
@@ -296,34 +302,34 @@
 
     // Mouse and touch event listeners
     document.addEventListener('mousemove', (e) => {
-      updateMessage();
+      updateHungerState();
       movementThreshold = cursorThreshold;
       destinationX = e.pageX - 16; // Adjust for monster width
     });
 
     document.addEventListener('click', () => {
-      updateMessage();
+      updateHungerState();
       movementThreshold = cursorThreshold;
       jumpMonster(); // Desktop click to jump
     });
 
     // Handle mobile touch drag and tap for jumping
     document.addEventListener('touchstart', (e) => {
-      updateMessage();
+      updateHungerState();
       movementThreshold = touchThreshold;
       isDragging = false; // Reset dragging state
       destinationX = e.touches[0].pageX - 16; // Set destination based on touch
     });
 
     document.addEventListener('touchmove', (e) => {
-      updateMessage();
+      updateHungerState();
       movementThreshold = touchThreshold;
       isDragging = true; // Mark as drag
       destinationX = e.touches[0].pageX - 16; // Update destination as the touch moves
     });
 
     document.addEventListener('touchend', () => {
-      updateMessage();
+      updateHungerState();
       movementThreshold = touchThreshold;
       if (!isDragging) {
         jumpMonster(); // Only jump if it was a tap, not a drag
