@@ -3,19 +3,19 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-11T21:28:49-04:00</updated>
+    <updated>2024-09-11T21:34:31-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
     <id>https://maya.cloud</id>
 
     <entry>
-        <title>Maya&#x27;s Monster</title>
+        <title>Little Monster</title>
         <author>
             <name>Maya</name>
         </author>
-        <link href="https://maya.cloud/portfolio/laser-box-2/"/>
-        <id>https://maya.cloud/portfolio/laser-box-2/</id>
+        <link href="https://maya.cloud/portfolio/little-monster/"/>
+        <id>https://maya.cloud/portfolio/little-monster/</id>
         <media:content url="https://maya.cloud/media/posts/11/Pink_Monster_Walk_6.png" medium="image" />
 
         <updated>2024-09-11T18:03:52-04:00</updated>
@@ -44,8 +44,7 @@
   <p>
     This little cutie lives on my website! Watch out, it might cause trouble...
   </p>
-<div><div class="post__iframe"><iframe loading="lazy" src="monster.html" width="400px" height="200px" frameborder="0"></iframe></div>
-</div>
+<div><div class="post__iframe"><iframe loading="lazy" src="monster.html" width="400px" height="200px" frameborder="0"></iframe></div></div>
 
     <h2 id="sprites">
       Sprites
@@ -81,7 +80,7 @@
     </h2>
 
   <p>
-    This code is 100% AI-written by ChatGPT 4o Mini. Prompt engineering by Maya.
+    This code is 80% AI-written by ChatGPT 4o Mini. Remaining 20% + prompt engineering by Maya.
   </p>
 <div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" style="width:100%; height:500px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Fwebsite%2Fblob%2Fmain%2Fmonster.html&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe>
 </div>
