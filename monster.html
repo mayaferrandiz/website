@@ -14,7 +14,7 @@
       position: absolute;
       width: 32px; /* Width of a single frame */
       height: 32px; /* Height of a single frame */
-      background: url('Pink_Monster_Idle_4.png') no-repeat 0 0; /* Default to idle animation */
+      background: no-repeat 0 0; /* Default to idle animation */
       bottom: 10%; /* Offset by percentage for better alignment across devices */
       transition: transform 0.3s ease-in-out; /* Smooth transitions for jumping */
       will-change: transform, background-position;
@@ -35,19 +35,20 @@
     let monsterX = window.innerWidth / 2; // Monster's initial X position
     let destinationX = monsterX; // Destination X position based on cursor or touch drag
     let isDragging = false; // Track if user is dragging on mobile
+
     const speed = 2; // Constant speed
     const movementThreshold = 5; // Movement threshold
-    let jumpDirection = 0; // Track horizontal direction while jumping
-    let lastDirection = 'right'; // Track the last movement direction
+    let direction = 0; // left: -1, right: 1, idle = 0
 
     const animations = {
       idle: { frames: 4, frameInterval: 200, url: 'Pink_Monster_Idle_4.png', name: 'idle' },
       walk: { frames: 6, frameInterval: 100, url: 'Pink_Monster_Walk_6.png', name: 'walk' },
       jump: { frames: 8, frameInterval: 80, url: 'Pink_Monster_Jump_8.png', name: 'jump' }
     };
-    let currentAnimation = animations.idle.name;
-    let totalFrames = animations.idle.frames;
-    let frameInterval = animations.idle.frameInterval;
+
+    let currentAnimation;
+    let totalFrames;
+    let frameInterval;
     let lastFrameTime = Date.now();
     let currentFrame = 0;
 
@@ -65,7 +66,6 @@
 
     // Switch animation function
     function switchAnimation(animation) {
-      console.log(`Switching to animation: ${animation.name}`);
       monster.style.backgroundImage = `url('${animation.url}')`;
       totalFrames = animation.frames;
       frameInterval = animation.frameInterval;
@@ -73,38 +73,43 @@
       currentFrame = 0; // Reset frame to start
     }
 
+    function updateDirection() {
+
+      const deltaX = destinationX - monsterX;
+
+      if (currentAnimation === 'idle') direction = 0
+      else if (deltaX < 0 && direction !== -1) {
+        monster.style.transform = 'scaleX(-1)'; // Face left
+        direction = -1;
+      } else if (deltaX > 0 && direction !== 1) {
+        monster.style.transform = 'scaleX(1)'; // Face right
+        direction = 1;
+      }
+    }
+
+    function moveTo(x){
+      monsterX += x
+      monster.style.left = `${monsterX}px`;
+    }
+
+    // Initial state
+    switchAnimation(animations.idle);
+
     // Move the monster based on destinationX
     function moveMonster() {
       const deltaX = destinationX - monsterX;
 
-      if (currentAnimation === 'jump') {
-        // Move horizontally while in the air if jumping
-        monsterX += speed * jumpDirection;
-        monster.style.left = `${monsterX}px`;
-      } else {
-        // If walking or idle, handle normal movement
+      if (currentAnimation === 'jump') moveTo(speed * direction)
+      else if (currentAnimation === 'walk') {
         if (Math.abs(deltaX) > movementThreshold) {
-          monsterX += speed * Math.sign(deltaX);
-          monster.style.left = `${monsterX}px`;
-
-          // Switch to walking animation if not already walking
-          if (currentAnimation !== 'walk') {
-            switchAnimation(animations.walk);
-          }
+          updateDirection();
+          moveTo(speed * Math.sign(deltaX))
+        } else {
+          switchAnimation(animations.idle); // Stop walking if close to destination
         }
-
-        // Change orientation to face the direction of movement
-        if (deltaX < 0 && lastDirection === 'right') {
-          monster.style.transform = 'scaleX(-1)'; // Face left
-          lastDirection = 'left';
-        } else if (deltaX > 0 && lastDirection === 'left') {
-          monster.style.transform = 'scaleX(1)'; // Face right
-          lastDirection = 'right';
-        }
-
-        // If destination is reached, switch to idle animation
-        if (currentAnimation === 'walk' && Math.abs(deltaX) <= movementThreshold) {
-          switchAnimation(animations.idle);
+      } else if (currentAnimation === 'idle') {
+        if (Math.abs(deltaX) > movementThreshold) {
+          switchAnimation(animations.walk); // Start walking if far from destination
         }
       }
 
@@ -114,13 +119,11 @@
     // Jump the monster
     function jumpMonster() {
       if (currentAnimation !== 'jump') {
+        updateDirection();
         switchAnimation(animations.jump);
 
-        jumpDirection = currentAnimation === 'walk' ? Math.sign(destinationX - monsterX) : 0; // Continue horizontal movement if walking
-
-        // Vertical jump with horizontal movement
+        // Apply jump transformation
         monster.style.transform += ' translateY(-75px)';
-        console.log("Jumping...");
 
         setTimeout(() => {
           // Land after jump
@@ -141,11 +144,9 @@
     // Mouse and touch event listeners
     document.addEventListener('mousemove', (e) => {
       destinationX = e.pageX - 16; // Adjust for monster width
-      console.log(`Mouse moved. New destination: ${destinationX}`);
     });
 
     document.addEventListener('click', () => {
-      console.log("Mouse clicked. Initiating jump.");
       jumpMonster(); // Desktop click to jump
     });
 
@@ -153,18 +154,15 @@
     document.addEventListener('touchstart', (e) => {
       isDragging = false; // Reset dragging state
       destinationX = e.touches[0].pageX - 16; // Set destination based on touch
-      console.log(`Touch started. Destination set to: ${destinationX}`);
     });
 
     document.addEventListener('touchmove', (e) => {
       isDragging = true; // Mark as drag
       destinationX = e.touches[0].pageX - 16; // Update destination as the touch moves
-      console.log(`Touch moved. New destination: ${destinationX}`);
     });
 
     document.addEventListener('touchend', () => {
       if (!isDragging) {
-        console.log("Touch ended. Initiating jump.");
         jumpMonster(); // Only jump if it was a tap, not a drag
       }
     });
