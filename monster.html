@@ -37,7 +37,9 @@
     let isDragging = false; // Track if user is dragging on mobile
 
     const speed = 2; // Constant speed
-    const movementThreshold = 5; // Movement threshold
+    let movementThreshold; // Movement threshold
+    const touchThreshold = 10;
+    const cursorThreshold = 5;
     let direction = 0; // left: -1, right: 1, idle = 0
 
     const animations = {
@@ -143,25 +145,30 @@
 
     // Mouse and touch event listeners
     document.addEventListener('mousemove', (e) => {
+      movementThreshold = cursorThreshold;
       destinationX = e.pageX - 16; // Adjust for monster width
     });
 
     document.addEventListener('click', () => {
+      movementThreshold = cursorThreshold;
       jumpMonster(); // Desktop click to jump
     });
 
     // Handle mobile touch drag and tap for jumping
     document.addEventListener('touchstart', (e) => {
+      movementThreshold = touchThreshold;
       isDragging = false; // Reset dragging state
       destinationX = e.touches[0].pageX - 16; // Set destination based on touch
     });
 
     document.addEventListener('touchmove', (e) => {
+      movementThreshold = touchThreshold;
       isDragging = true; // Mark as drag
       destinationX = e.touches[0].pageX - 16; // Update destination as the touch moves
     });
 
     document.addEventListener('touchend', () => {
+      movementThreshold = touchThreshold;
       if (!isDragging) {
         jumpMonster(); // Only jump if it was a tap, not a drag
       }
