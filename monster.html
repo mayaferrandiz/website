@@ -111,11 +111,14 @@
 
     function getMessage(nextMessage){
 
-      if (nextMessage !== undefined) messageQueue.unshift(nextMessage)
+      console.log(1,messageQueue)
 
-      const msg = messageQueue.shift()
+      if (nextMessage !== undefined) messageQueue.unshift(nextMessage)
       if (messageQueue.length == 0) messageQueue.push(defaultMessages)
-      return msg
+
+      console.log(2,messageQueue)
+
+      return messageQueue.shift()
     }
 
     const hungerStates = {

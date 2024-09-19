@@ -33,7 +33,9 @@
     // Check if the food item can be shown
     function checkFoodAvailability(id) {
       const lastCollected = localStorage.getItem(`food_${id}`);
-      if (!lastCollected || Date.now() - lastCollected > foodReappearTime) {
+      const currentHunger = localStorage.getItem('monsterHunger')
+
+      if (currentHunger && (!lastCollected || Date.now() - lastCollected > foodReappearTime)) {
         foodItem.style.display = 'block'; // Show the food
         foodItem.style.transform = 'scale(1)'; // Reset size in case it was previously collected
         foodItem.style.opacity = '1'; // Reset opacity
@@ -45,7 +47,7 @@
     // Handle food collection with shrinking animation and hunger replenishment
     function collectFood(id) {
       localStorage.setItem(`food_${id}`, Date.now()); // Record the time the food was collected
-      const currentHunger = localStorage.getItem('monsterHunger')
+      
       localStorage.setItem('monsterHunger', currentHunger + 50); // Replenish hunger to 100
       foodItem.style.transform = 'scale(0)'; // Shrink to nothing
       foodItem.style.opacity = '0'; // Fade out
