@@ -12,11 +12,11 @@
 
     #monster {
       position: absolute;
-      width: 32px; /* Width of a single frame */
-      height: 32px; /* Height of a single frame */
-      background: no-repeat 0 0; /* Default to idle animation */
-      bottom: 10%; /* Offset by percentage for better alignment across devices */
-      transition: transform 0.3s ease-in-out; /* Smooth transitions for jumping */
+      width: 32px;
+      height: 32px;
+      background: no-repeat 0 0;
+      bottom: 10%;
+      transition: transform 0.3s ease-in-out;
       will-change: transform, background-position;
     }
 
@@ -55,9 +55,10 @@
     const messageBubble = document.getElementById('messageBubble');
     let monsterX = window.innerWidth / 2; // Monster's initial X position
     let destinationX = monsterX; // Destination X position based on cursor or touch drag
+    let previousMonsterX = monsterX; // To calculate actual movement
     let isDragging = false; // Track if user is dragging on mobile
 
-    let movementThreshold; // Movement threshold
+    let movementThreshold;
     const touchThreshold = 10;
     const cursorThreshold = 5;
     let direction = 0; // left: -1, right: 1, idle = 0
@@ -71,28 +72,28 @@
     const niceMessages = ["You're really cool!", "You're awesome!", "Thanks for playing with me!", "Let's keep having fun!"];
     const hungerStates = {
       full: { 
-        name:'full', 
-        upperBound:100, 
-        lowerBound:51, 
-        speed:2, 
-        jumpHeight:75, 
-        message:(() => niceMessages[Math.floor(Math.random() * niceMessages.length)]) 
+        name: 'full', 
+        upperBound: 100, 
+        lowerBound: 51, 
+        speed: 2, 
+        jumpHeight: 75, 
+        message: () => niceMessages[Math.floor(Math.random() * niceMessages.length)] 
       },
       hungry: { 
-        name:'hungry', 
-        upperBound:50, 
-        lowerBound:1, 
-        speed:1, 
+        name: 'hungry', 
+        upperBound: 50, 
+        lowerBound: 1, 
+        speed: 1, 
         jumpHeight: 37.5, 
-        message:(() => "I'm getting hungry..."), 
+        message: () => "I'm getting hungry..." 
       },
       empty: { 
-        name:'empty', 
-        upperBound:0, 
-        lowerBound:-Infinity, 
-        speed:0, 
-        jumpHeight:0, 
-        message:(() => "I'm hungry! Go find me a cookie >:)"), 
+        name: 'empty', 
+        upperBound: 0, 
+        lowerBound: -Infinity, 
+        speed: 0, 
+        jumpHeight: 0, 
+        message: () => "I'm hungry! Go find me a cookie >:)" 
       }
     }
 
@@ -118,35 +119,21 @@
     setNextHungerState();
     updateHungerState();
 
-    // `7MMF'  `7MMF'
-    //   MM      MM
-    //   MM      MM `7MM  `7MM  `7MMpMMMb.  .P"Ybmmm .gP"Ya `7Mb,od8
-    //   MMmmmmmmMM   MM    MM    MM    MM :MI  I8  ,M'   Yb  MM' "'
-    //   MM      MM   MM    MM    MM    MM  WmmmP"  8M""""""  MM
-    //   MM      MM   MM    MM    MM    MM 8M       YM.    ,  MM
-    // .JMML.  .JMML. `Mbod"YML..JMML  JMML.YMMMMMb  `Mbmmd'.JMML.
-    //                                     6'     dP
-    //                                     Ybmmmd'
-
+    // Periodic updates
     setInterval(updateHungerState, 2000);
     setInterval(handleHungerReplenished, 1000);
 
     // Update monster properties and display a message
     function updateHungerState() {
-
       const message = hungerState.message();
-
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
-      console.log(`hunger state: "${hungerState}`);
-
       if (hungerState.name == 'empty') {
-        console.log("idle from hunger")
         switchAnimation(animations.idle);
       }
 
-      if (messageBubble.innerText !== message){
+      if (messageBubble.innerText !== message) {
         clearTimeout(fadeTimeout); // Clear any ongoing fade
         messageBubble.style.opacity = 0; // Start by hiding the message
 
@@ -154,7 +141,7 @@
           messageBubble.innerText = message; // Update the text
           messageBubble.style.opacity = 1; // Fade in the message
 
-          if (hungerState.name !== 'empty'){
+          if (hungerState.name !== 'empty') {
             fadeTimeout = setTimeout(() => {
               messageBubble.style.opacity = 0;
             }, 2000);
@@ -165,10 +152,10 @@
 
     // Queue up next hunger state for next update interval
     function setNextHungerState() {
-      for (let key in hungerStates){
+      for (let key in hungerStates) {
         const state = hungerStates[key];
-        if (hunger > state.lowerBound && hunger <= state.upperBound){
-          hungerState = state; 
+        if (hunger > state.lowerBound && hunger <= state.upperBound) {
+          hungerState = state;
         }
       }
     }
@@ -178,20 +165,23 @@
       localStorage.setItem('monsterHunger', hunger);
     }
 
+    // Handle hunger replenishment
     function handleHungerReplenished() {
       const foodCollected = localStorage.getItem('foodCollected');
       if (foodCollected) {
-        localStorage.removeItem('foodCollected'); // Clear the food collected flag
-        hunger = 100; // Replenish hunger to 100
+        localStorage.removeItem('foodCollected');
+        hunger = 100;
         saveHunger();
         setNextHungerState();
       }
     }
 
-    // Handle hunger depletion when the monster walks
+    // Handle hunger depletion from walking
     function depleteHungerFromWalk() {
-      walkedDistance += Math.abs(destinationX - monsterX);
-      console.log(`dest: "${destinationX}" from: "${monsterX}" totalDistance: "${walkedDistance}`);
+      const distanceTraveled = Math.abs(monsterX - previousMonsterX);
+      walkedDistance += distanceTraveled;
+      previousMonsterX = monsterX; // Update to the current position
+
       if (walkedDistance >= window.innerWidth) {
         hunger -= hungerDepletionPerScreenWalk;
         walkedDistance = 0; // Reset walked distance
@@ -200,21 +190,13 @@
       }
     }
 
-    function depleteHungerFromJump(){
+    function depleteHungerFromJump() {
       if (hunger > 0) {
         hunger -= hungerDepletionPerJump;
         saveHunger();
         setNextHungerState();
       }
     }
-
-    // `7MMM.     ,MMF'                                                              mm
-    //   MMMb    dPMM                                                                MM
-    //   M YM   ,M MM  ,pW"Wq.`7M'   `MF'.gP"Ya `7MMpMMMb.pMMMb.  .gP"Ya `7MMpMMMb.mmMMmm
-    //   M  Mb  M' MM 6W'   `Wb VA   ,V ,M'   Yb  MM    MM    MM ,M'   Yb  MM    MM  MM
-    //   M  YM.P'  MM 8M     M8  VA ,V  8M""""""  MM    MM    MM 8M""""""  MM    MM  MM
-    //   M  `YM'   MM YA.   ,A9   VVV   YM.    ,  MM    MM    MM YM.    ,  MM    MM  MM
-    // .JML. `'  .JMML.`Ybmd9'     W     `Mbmmd'.JMML  JMML  JMML.`Mbmmd'.JMML  JMML.`Mbmo
 
     // Animation frame updater
     function updateFrame() {
@@ -240,24 +222,24 @@
     function updateDirection() {
       const deltaX = destinationX - monsterX;
 
-      if (currentAnimation === 'idle') direction = 0
+      if (currentAnimation === 'idle') direction = 0;
       else if (deltaX < 0 && direction !== -1) {
-        monster.style.transform = 'scaleX(-1)'; // Face left
+        monster.style.transform = 'scaleX(-1)';
         direction = -1;
       } else if (deltaX > 0 && direction !== 1) {
-        monster.style.transform = 'scaleX(1)'; // Face right
+        monster.style.transform = 'scaleX(1)';
         direction = 1;
       }
     }
 
-    function moveTo(x){
+    function moveTo(x) {
       monsterX += x;
       monster.style.left = `${monsterX}px`;
     }
 
     // Move the monster based on destinationX
     function moveMonster() {
-      if (hunger > 0){
+      if (hunger > 0) {
         const deltaX = destinationX - monsterX;
 
         if (currentAnimation === 'jump') moveTo(speed * direction);
@@ -267,11 +249,11 @@
             depleteHungerFromWalk();
             moveTo(speed * Math.sign(deltaX));
           } else {
-            switchAnimation(animations.idle); // Stop walking if close to destination
+            switchAnimation(animations.idle);
           }
         } else if (currentAnimation === 'idle') {
           if (Math.abs(deltaX) > movementThreshold) {
-            switchAnimation(animations.walk); // Start walking if far from destination
+            switchAnimation(animations.walk);
           }
         }
       } else {
@@ -282,11 +264,8 @@
 
     // Jump the monster
     function jumpMonster() {
-
-      if (hunger > 0){
-
+      if (hunger > 0) {
         if (currentAnimation !== 'jump') {
-        
           updateDirection();
           depleteHungerFromJump();
           switchAnimation(animations.jump);
@@ -295,11 +274,9 @@
           monster.style.transform += ' translateY(-75px)';
 
           setTimeout(() => {
-            // Land after jump
             monster.style.transform = monster.style.transform.replace(' translateY(-75px)', '');
 
             setTimeout(() => {
-              // Resume walking or switch to idle after landing
               if (Math.abs(destinationX - monsterX) > movementThreshold) {
                 switchAnimation(animations.walk);
               } else {
@@ -307,66 +284,42 @@
               }
             }, animations.jump.frameInterval * animations.jump.frames / 2);
           }, animations.jump.frameInterval * animations.jump.frames / 2);
-
         }
-
       } else {
-        switchAnimation(animations.idle)
+        switchAnimation(animations.idle);
       }
-    }
-
-
-    //                                                                                          ,,    ,,
-    // `7MM"""YMM                             mm       `7MMF'  `7MMF'                         `7MM  `7MM
-    //   MM    `7                             MM         MM      MM                             MM    MM
-    //   MM   d `7M'   `MF'.gP"Ya `7MMpMMMb.mmMMmm       MM      MM   ,6"Yb.  `7MMpMMMb.   ,M""bMM    MM  .gP"Ya `7Mb,od8 ,pP"Ybd
-    //   MMmmMM   VA   ,V ,M'   Yb  MM    MM  MM         MMmmmmmmMM  8)   MM    MM    MM ,AP    MM    MM ,M'   Yb  MM' "' 8I   `"
-    //   MM   Y  , VA ,V  8M""""""  MM    MM  MM         MM      MM   ,pm9MM    MM    MM 8MI    MM    MM 8M""""""  MM     `YMMMa.
-    //   MM     ,M  VVV   YM.    ,  MM    MM  MM         MM      MM  8M   MM    MM    MM `Mb    MM    MM YM.    ,  MM     L.   I8
-    // .JMMmmmmMMM   W     `Mbmmd'.JMML  JMML.`Mbmo    .JMML.  .JMML.`Moo9^Yo..JMML  JMML.`Wbmd"MML..JMML.`Mbmmd'.JMML.   M9mmmP'
-
-
-
-    // Track the jump and manage jump count
-    function trackJump() {
-      const now = Date.now();
-      jumpTimes.push(now);
-      jumpTimes = jumpTimes.filter(time => now - time < 30000); // Filter jumps within 30 seconds
-      jumpCounter = jumpTimes.length;
     }
 
     // Mouse and touch event listeners
     document.addEventListener('mousemove', (e) => {
       movementThreshold = cursorThreshold;
-      destinationX = e.pageX - 16; // Adjust for monster width
+      destinationX = e.pageX - 16;
     });
 
     document.addEventListener('click', () => {
       movementThreshold = cursorThreshold;
-      jumpMonster(); // Desktop click to jump
+      jumpMonster();
     });
 
-    // Handle mobile touch drag and tap for jumping
     document.addEventListener('touchstart', (e) => {
       movementThreshold = touchThreshold;
-      isDragging = false; // Reset dragging state
-      destinationX = e.touches[0].pageX - 16; // Set destination based on touch
+      isDragging = false;
+      destinationX = e.touches[0].pageX - 16;
     });
 
     document.addEventListener('touchmove', (e) => {
       movementThreshold = touchThreshold;
-      isDragging = true; // Mark as drag
-      destinationX = e.touches[0].pageX - 16; // Update destination as the touch moves
+      isDragging = true;
+      destinationX = e.touches[0].pageX - 16;
     });
 
     document.addEventListener('touchend', () => {
       movementThreshold = touchThreshold;
       if (!isDragging) {
-        jumpMonster(); // Only jump if it was a tap, not a drag
+        jumpMonster();
       }
     });
 
-    // Start monster movement loop
     requestAnimationFrame(moveMonster);
   </script>
 </body>
