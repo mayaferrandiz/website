@@ -242,8 +242,6 @@
       const foodCollected = localStorage.getItem('foodCollected');
       if (foodCollected) {
         localStorage.removeItem('foodCollected');
-        hunger = 100;
-        shownHungryMessage = false;
         saveHunger();
         setNextHungerState();
         updateHungerState();
