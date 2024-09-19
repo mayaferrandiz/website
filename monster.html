@@ -86,10 +86,7 @@
     let messageFadeTimeout;
     let messageClickListener;
 
-    const messageQueue = [{
-        body:"Maya hid cookies everywhere and if you find them I know we'll be friends!!",
-        nextTrigger:'timed'
-    }]
+    const messageQueue = []
     const defaultMessages = [
       {
         body:"I'll tell you lots of secrets if you find me enough cookies...",
@@ -127,6 +124,10 @@
         lowerBound: 51, 
         speed: 2, 
         jumpHeight: 75, 
+        initialStateMessage:{
+            body:"Maya hid cookies everywhere and if you find them I know we'll be friends!!",
+            nextTrigger:'timed'
+        }
       },
       hungry: { 
         name: 'hungry', 
@@ -216,7 +217,7 @@
       for (let key in hungerStates) {
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound) {
-          if (state.name !== hungerState.name) messageQueue.unshift(state.initialStateMessage);
+          if (hungerState === undefined || state.name !== hungerState.name) messageQueue.unshift(state.initialStateMessage);
           hungerState = state;
         }
       }
