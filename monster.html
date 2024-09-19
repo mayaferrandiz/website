@@ -35,7 +35,7 @@
       border-radius: 30px;
       padding: 10px 20px;
       margin:5%;
-      max-width:90%;
+      max-width:80%;
       word-wrap: break-word; /* Ensure long words break onto the next line */
       overflow-wrap: break-word; /* Similar to word-wrap, ensures word breaks */
       opacity: 0;
@@ -44,16 +44,28 @@
       display: inline-block;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     }
+
+    #hungerCounter{
+      text-align:right;
+      font-size: 20px;
+      position:absolute;
+      right:0px;
+      top:0px;
+      margin:5%;
+    }
+
   </style>
 </head>
 <body>
 
   <div id="messageBubble"></div>
   <div id="monster"></div>
+  <div id="hungerCounter"></div>
 
   <script>
     const monster = document.getElementById('monster');
     const messageBubble = document.getElementById('messageBubble');
+    const hungerCounter = document.getElementById('hungerCounter');
     let monsterX = window.innerWidth / 2; // Monster's initial X position
     let destinationX = monsterX; // Destination X position based on cursor or touch drag
     let previousMonsterX = monsterX; // To calculate actual movement
@@ -180,7 +192,7 @@
 
         setTimeout(() => {
 
-          messageBubble.innerHTML = message; // Update the text
+          messageBubble.innerHTML = message.body; // Update the text
           messageBubble.style.opacity = 1; // Fade in the message
 
           if (hungerState.name !== 'empty'){
@@ -204,6 +216,7 @@
 
     // Store hunger in localStorage
     function saveHunger() {
+      hungerCounter.innerText = `🍪${hunger}`
       localStorage.setItem('monsterHunger', hunger);
     }
 
