@@ -139,7 +139,7 @@
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
-      console.log("hunger state: "${hungerState});
+      console.log(`hunger state: "${hungerState}`);
 
       if (hungerState.name == 'empty') {
         console.log("idle from hunger")
@@ -191,7 +191,7 @@
     // Handle hunger depletion when the monster walks
     function depleteHungerFromWalk() {
       walkedDistance += Math.abs(destinationX - monsterX);
-      console.log("dest: "${destinationX}" from: "${monsterX}" totalDistance: "${walkedDistance});
+      console.log(`dest: "${destinationX}" from: "${monsterX}" totalDistance: "${walkedDistance}`);
       if (walkedDistance >= window.innerWidth) {
         hunger -= hungerDepletionPerScreenWalk;
         walkedDistance = 0; // Reset walked distance
