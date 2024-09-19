@@ -87,7 +87,7 @@
       "ACAB.", 
       "Tell me how much you love me! <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a>"
     ];
-    function messages(){
+    function getMessage(){
       const introMessage = "Maya hid cookies everywhere and if you find them I know we'll be friends :)))"
       if (messageIndex == -1) {
         messageIndex = 0
@@ -101,13 +101,13 @@
     }
 
     let shownHungryMessage = false;
-    function hungryMessage(){
+    function getHungryMessage(){
       if (!shownHungryMessage){
         shownHungryMessage = true;
         return "I'm getting hungry..."
       }
       else {
-        return messages()
+        return getMessage()
       }
     }
 
@@ -118,7 +118,7 @@
         lowerBound: 51, 
         speed: 2, 
         jumpHeight: 75, 
-        message: messages 
+        message: getMessage 
       },
       hungry: { 
         name: 'hungry', 
@@ -126,7 +126,7 @@
         lowerBound: 1, 
         speed: 1, 
         jumpHeight: 37.5, 
-        message: hungryMessage
+        message: getHungryMessage
       },
       empty: { 
         name: 'empty', 
