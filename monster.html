@@ -147,7 +147,8 @@
             }, 2000);
           }
         }, 500); // Small delay before showing the new message
-      }      
+      }
+      requestAnimationFrame(updateHungerState); 
     }
 
     // Queue up next hunger state for next update interval
@@ -288,6 +289,7 @@
       } else {
         switchAnimation(animations.idle);
       }
+      requestAnimationFrame(jumpMonster);
     }
 
     // Mouse and touch event listeners
