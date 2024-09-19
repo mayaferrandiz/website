@@ -171,7 +171,7 @@
       for (let key in hungerStates){
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound){
-          hungerState = state.name; 
+          hungerState = state; 
         }
       }
     }
