@@ -34,7 +34,7 @@
       border: 2px solid black;
       border-radius: 30px;
       padding: 10px 20px;
-      margin:5%;
+      margin:6%;
       max-width:80%;
       word-wrap: break-word; /* Ensure long words break onto the next line */
       overflow-wrap: break-word; /* Similar to word-wrap, ensures word breaks */
@@ -101,11 +101,7 @@
         nextTrigger:'click'
       },
       {
-        body:"That's awkward...",
-        nextTrigger:'timed'
-      },
-      {
-        body:"That's awkward...",
+        body:"Pleaseeeeee 🥺",
         nextTrigger:'timed'
       },
       {
@@ -215,7 +211,7 @@
           messageBubble.style.opacity = 1; // Fade in the message
 
           if (hungerState.name !== 'empty'){
-            if (message.nextTrigger == 'timed') messageFadeTimeout = setTimeout(updateHungerState, 6000);
+            if (message.nextTrigger == 'timed') messageFadeTimeout = setTimeout(updateHungerState, 5000);
             else if (message.nextTrigger == 'click') document.addEventListener('click', updateHungerState);
           }
 
@@ -235,8 +231,14 @@
 
     // Store hunger in localStorage
     function saveHunger() {
-      if (hunger > 0) hungerCounter.innerText = "🍪".repeat( Math.ceil(hunger/10) );
-      else hungerCounter.innerText = "";
+      if (hunger > 0) {
+        hungerCounter.show()
+        hungerCounter.innerText = "🍪".repeat( Math.ceil(hunger/10) );
+      }
+      else {
+        hungerCounter.innerText = "";
+        hungerCounter.hide()
+      }
       
       localStorage.setItem('monsterHunger', hunger);
     }
