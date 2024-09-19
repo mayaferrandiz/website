@@ -150,7 +150,10 @@
         lowerBound: -Infinity, 
         speed: 0, 
         jumpHeight: 0, 
-        message: () => "I'm hungry! Go find me a cookie >:)" 
+        message: (() => ({
+          body: "I'm hungry! Go find me a cookie >:)",
+          nextTrigger: 'timed'
+        }))
       }
     }
 
@@ -175,6 +178,7 @@
     switchAnimation(animations.idle);
     setNextHungerState();
     updateHungerState();
+    saveHunger();
 
     // Periodic updates
     setInterval(handleHungerReplenished, 1000);
