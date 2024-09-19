@@ -11,10 +11,7 @@
     }
 
     .food {
-      width: 50px;
-      height: 50px;
-      background-color: orange;
-      border-radius: 50%;
+      font-size: 50px;
       display: block;
       cursor: pointer;
       transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* Smooth shrinking and fading */
@@ -23,7 +20,7 @@
 </head>
 <body>
 
-  <div id="foodItem" class="food"></div>
+  <p id="foodItem" class="food">🍪</p>
 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
