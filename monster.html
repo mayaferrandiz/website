@@ -30,7 +30,7 @@
       top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      text-align: center;
+      text-align: left;
       font-size: 20px;
       color: black;
       background-color: white;
@@ -69,27 +69,26 @@
     let lastMessageTime = Date.now();
     let fadeTimeout;
 
-    let messageIndex = -1
+    let messageIndex = -1;
+    const messages = [
+      "What are you still doing here? I want cookiesssss",
+      "Ok fine... here's a ten point manifesto for the creation of a healthy local community..."
+      "[01] Share knowledge and tips with other creatives",
+      "[02] Work local and act international",
+      "[03] Create accessible events for your community",
+      "[04] Travel, create friends all over the world, and connect them with your community",
+      "[05] Host to be hosted while travelling",
+      "[06] Create accessible products based on the purchasing power of your community",
+      "[07] Collaborate as much as you can",
+      "[08] Always make sure having fun is the main goal for those collaborations",
+      "[09] Talk with honesty about money",
+      "[10] Avoid competition",
+      "[∞] Repeat over and over", 
+      "ACAB.", 
+      "Tell me how much you love me! <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a>"
+    ];
     function messages(){
       const introMessage = "Maya hid cookies everywhere and if you find them I know we'll be friends :)))"
-      const messages = [
-        "What do you dream about?", 
-        "What are you still doing here? I want cookiesssss",
-        "[01] Share knowledge and tips with other creatives",
-        "[02] Work local and act international",
-        "[03] Create accessible events for your community",
-        "[04] Travel, create friends all over the world, and connect them with your community",
-        "[05] Host to be hosted while travelling",
-        "[06] Create accessible products based on the purchasing power of your community",
-        "[07] Collaborate as much as you can",
-        "[08] Always make sure having fun is the main goal for those collaborations",
-        "[09] Talk with honesty about money",
-        "[10] Avoid competition",
-        "[∞] Repeat over and over", 
-        "ACAB", 
-        "Tell me how much you love me ~ <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a>"
-      ];
-
       if (messageIndex == -1) {
         messageIndex = 0
         return introMessage
@@ -98,6 +97,17 @@
         const msg = messages[messageIndex];
         messageIndex = (messageIndex+1)%messages.length;
         return msg
+      }
+    }
+
+    let shownHungryMessage = false;
+    function hungryMessage(){
+      if (!shownHungryMessage){
+        shownHungryMessage = true;
+        return "I'm getting hungry..."
+      }
+      else {
+        return messages()
       }
     }
 
@@ -112,11 +122,11 @@
       },
       hungry: { 
         name: 'hungry', 
-        upperBound: 50, 
+        upperBound: 25, 
         lowerBound: 1, 
         speed: 1, 
         jumpHeight: 37.5, 
-        message: () => "I'm getting hungry..." 
+        message: hungryMessage
       },
       empty: { 
         name: 'empty', 
@@ -203,6 +213,7 @@
       if (foodCollected) {
         localStorage.removeItem('foodCollected');
         hunger = 100;
+        shownHungryMessage = false;
         saveHunger();
         setNextHungerState();
       }
