@@ -26,7 +26,6 @@
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const foodId = urlParams.get('id') || 'defaultFood'; // Get food ID from iframe URL, use 'defaultFood' if none provided
-    const hungerFull = 100;
     const foodReappearTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
 
     const foodItem = document.getElementById('foodItem');
@@ -46,7 +45,8 @@
     // Handle food collection with shrinking animation and hunger replenishment
     function collectFood(id) {
       localStorage.setItem(`food_${id}`, Date.now()); // Record the time the food was collected
-      localStorage.setItem('monsterHunger', hungerFull); // Replenish hunger to 100
+      const currentHunger = localStorage.getItem('monsterHunger')
+      localStorage.setItem('monsterHunger', currentHunger + 50); // Replenish hunger to 100
       foodItem.style.transform = 'scale(0)'; // Shrink to nothing
       foodItem.style.opacity = '0'; // Fade out
 

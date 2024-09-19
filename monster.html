@@ -86,18 +86,17 @@
     let messageFadeTimeout;
     let messageClickListener;
 
-    let messageIndex = -1;
-    const messages = [
-      {
+    const messageQueue = [{
         body:"Maya hid cookies everywhere and if you find them I know we'll be friends!!",
         nextTrigger:'timed'
-      },
+    }]
+    const defaultMessages = [
       {
-        body:"Also, I'll tell you lots of secrets if you get find me enough cookies...",
+        body:"I'll tell you lots of secrets if you find me enough cookies...",
         nextTrigger:'timed'
       },
       {
-        body:"Need some help? I think there's at least one somewhere in her <a href onclick='openPortfolio()'>Portfolio</a>",
+        body:"Need some help? I think there's at least one somewhere in her <a href onclick=\"() => window.top.location.href = 'https://maya.cloud/portfolio/'\">Portfolio</a>",
         nextTrigger:'click'
       },
       {
@@ -107,43 +106,38 @@
       {
         body:"Pleaseeeeee 🥺",
         nextTrigger:'timed'
-      },
-      {
-        body:"Tell me how much you love me! <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a>",
-        nextTrigger:'timed'
       }
     ];
-    function openPortfolio(){
-      window.top.location.href = 'https://maya.cloud/portfolio/'
-    }
 
-    function getMessage(){
-      messageIndex = (messageIndex+1)%messages.length;
-      return messages[messageIndex];
-    }
+    function getMessage(nextMessage){
 
-    let shownHungryMessage = false;
-    function getHungryMessage(){
-      if (!shownHungryMessage){
-        shownHungryMessage = true;
-        return {
-          body: "I'm getting hungry...",
-          nextTrigger: 'timed'
-        }
-      }
-      else {
-        return getMessage()
-      }
+      if (nextMessage !== undefined) messageQueue.unshift(nextMessage)
+
+      const msg = messageQueue.shift()
+      if (messageQueue.length == 0) messageQueue.push(defaultMessages)
+      return msg
     }
 
     const hungerStates = {
+      overfull: {
+        name: 'overfull',
+        upperBound: Infinity,
+        lowerBound: 101,
+        speed: 2,
+        jumpHeight: 75,
+        getMessage: (() => 
+          getMessage({
+            body:"Ok here's one little secret for you 😉 email me at <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a> for a surprise!",
+            nextTrigger:'click'
+        }))
+      }
       full: { 
         name: 'full', 
         upperBound: 100, 
         lowerBound: 51, 
         speed: 2, 
         jumpHeight: 75, 
-        message: getMessage 
+        getMessage: getMessage 
       },
       hungry: { 
         name: 'hungry', 
@@ -151,7 +145,11 @@
         lowerBound: 1, 
         speed: 1, 
         jumpHeight: 37.5, 
-        message: getHungryMessage
+        getMessage: (() => 
+          getMessage({
+          body: "I'm getting hungry...",
+          nextTrigger: 'timed'
+        }))
       },
       empty: { 
         name: 'empty', 
@@ -159,8 +157,8 @@
         lowerBound: -Infinity, 
         speed: 0, 
         jumpHeight: 0, 
-        message: (() => ({
-          body: "I'm hungry! Go find me a cookie >:)",
+        getMessage: (() => getMessage({
+          body: "I'm hungry! I'm not doing anything else until you find me a cookie >:(",
           nextTrigger: 'timed'
         }))
       }
@@ -195,7 +193,7 @@
     // Update monster properties and display a message
     function updateHungerState() {
 
-      const message = hungerState.message();
+      const message = hungerState.getMessage();
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
@@ -231,6 +229,10 @@
           hungerState = state;
         }
       }
+    }
+
+    function addMessageToQueue(){
+
     }
 
     // Store hunger in localStorage
