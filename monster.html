@@ -139,7 +139,12 @@
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
-      if (hungerState.name == 'empty') switchAnimation(animations.idle);
+      console.log("hunger state: "${hungerState});
+
+      if (hungerState.name == 'empty') {
+        console.log("idle from hunger")
+        switchAnimation(animations.idle);
+      }
 
       if (messageBubble.innerText !== message){
         clearTimeout(fadeTimeout); // Clear any ongoing fade
@@ -149,7 +154,7 @@
           messageBubble.innerText = message; // Update the text
           messageBubble.style.opacity = 1; // Fade in the message
 
-          if (hungerState !== 'empty'){
+          if (hungerState.name !== 'empty'){
             fadeTimeout = setTimeout(() => {
               messageBubble.style.opacity = 0;
             }, 2000);
@@ -186,6 +191,7 @@
     // Handle hunger depletion when the monster walks
     function depleteHungerFromWalk() {
       walkedDistance += Math.abs(destinationX - monsterX);
+      console.log("dest: "${destinationX}" from: "${monsterX}" totalDistance: "${walkedDistance});
       if (walkedDistance >= window.innerWidth) {
         hunger -= hungerDepletionPerScreenWalk;
         walkedDistance = 0; // Reset walked distance
