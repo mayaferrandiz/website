@@ -29,12 +29,13 @@
     const foodReappearTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
 
     const foodItem = document.getElementById('foodItem');
+    let currentHunger
 
 
     // Check if the food item can be shown
     function checkFoodAvailability(id) {
       const lastCollected = localStorage.getItem(`food_${id}`);
-      const currentHunger = localStorage.getItem('monsterHunger')
+      currentHunger = localStorage.getItem('monsterHunger')
 
       if (currentHunger && (!lastCollected || Date.now() - lastCollected > foodReappearTime)) {
         foodItem.style.display = 'block'; // Show the food
@@ -47,7 +48,7 @@
 
     // Handle food collection with shrinking animation and hunger replenishment
     function collectFood(id) {
-      const currentHunger = localStorage.getItem('monsterHunger')
+      currentHunger = localStorage.getItem('monsterHunger')
 
       localStorage.setItem(`food_${id}`, Date.now()); // Record the time the food was collected
       localStorage.setItem('monsterHunger', currentHunger + 50); // Replenish hunger to 100
