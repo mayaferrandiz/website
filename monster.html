@@ -139,7 +139,7 @@
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
-      if (hungerState.name === 'empty') switchAnimation(animations.idle);
+      if (hungerState.name == 'empty') switchAnimation(animations.idle);
 
       if (messageBubble.innerText !== message){
         clearTimeout(fadeTimeout); // Clear any ongoing fade
