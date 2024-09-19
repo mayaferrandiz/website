@@ -232,12 +232,12 @@
     // Store hunger in localStorage
     function saveHunger() {
       if (hunger > 0) {
-        hungerCounter.show()
+        hungerCounter.style.opacity = 1
         hungerCounter.innerText = "🍪".repeat( Math.ceil(hunger/10) );
       }
       else {
         hungerCounter.innerText = "";
-        hungerCounter.hide()
+        hungerCounter.style.opacity = 0
       }
       
       localStorage.setItem('monsterHunger', hunger);
