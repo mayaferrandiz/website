@@ -164,7 +164,6 @@
       if (foodCollected) {
         hunger = 100; // Replenish hunger to 100
         saveHunger();
-        setNextHungerState(); // Update the message and reset monster state
         localStorage.removeItem('foodCollected'); // Clear the food collected flag
       }
 
@@ -329,34 +328,34 @@
 
     // Mouse and touch event listeners
     document.addEventListener('mousemove', (e) => {
-      setNextHungerState();
+      updateHungerState();
       movementThreshold = cursorThreshold;
       destinationX = e.pageX - 16; // Adjust for monster width
     });
 
     document.addEventListener('click', () => {
-      setNextHungerState();
+      updateHungerState();
       movementThreshold = cursorThreshold;
       jumpMonster(); // Desktop click to jump
     });
 
     // Handle mobile touch drag and tap for jumping
     document.addEventListener('touchstart', (e) => {
-      setNextHungerState();
+      updateHungerState();
       movementThreshold = touchThreshold;
       isDragging = false; // Reset dragging state
       destinationX = e.touches[0].pageX - 16; // Set destination based on touch
     });
 
     document.addEventListener('touchmove', (e) => {
-      setNextHungerState();
+      updateHungerState();
       movementThreshold = touchThreshold;
       isDragging = true; // Mark as drag
       destinationX = e.touches[0].pageX - 16; // Update destination as the touch moves
     });
 
     document.addEventListener('touchend', () => {
-      setNextHungerState();
+      updateHungerState();
       movementThreshold = touchThreshold;
       if (!isDragging) {
         jumpMonster(); // Only jump if it was a tap, not a drag
