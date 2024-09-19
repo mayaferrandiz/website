@@ -114,7 +114,7 @@
       console.log(1,messageQueue)
 
       if (nextMessage !== undefined) messageQueue.unshift(nextMessage)
-      if (messageQueue.length == 0) messageQueue.push(defaultMessages)
+      if (messageQueue.length == 0) messageQueue.push(...defaultMessages)
 
       console.log(2,messageQueue)
 
