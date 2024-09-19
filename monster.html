@@ -128,12 +128,13 @@
     //                                     6'     dP
     //                                     Ybmmmd'
 
-    setInterval(setNextHungerState, 2000);
+    setInterval(updateHungerState, 2000);
+    setInterval(handleHungerReplenished, 1000);
 
     // Update monster properties and display a message
     function updateHungerState() {
 
-      const message = hungerState.message()
+      const message = hungerState.message();
 
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
@@ -159,14 +160,6 @@
 
     // Queue up next hunger state for next update interval
     function setNextHungerState() {
-
-      const foodCollected = localStorage.getItem('foodCollected');
-      if (foodCollected) {
-        hunger = 100; // Replenish hunger to 100
-        saveHunger();
-        localStorage.removeItem('foodCollected'); // Clear the food collected flag
-      }
-
       for (let key in hungerStates){
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound){
@@ -178,6 +171,16 @@
     // Store hunger in localStorage
     function saveHunger() {
       localStorage.setItem('monsterHunger', hunger);
+    }
+
+    function handleHungerReplenished() {
+      const foodCollected = localStorage.getItem('foodCollected');
+      if (foodCollected) {
+        localStorage.removeItem('foodCollected'); // Clear the food collected flag
+        hunger = 100; // Replenish hunger to 100
+        saveHunger();
+        setNextHungerState();
+      }
     }
 
     // Handle hunger depletion when the monster walks
@@ -328,34 +331,29 @@
 
     // Mouse and touch event listeners
     document.addEventListener('mousemove', (e) => {
-      updateHungerState();
       movementThreshold = cursorThreshold;
       destinationX = e.pageX - 16; // Adjust for monster width
     });
 
     document.addEventListener('click', () => {
-      updateHungerState();
       movementThreshold = cursorThreshold;
       jumpMonster(); // Desktop click to jump
     });
 
     // Handle mobile touch drag and tap for jumping
     document.addEventListener('touchstart', (e) => {
-      updateHungerState();
       movementThreshold = touchThreshold;
       isDragging = false; // Reset dragging state
       destinationX = e.touches[0].pageX - 16; // Set destination based on touch
     });
 
     document.addEventListener('touchmove', (e) => {
-      updateHungerState();
       movementThreshold = touchThreshold;
       isDragging = true; // Mark as drag
       destinationX = e.touches[0].pageX - 16; // Update destination as the touch moves
     });
 
     document.addEventListener('touchend', () => {
-      updateHungerState();
       movementThreshold = touchThreshold;
       if (!isDragging) {
         jumpMonster(); // Only jump if it was a tap, not a drag
