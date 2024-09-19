@@ -33,10 +33,15 @@
       text-align: left;
       font-size: 20px;
       color: black;
+      font: var(--body-font);
       background-color: white;
       border: 2px solid black;
       border-radius: 30px;
       padding: 10px 20px;
+      max-width:80%;
+      min-width:200px;
+      word-wrap: break-word; /* Ensure long words break onto the next line */
+      overflow-wrap: break-word; /* Similar to word-wrap, ensures word breaks */
       opacity: 0;
       z-index: 10;
       transition: opacity 0.2s ease-in, opacity 5s ease-out;
@@ -71,7 +76,7 @@
 
     let messageIndex = -1;
     const messages = [
-      "What are you still doing here? I want cookiesssss",
+      "What are you still doing here? I want cookiesssss >:)",
       "Ok fine... here's a ten point manifesto for the creation of a healthy local community...",
       "[01] Share knowledge and tips with other creatives",
       "[02] Work local and act international",
@@ -84,11 +89,10 @@
       "[09] Talk with honesty about money",
       "[10] Avoid competition",
       "[∞] Repeat over and over", 
-      "ACAB.", 
       "Tell me how much you love me! <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a>"
     ];
     function getMessage(){
-      const introMessage = "Maya hid cookies everywhere and if you find them I know we'll be friends :)))"
+      const introMessage = "Maya hid cookies everywhere and if you find them I know we'll be friends!!"
       if (messageIndex == -1) {
         messageIndex = 0
         return introMessage
