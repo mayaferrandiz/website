@@ -48,7 +48,7 @@
 
     // Handle food collection with shrinking animation and hunger replenishment
     function collectFood(id) {
-      currentHunger = localStorage.getItem('monsterHunger')
+      currentHunger = parseInt(localStorage.getItem('monsterHunger'))
 
       localStorage.setItem(`food_${id}`, Date.now()); // Record the time the food was collected
       localStorage.setItem('monsterHunger', currentHunger + 50); // Replenish hunger to 100
