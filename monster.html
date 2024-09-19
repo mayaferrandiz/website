@@ -69,7 +69,38 @@
     let lastMessageTime = Date.now();
     let fadeTimeout;
 
-    const niceMessages = ["You're really cool!", "You're awesome!", "Thanks for playing with me!", "Let's keep having fun!"];
+    let messageIndex = -1
+    function messages(){
+      const introMessage = "Maya hid cookies everywhere and if you find them I know we'll be friends :)))"
+      const messages = [
+        "What do you dream about?", 
+        "What are you still doing here? I want cookiesssss",
+        "[01] Share knowledge and tips with other creatives",
+        "[02] Work local and act international",
+        "[03] Create accessible events for your community",
+        "[04] Travel, create friends all over the world, and connect them with your community",
+        "[05] Host to be hosted while travelling",
+        "[06] Create accessible products based on the purchasing power of your community",
+        "[07] Collaborate as much as you can",
+        "[08] Always make sure having fun is the main goal for those collaborations",
+        "[09] Talk with honesty about money",
+        "[10] Avoid competition",
+        "[∞] Repeat over and over" 
+        "ACAB", 
+        "Tell me how much you love me ~ <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a>"
+      ];
+
+      if (messageIndex == -1) {
+        messageIndex = 0
+        return introMessage
+      }
+      else {
+        const msg = messages[messageIndex];
+        messageIndex = (messageIndex+1)%messages.length;
+        return msg
+      }
+    }
+
     const hungerStates = {
       full: { 
         name: 'full', 
@@ -77,7 +108,7 @@
         lowerBound: 51, 
         speed: 2, 
         jumpHeight: 75, 
-        message: () => niceMessages[Math.floor(Math.random() * niceMessages.length)] 
+        message: messages 
       },
       hungry: { 
         name: 'hungry', 
@@ -125,13 +156,14 @@
 
     // Update monster properties and display a message
     function updateHungerState() {
-      const message = hungerState.message();
-      speed = hungerState.speed;
-      jumpHeight = hungerState.jumpHeight;
 
       if (hungerState.name == 'empty' && currentAnimation !== 'idle') {
         switchAnimation(animations.idle);
       }
+
+      const message = hungerState.message();
+      speed = hungerState.speed;
+      jumpHeight = hungerState.jumpHeight;
 
       if (messageBubble.innerText !== message) {
         clearTimeout(fadeTimeout); // Clear any ongoing fade
