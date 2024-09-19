@@ -93,12 +93,16 @@
         nextTrigger:'timed'
       },
       {
-        body:"What are you still doing here? Go find me some cookies >:)",
+        body:"Also, I'll tell you lots of secrets if you get find me enough cookies...",
         nextTrigger:'timed'
       },
       {
         body:"Need some help? I think there's at least one somewhere in her <a href onclick='openPortfolio()'>Portfolio</a>",
         nextTrigger:'click'
+      },
+      {
+        body:"What are you still doing here? Go find me some cookies >:)",
+        nextTrigger:'timed'
       },
       {
         body:"Pleaseeeeee 🥺",
@@ -163,7 +167,7 @@
     }
 
     let hungerState;
-    let hunger = parseInt(localStorage.getItem('monsterHunger')) || 100; // Persist hunger
+    let hunger = parseInt(localStorage.getItem('monsterHunger')) || 0; // Persist hunger
     let speed;
     let jumpHeight;
     let message;
