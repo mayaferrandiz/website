@@ -48,10 +48,12 @@
     #hungerCounter{
       text-align:right;
       font-size: 20px;
+      padding:2px 5px;
+      border-radius:10px;
       position:absolute;
       right:0px;
       top:0px;
-      margin:5%;
+      margin:1%;
     }
 
   </style>
@@ -94,7 +96,7 @@
         nextTrigger:'timed'
       },
       {
-        body:"Ok fine... need some help? I here there's at least one somewhere in her <a href='https://maya.cloud/portfolio/'>Portfolio</a>. Wanna go there? <a href='https://maya.cloud/portfolio/'>Yes</a> <a>No</a>",
+        body:"Ok fine... need some help? I here there's at least one somewhere in her <a href onclick='openPortfolio()'>Portfolio</a>. Wanna go there? <a href onclick='openPortfolio()'>Yes</a> <a href>No</a>",
         nextTrigger:'click'
       },
       {
@@ -102,6 +104,10 @@
         nextTrigger:'timed'
       }
     ];
+    function openPortfolio(){
+      window.top.location.href = 'https://maya.cloud/portfolio/'
+    }
+
     function getMessage(){
       messageIndex = (messageIndex+1)%messages.length;
       return messages[messageIndex];
