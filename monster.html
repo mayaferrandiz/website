@@ -31,7 +31,7 @@
       left: 50%;
       transform: translateX(-50%);
       text-align: center;
-      font-size: 24px;
+      font-size: 20px;
       color: black;
       background-color: white;
       border: 2px solid black;
@@ -151,7 +151,7 @@
     updateHungerState();
 
     // Periodic updates
-    setInterval(updateHungerState, 2000);
+    setInterval(updateHungerState, 4000);
     setInterval(handleHungerReplenished, 1000);
 
     // Update monster properties and display a message
@@ -165,18 +165,18 @@
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
-      if (messageBubble.innerText !== message) {
+      if (messageBubble.innerHTML !== message) {
         clearTimeout(fadeTimeout); // Clear any ongoing fade
         messageBubble.style.opacity = 0; // Start by hiding the message
 
         setTimeout(() => {
-          messageBubble.innerText = message; // Update the text
+          messageBubble.innerHTML = message; // Update the text
           messageBubble.style.opacity = 1; // Fade in the message
 
           if (hungerState.name !== 'empty') {
             fadeTimeout = setTimeout(() => {
               messageBubble.style.opacity = 0;
-            }, 2000);
+            }, 4000);
           }
         }, 500); // Small delay before showing the new message
       }
