@@ -216,7 +216,7 @@
 
     // Store hunger in localStorage
     function saveHunger() {
-      hungerCounter.innerText = `🍪${hunger}`
+      hungerCounter.innerText = "🍪".repeat( Math.ceil(hunger/10) )
       localStorage.setItem('monsterHunger', hunger);
     }
 
