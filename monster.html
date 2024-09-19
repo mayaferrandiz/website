@@ -129,7 +129,7 @@
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
-      if (hungerState.name == 'empty') {
+      if (hungerState.name == 'empty' && currentAnimation !== 'idle') {
         switchAnimation(animations.idle);
       }
 
@@ -201,9 +201,7 @@
     // Animation frame updater
     function updateFrame() {
       const now = Date.now();
-      console.log(1)
       if (now - lastFrameTime > frameInterval) {
-        console.log(2)
         currentFrame = (currentFrame + 1) % totalFrames;
         lastFrameTime = now;
         monster.style.backgroundPosition = `-${currentFrame * 32}px 0`;
@@ -214,6 +212,7 @@
 
     // Switch animation function
     function switchAnimation(animation) {
+      console.log(animation.name)
       monster.style.backgroundImage = `url('${animation.url}')`;
       totalFrames = animation.frames;
       frameInterval = animation.frameInterval;
