@@ -171,6 +171,10 @@
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
+      if (hungerState.name == 'empty' && currentAnimation !== 'idle') {
+        switchAnimation(animations.idle);
+      }
+
       if (messageBubble.innerHTML !== message) {
         clearTimeout(fadeTimeout); // Clear any ongoing fade
         messageBubble.style.opacity = 0; // Start by hiding the message
@@ -194,9 +198,6 @@
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound) {
           hungerState = state;
-          if (hungerState.name == 'empty' && currentAnimation !== 'idle') {
-            switchAnimation(animations.idle);
-          }
         }
       }
     }
@@ -281,7 +282,7 @@
 
     // Move the monster based on destinationX
     function moveMonster() {
-      if (hunger > 0) {
+      if (speed > 0) {
         const deltaX = destinationX - monsterX;
 
         if (currentAnimation === 'jump') moveTo(speed * direction);
@@ -304,7 +305,7 @@
 
     // Jump the monster
     function jumpMonster() {
-      if (hunger > 0) {
+      if (jumpHeight > 0) {
         if (currentAnimation !== 'jump') {
           updateDirection();
           depleteHungerFromJump();
