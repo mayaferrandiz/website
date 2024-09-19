@@ -32,7 +32,7 @@
       transform: translateX(-50%);
       text-align: center;
       font-size: 24px;
-      color: red;
+      color: black;
       background-color: white;
       border: 2px solid black;
       border-radius: 30px;
@@ -212,7 +212,6 @@
 
     // Switch animation function
     function switchAnimation(animation) {
-      console.log(animation.name)
       monster.style.backgroundImage = `url('${animation.url}')`;
       totalFrames = animation.frames;
       frameInterval = animation.frameInterval;
