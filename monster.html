@@ -257,8 +257,6 @@
             switchAnimation(animations.walk);
           }
         }
-      } else {
-        switchAnimation(animations.idle);
       }
       requestAnimationFrame(moveMonster);
     }
@@ -286,8 +284,6 @@
             }, animations.jump.frameInterval * animations.jump.frames / 2);
           }, animations.jump.frameInterval * animations.jump.frames / 2);
         }
-      } else {
-        switchAnimation(animations.idle);
       }
     }
 
