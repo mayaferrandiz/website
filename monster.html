@@ -148,7 +148,6 @@
           }
         }, 500); // Small delay before showing the new message
       }
-      requestAnimationFrame(updateHungerState); 
     }
 
     // Queue up next hunger state for next update interval
@@ -202,7 +201,9 @@
     // Animation frame updater
     function updateFrame() {
       const now = Date.now();
+      console.log(1)
       if (now - lastFrameTime > frameInterval) {
+        console.log(2)
         currentFrame = (currentFrame + 1) % totalFrames;
         lastFrameTime = now;
         monster.style.backgroundPosition = `-${currentFrame * 32}px 0`;
@@ -289,7 +290,6 @@
       } else {
         switchAnimation(animations.idle);
       }
-      requestAnimationFrame(jumpMonster);
     }
 
     // Mouse and touch event listeners
