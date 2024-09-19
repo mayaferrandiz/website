@@ -70,12 +70,33 @@
 
     const niceMessages = ["You're really cool!", "You're awesome!", "Thanks for playing with me!", "Let's keep having fun!"];
     const hungerStates = {
-      full: { name:'full', upperBound:100, lowerBound:51, speed:2, jumpHeight:75, message:getNiceMessage, updateInterval:2000 },
-      hungry: { name:'hungry', upperBound:50, lowerBound:1, speed:1, jumpHeight: 37.5, message:(() => "I'm getting hungry..."), updateInterval:2000 },
-      empty: { name:'empty', upperBound:0, lowerBound:-Infinity, speed:0, jumpHeight:0, message:(() => "I'm hungry! Go find me a cookie >:)"), updateInterval:Infinity }
+      full: { 
+        name:'full', 
+        upperBound:100, 
+        lowerBound:51, 
+        speed:2, 
+        jumpHeight:75, 
+        message:(() => niceMessages[Math.floor(Math.random() * niceMessages.length)]) 
+      },
+      hungry: { 
+        name:'hungry', 
+        upperBound:50, 
+        lowerBound:1, 
+        speed:1, 
+        jumpHeight: 37.5, 
+        message:(() => "I'm getting hungry..."), 
+      },
+      empty: { 
+        name:'empty', 
+        upperBound:0, 
+        lowerBound:-Infinity, 
+        speed:0, 
+        jumpHeight:0, 
+        message:(() => "I'm hungry! Go find me a cookie >:)"), 
+      }
     }
 
-    let currentHungerState;
+    let hungerState;
     let hunger = parseInt(localStorage.getItem('monsterHunger')) || 100; // Persist hunger
     let speed;
     let jumpHeight;
@@ -92,47 +113,65 @@
     let lastFrameTime = Date.now();
     let currentFrame = 0;
 
-    setInterval(handleFoodReplenishment, 1000); // Check every second
+    // Initial monster state
+    switchAnimation(animations.idle);
+    setNextHungerState();
     updateHungerState();
 
-    // Function to show a random nice message
-    function getNiceMessage() {
-      return niceMessages[Math.floor(Math.random() * niceMessages.length)];
-    }
+    // `7MMF'  `7MMF'
+    //   MM      MM
+    //   MM      MM `7MM  `7MM  `7MMpMMMb.  .P"Ybmmm .gP"Ya `7Mb,od8
+    //   MMmmmmmmMM   MM    MM    MM    MM :MI  I8  ,M'   Yb  MM' "'
+    //   MM      MM   MM    MM    MM    MM  WmmmP"  8M""""""  MM
+    //   MM      MM   MM    MM    MM    MM 8M       YM.    ,  MM
+    // .JMML.  .JMML. `Mbod"YML..JMML  JMML.YMMMMMb  `Mbmmd'.JMML.
+    //                                     6'     dP
+    //                                     Ybmmmd'
 
-    // Display a message
-    function showMessage(message) {
-      clearTimeout(fadeTimeout); // Clear any ongoing fade
-      messageBubble.style.opacity = 0; // Start by hiding the message
+    setInterval(setNextHungerState, 2000);
 
-      setTimeout(() => {
-        messageBubble.innerText = message; // Update the text
-        messageBubble.style.opacity = 1; // Fade in the message
-
-        if (currentHungerState !== 'empty'){
-          fadeTimeout = setTimeout(() => {
-            messageBubble.style.opacity = 0;
-          }, 2000);
-        }
-      }, 500); // Small delay before showing the new message
-    }
-
-    // Update the message bubble and handle hunger effects
+    // Update monster properties and display a message
     function updateHungerState() {
-      const now = Date.now();
+
+      const message = hungerState.message()
+
+      speed = hungerState.speed;
+      jumpHeight = hungerState.jumpHeight;
+
+      if (hungerState.name === 'empty') switchAnimation(animations.idle);
+
+      if (messageBubble.innerText !== message){
+        clearTimeout(fadeTimeout); // Clear any ongoing fade
+        messageBubble.style.opacity = 0; // Start by hiding the message
+
+        setTimeout(() => {
+          messageBubble.innerText = message; // Update the text
+          messageBubble.style.opacity = 1; // Fade in the message
+
+          if (hungerState !== 'empty'){
+            fadeTimeout = setTimeout(() => {
+              messageBubble.style.opacity = 0;
+            }, 2000);
+          }
+        }, 500); // Small delay before showing the new message
+      }      
+    }
+
+    // Queue up next hunger state for next update interval
+    function setNextHungerState() {
+
+      const foodCollected = localStorage.getItem('foodCollected');
+      if (foodCollected) {
+        hunger = 100; // Replenish hunger to 100
+        saveHunger();
+        setNextHungerState(); // Update the message and reset monster state
+        localStorage.removeItem('foodCollected'); // Clear the food collected flag
+      }
 
       for (let key in hungerStates){
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound){
-          currentHungerState = state.name;
-          speed = state.speed;
-          jumpHeight = state.jumpHeight;
-          message = state.message();
-
-          if (now - lastMessageTime > state.updateInterval && messageBubble.innerText !== message) {
-            showMessage(message);
-            lastMessageTime = now;
-          }
+          hungerState = state.name; 
         }
       }
     }
@@ -149,7 +188,7 @@
         hunger -= hungerDepletionPerScreenWalk;
         walkedDistance = 0; // Reset walked distance
         saveHunger();
-        updateHungerState();
+        setNextHungerState();
       }
     }
 
@@ -157,20 +196,17 @@
       if (hunger > 0) {
         hunger -= hungerDepletionPerJump;
         saveHunger();
-        updateHungerState();
+        setNextHungerState();
       }
     }
 
-    // Handle hunger replenishment triggered by food collection
-    function handleFoodReplenishment() {
-      const foodCollected = localStorage.getItem('foodCollected');
-      if (foodCollected) {
-        hunger = 100; // Replenish hunger to 100
-        saveHunger();
-        updateHungerState(); // Update the message and reset monster state
-        localStorage.removeItem('foodCollected'); // Clear the food collected flag
-      }
-    }
+    // `7MMM.     ,MMF'                                                              mm
+    //   MMMb    dPMM                                                                MM
+    //   M YM   ,M MM  ,pW"Wq.`7M'   `MF'.gP"Ya `7MMpMMMb.pMMMb.  .gP"Ya `7MMpMMMb.mmMMmm
+    //   M  Mb  M' MM 6W'   `Wb VA   ,V ,M'   Yb  MM    MM    MM ,M'   Yb  MM    MM  MM
+    //   M  YM.P'  MM 8M     M8  VA ,V  8M""""""  MM    MM    MM 8M""""""  MM    MM  MM
+    //   M  `YM'   MM YA.   ,A9   VVV   YM.    ,  MM    MM    MM YM.    ,  MM    MM  MM
+    // .JML. `'  .JMML.`Ybmd9'     W     `Mbmmd'.JMML  JMML  JMML.`Mbmmd'.JMML  JMML.`Mbmo
 
     // Animation frame updater
     function updateFrame() {
@@ -210,9 +246,6 @@
       monsterX += x;
       monster.style.left = `${monsterX}px`;
     }
-
-    // Initial state
-    switchAnimation(animations.idle);
 
     // Move the monster based on destinationX
     function moveMonster() {
@@ -269,10 +302,22 @@
 
         }
 
-      } else switchAnimation(animations.idle);
-
-      
+      } else {
+        switchAnimation(animations.idle)
+      }
     }
+
+
+    //                                                                                          ,,    ,,
+    // `7MM"""YMM                             mm       `7MMF'  `7MMF'                         `7MM  `7MM
+    //   MM    `7                             MM         MM      MM                             MM    MM
+    //   MM   d `7M'   `MF'.gP"Ya `7MMpMMMb.mmMMmm       MM      MM   ,6"Yb.  `7MMpMMMb.   ,M""bMM    MM  .gP"Ya `7Mb,od8 ,pP"Ybd
+    //   MMmmMM   VA   ,V ,M'   Yb  MM    MM  MM         MMmmmmmmMM  8)   MM    MM    MM ,AP    MM    MM ,M'   Yb  MM' "' 8I   `"
+    //   MM   Y  , VA ,V  8M""""""  MM    MM  MM         MM      MM   ,pm9MM    MM    MM 8MI    MM    MM 8M""""""  MM     `YMMMa.
+    //   MM     ,M  VVV   YM.    ,  MM    MM  MM         MM      MM  8M   MM    MM    MM `Mb    MM    MM YM.    ,  MM     L.   I8
+    // .JMMmmmmMMM   W     `Mbmmd'.JMML  JMML.`Mbmo    .JMML.  .JMML.`Moo9^Yo..JMML  JMML.`Wbmd"MML..JMML.`Mbmmd'.JMML.   M9mmmP'
+
+
 
     // Track the jump and manage jump count
     function trackJump() {
@@ -282,58 +327,36 @@
       jumpCounter = jumpTimes.length;
     }
 
-    // Display the "I'm tired" message and block further jumps
-    function displayTiredMessage() {
-      clearTimeout(fadeTimeout); // Clear any ongoing fade-out
-
-      // Show message immediately
-      tiredMessage.style.transition = 'opacity 0.2s ease-in'; // Quick fade-in
-      tiredMessage.style.opacity = 1; // Make message visible
-      jumpingBlocked = true;
-
-      // Start the fade-out after a short delay, making it fade out over 5 seconds
-      fadeTimeout = setTimeout(() => {
-        tiredMessage.style.transition = 'opacity 5s ease-out'; // Gradual fade-out
-        tiredMessage.style.opacity = 0; // Fade out message gradually
-
-        setTimeout(() => {
-          jumpTimes = []; // Reset jumps
-          jumpCounter = 0;
-          jumpingBlocked = false; // Allow jumps after message fades out
-        }, 5000); // Allow jumping again after 5 seconds
-      }, 500); // Start fade-out process after a short delay to ensure visibility
-    }
-
     // Mouse and touch event listeners
     document.addEventListener('mousemove', (e) => {
-      updateHungerState();
+      setNextHungerState();
       movementThreshold = cursorThreshold;
       destinationX = e.pageX - 16; // Adjust for monster width
     });
 
     document.addEventListener('click', () => {
-      updateHungerState();
+      setNextHungerState();
       movementThreshold = cursorThreshold;
       jumpMonster(); // Desktop click to jump
     });
 
     // Handle mobile touch drag and tap for jumping
     document.addEventListener('touchstart', (e) => {
-      updateHungerState();
+      setNextHungerState();
       movementThreshold = touchThreshold;
       isDragging = false; // Reset dragging state
       destinationX = e.touches[0].pageX - 16; // Set destination based on touch
     });
 
     document.addEventListener('touchmove', (e) => {
-      updateHungerState();
+      setNextHungerState();
       movementThreshold = touchThreshold;
       isDragging = true; // Mark as drag
       destinationX = e.touches[0].pageX - 16; // Update destination as the touch moves
     });
 
     document.addEventListener('touchend', () => {
-      updateHungerState();
+      setNextHungerState();
       movementThreshold = touchThreshold;
       if (!isDragging) {
         jumpMonster(); // Only jump if it was a tap, not a drag
