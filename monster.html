@@ -48,6 +48,7 @@
     #hungerCounter{
       text-align:right;
       font-size: 20px;
+      background-color:white;
       padding:2px 5px;
       border-radius:10px;
       position:absolute;
@@ -96,8 +97,16 @@
         nextTrigger:'timed'
       },
       {
-        body:"Ok fine... need some help? I here there's at least one somewhere in her <a href onclick='openPortfolio()'>Portfolio</a>. Wanna go there? <a href onclick='openPortfolio()'>Yes</a> <a href>No</a>",
+        body:"Need some help? I think there's at least one somewhere in her <a href onclick='openPortfolio()'>Portfolio</a>",
         nextTrigger:'click'
+      },
+      {
+        body:"That's awkward...",
+        nextTrigger:'timed'
+      },
+      {
+        body:"That's awkward...",
+        nextTrigger:'timed'
       },
       {
         body:"Tell me how much you love me! <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a>",
@@ -206,7 +215,7 @@
           messageBubble.style.opacity = 1; // Fade in the message
 
           if (hungerState.name !== 'empty'){
-            if (message.nextTrigger == 'timed') messageFadeTimeout = setTimeout(updateHungerState, 4000);
+            if (message.nextTrigger == 'timed') messageFadeTimeout = setTimeout(updateHungerState, 6000);
             else if (message.nextTrigger == 'click') document.addEventListener('click', updateHungerState);
           }
 
@@ -226,7 +235,9 @@
 
     // Store hunger in localStorage
     function saveHunger() {
-      hungerCounter.innerText = "🍪".repeat( Math.ceil(hunger/10) )
+      if (hunger > 0) hungerCounter.innerText = "🍪".repeat( Math.ceil(hunger/10) );
+      else hungerCounter.innerText = "";
+      
       localStorage.setItem('monsterHunger', hunger);
     }
 
