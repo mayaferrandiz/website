@@ -68,43 +68,41 @@
     const hungerDepletionPerScreenWalk = 10;
     let walkedDistance = 0;
     let lastMessageTime = Date.now();
-    let fadeTimeout;
+    let messageFadeTimeout;
+    let messageClickListener;
 
     let messageIndex = -1;
     const messages = [
-      "What are you still doing here? I want cookiesssss >:)",
-      "Ok fine... here's a ten point manifesto for the creation of a healthy local community...",
-      "[01] Share knowledge and tips with other creatives",
-      "[02] Work local and act international",
-      "[03] Create accessible events for your community",
-      "[04] Travel, create friends all over the world, and connect them with your community",
-      "[05] Host to be hosted while travelling",
-      "[06] Create accessible products based on the purchasing power of your community",
-      "[07] Collaborate as much as you can",
-      "[08] Always make sure having fun is the main goal for those collaborations",
-      "[09] Talk with honesty about money",
-      "[10] Avoid competition",
-      "[∞] Repeat over and over", 
-      "Tell me how much you love me! <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a>"
+      {
+        body:"Maya hid cookies everywhere and if you find them I know we'll be friends!!",
+        nextTrigger:'timed'
+      },
+      {
+        body:"What are you still doing here? Go find me some cookies >:)",
+        nextTrigger:'timed'
+      },
+      {
+        body:"Ok fine... need some help? I here there's at least one somewhere in her <a href='https://maya.cloud/portfolio/'>Portfolio</a>. Wanna go there? <a href='https://maya.cloud/portfolio/'>Yes</a> <a>No</a>",
+        nextTrigger:'click'
+      },
+      {
+        body:"Tell me how much you love me! <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a>",
+        nextTrigger:'timed'
+      }
     ];
     function getMessage(){
-      const introMessage = "Maya hid cookies everywhere and if you find them I know we'll be friends!!"
-      if (messageIndex == -1) {
-        messageIndex = 0
-        return introMessage
-      }
-      else {
-        const msg = messages[messageIndex];
-        messageIndex = (messageIndex+1)%messages.length;
-        return msg
-      }
+      messageIndex = (messageIndex+1)%messages.length;
+      return messages[messageIndex];
     }
 
     let shownHungryMessage = false;
     function getHungryMessage(){
       if (!shownHungryMessage){
         shownHungryMessage = true;
-        return "I'm getting hungry..."
+        return {
+          body: "I'm getting hungry...",
+          nextTrigger: 'timed'
+        }
       }
       else {
         return getMessage()
@@ -161,7 +159,6 @@
     updateHungerState();
 
     // Periodic updates
-    setInterval(updateHungerState, 4000);
     setInterval(handleHungerReplenished, 1000);
 
     // Update monster properties and display a message
@@ -175,20 +172,23 @@
         switchAnimation(animations.idle);
       }
 
-      if (messageBubble.innerHTML !== message) {
-        clearTimeout(fadeTimeout); // Clear any ongoing fade
-        messageBubble.style.opacity = 0; // Start by hiding the message
+      if (messageBubble.innerHTML !== message.body) {
+
+        clearTimeout(messageFadeTimeout); // Clear any ongoing fade
+        document.removeEventListener('click', updateHungerState)
+        messageBubble.style.opacity = 0;
 
         setTimeout(() => {
+
           messageBubble.innerHTML = message; // Update the text
           messageBubble.style.opacity = 1; // Fade in the message
 
-          if (hungerState.name !== 'empty') {
-            fadeTimeout = setTimeout(() => {
-              messageBubble.style.opacity = 0;
-            }, 4000);
+          if (hungerState.name !== 'empty'){
+            if (message.nextTrigger == 'timed') messageFadeTimeout = setTimeout(updateHungerState, 4000);
+            else if (message.nextTrigger == 'click') document.addEventListener('click', updateHungerState);
           }
-        }, 500); // Small delay before showing the new message
+
+        },500)
       }
     }
 
