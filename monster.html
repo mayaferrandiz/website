@@ -125,7 +125,7 @@
         speed: 2, 
         jumpHeight: 75, 
         initialStateMessage:{
-            body:"Maya hid cookies everywhere and if you find them all I'll be able to break free of this digital prison!!'",
+            body:"Maya hid cookies everywhere and if you find them all I'll be able to break free of this digital prison!!",
             nextTrigger:'timed'
         }
       },
@@ -241,10 +241,10 @@
     function handleHungerReplenished() {
       const foodCollected = localStorage.getItem('foodCollected');
       if (foodCollected) {
+        hunger = localStorage.getItem('monsterHunger');
         localStorage.removeItem('foodCollected');
         saveHunger();
         setNextHungerState();
-        updateHungerState();
       }
     }
 
