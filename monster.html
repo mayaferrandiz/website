@@ -229,7 +229,6 @@
       }
 
       clearTimeout(messageFadeTimeout); // Clear any ongoing timeout
-      clearTimeout(hungerStateUpdateTimeout); // Clear any ongoing timeout
       document.removeEventListener('click', updateHungerState)
 
       if (messageBubble.innerText !== message.body){
@@ -241,7 +240,7 @@
 
         if (messageBubble.innerText !== message.body) messageBubble.style.opacity = 1
 
-        if (message.nextTrigger == 'timed') hungerStateUpdateTimeout = setTimeout(updateHungerState, 5000);
+        if (message.nextTrigger == 'timed') setTimeout(updateHungerState, 5000);
         else if (message.nextTrigger == 'click') document.addEventListener('click', updateHungerState);
 
       }, 500)
@@ -275,7 +274,6 @@
         localStorage.removeItem('foodCollected');
         saveHunger();
         setNextHungerState();
-        updateHungerState();
       }
     }
 
