@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-24T17:44:19-04:00</updated>
+    <updated>2024-09-24T17:50:06-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -52,7 +52,7 @@
     <h2 id="media">
       Media
     </h2>
-<div><video loading="lazy" width="100%" height="auto" controls="controls"><source src="media/files/laserbox.webm" type="video/webm" /></video>
+<div><video loading="lazy" width="100%" height="auto" controls="controls"><source src="/laserbox.webm" type="video/webm" /></video>
 </div>
 
   <div  class="gallery-wrapper gallery-wrapper--wide">
