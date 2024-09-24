@@ -40,7 +40,7 @@
       overflow-wrap: break-word; /* Similar to word-wrap, ensures word breaks */
       opacity: 0;
       z-index: 10;
-      transition: opacity 0.2s ease-in, opacity 5s ease-out;
+      transition: opacity 0.2s ease-in, opacity 3s ease-out;
       display: inline-block;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     }
@@ -204,22 +204,17 @@
     // Update monster properties and display a message
     function updateHungerState() {
 
-      console.log(currentHungerState)
-      console.log(messageQueue)
-
       if (messageQueue.length === 0){
         if (currentHungerState.name !== 'empty') messageQueue.push(...defaultMessages)
         else messageQueue.push(currentHungerState.initialStateMessage)
       }
 
-      console.log(messageQueue)
-
       const message = messageQueue.shift()
       speed = currentHungerState.speed;
       jumpHeight = currentHungerState.jumpHeight;
 
-      if (currentHungerState.name == 'empty' && currentAnimation.name !== 'idle') {
-        switchAnimation(animations.idle);
+      if (currentHungerState.name == 'empty') {
+        if (currentAnimation.name !== 'idle') switchAnimation(animations.idle);
         hungerCounter.innerText = "";
         hungerCounter.style.opacity = 0
       }
