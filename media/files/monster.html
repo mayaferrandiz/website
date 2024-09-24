@@ -21,7 +21,7 @@
     }
 
     body {
-      background: url('monster-background.webp') no-repeat center center;
+      background: url('https://maya.cloud/media/files/monster-background.webp') no-repeat center center;
       background-size: 100% 100%;
     }
 
@@ -93,7 +93,7 @@
         nextTrigger:'timed'
       },
       {
-        body:"need some help? i think there's at least one somewhere in her <a href onclick="(() => window.top.location.href = 'https://maya.cloud/portfolio/')">portfolio</a>",
+        body:"need some help? i think there's at least one somewhere in her <a href onclick="+(() => {window.top.location.href = 'https://maya.cloud/portfolio/'})+">portfolio</a>",
         nextTrigger:'click'
       },
       {
