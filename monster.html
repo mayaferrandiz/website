@@ -234,6 +234,8 @@
       for (let key in hungerStates) {
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound) {
+
+          if (currentHungerState !== undefined && (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull')) messageQueue = [];
           if (currentHungerState === undefined || state.name !== currentHungerState.name) messageQueue.unshift(state.initialStateMessage);
           currentHungerState = state;
 
