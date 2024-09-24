@@ -1739,6 +1739,9 @@ textarea {
   margin-right: auto;
   text-align: center;
 }
+.post__image--hide {
+  display:none;
+}
 .post__image--wide {
   display: block;
 }
