@@ -331,25 +331,22 @@
       monster.style.left = `${monsterX}px`;
     }
 
+    function setMoveAnimation(){
+      if (currentHungerState.name === 'hungry' && currentAnimation.name !== 'walk') switchAnimation(animations.walk);
+      else if (currentHungerState.name === 'full' && currentAnimation.name !== 'run') switchAnimation(animations.run);
+      else if (currentHungerState.name === 'overfull'  && currentAnimation.name !== 'run') switchAnimation(animations.run);
+    }
+
     // Move the monster based on destinationX
     function moveMonster() {
       if (speed > 0) {
         const deltaX = destinationX - monsterX;
 
         if (currentAnimation.name === 'jump') moveTo(speed * direction);
-        else if (currentAnimation.name === 'idle') {
-          if (Math.abs(deltaX) > movementThreshold) {
-            switchAnimation(animations.walk)
-            // if (currentHungerState.name === 'hungry') switchAnimation(animations.walk);
-            // else switchAnimation(animations.run);
-          }
-        }
+        else if (currentAnimation.name === 'idle' && Math.abs(deltaX) > movementThreshold) setMoveAnimation()
         else {
           if (Math.abs(deltaX) > movementThreshold) {
-            switchAnimation(animations.walk)
-            // if (currentHungerState.name === 'hungry') switchAnimation(animations.walk);
-            // else switchAnimation(animations.run);
-
+            setMoveAnimation();
             updateDirection();
             depleteHungerFromMove();
             moveTo(speed * Math.sign(deltaX));
