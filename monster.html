@@ -93,7 +93,7 @@
         nextTrigger:'timed'
       },
       {
-        body:"need some help? i think there's at least one somewhere in her <a href=\"javascript:void(0)\" onclick=\"window.top.location.href='https://maya.cloud/portfolio/'; return false;\">portfolio</a>",
+        body:"ni think there's at least one cookie somewhere in her <a href=\"javascript:void(0)\" onclick=\"window.top.location.href='https://maya.cloud/portfolio/'; return false;\">portfolio</a>",
         nextTrigger:'click'
       },
       {
@@ -136,7 +136,7 @@
         speed: 1, 
         jumpHeight: 37.5, 
         initialStateMessage: {
-          body: "I'm getting hungry...",
+          body: "i'm getting hungry...",
           nextTrigger: 'timed'
         }
       },
@@ -234,8 +234,6 @@
       for (let key in hungerStates) {
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound) {
-
-          if (currentHungerState !== undefined && (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull')) messageQueue = [];
           if (currentHungerState === undefined || state.name !== currentHungerState.name) messageQueue.unshift(state.initialStateMessage);
           currentHungerState = state;
 
