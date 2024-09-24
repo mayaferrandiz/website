@@ -206,7 +206,7 @@
 
       if (messageQueue.length === 0){
         if (currentHungerState.name === 'empty') messageQueue.push(currentHungerState.initialStateMessage)
-        if (currentHungerState.name === 'overfull') messageQueue.push(currentHungerState.initialStateMessage)
+        else if (currentHungerState.name === 'overfull') messageQueue.push(currentHungerState.initialStateMessage)
         else messageQueue.push(...defaultMessages)
       }
 
@@ -224,7 +224,7 @@
       }
 
       setTimeout(() => {
-        if (message.nextTrigger == 'timed') setTimeout(updateMessage, 5000);
+        if (message.nextTrigger === 'timed') setTimeout(updateMessage, 5000);
         else if (message.nextTrigger == 'click') document.addEventListener('click', updateMessage);
       }, 500)
     }
