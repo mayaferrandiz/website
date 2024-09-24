@@ -93,7 +93,7 @@
         nextTrigger:'timed'
       },
       {
-        body:"need some help? i think there's at least one somewhere in her <a href onclick=(() => window.top.location.href = 'https://maya.cloud/portfolio/')>portfolio</a>",
+        body:"need some help? i think there's at least one somewhere in her <a href onclick="(() => window.top.location.href = 'https://maya.cloud/portfolio/')">portfolio</a>",
         nextTrigger:'click'
       },
       {
@@ -131,7 +131,7 @@
       },
       hungry: { 
         name: 'hungry', 
-        upperBound: 50, 
+        upperBound: 30, 
         lowerBound: 1, 
         speed: 1, 
         jumpHeight: 37.5, 
@@ -160,9 +160,9 @@
     let message;
 
     const animations = {
-      idle: { frames: 4, frameInterval: 200, url: 'Pink_Monster_Idle_4.png', name: 'idle' },
-      walk: { frames: 6, frameInterval: 100, url: 'Pink_Monster_Walk_6.png', name: 'walk' },
-      jump: { frames: 8, frameInterval: 80, url: 'Pink_Monster_Jump_8.png', name: 'jump' }
+      idle: { frames: 4, frameInterval: 200, url: 'https://maya.cloud/media/files/Pink_Monster_Idle_4.png', name: 'idle' },
+      walk: { frames: 6, frameInterval: 100, url: 'https://maya.cloud/media/files/Pink_Monster_Walk_6.png', name: 'walk' },
+      jump: { frames: 8, frameInterval: 80, url: 'https://maya.cloud/media/files/Pink_Monster_Jump_8.png', name: 'jump' }
     };
     let currentAnimation;
     let totalFrames;
