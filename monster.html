@@ -89,19 +89,19 @@
     const messageQueue = []
     const defaultMessages = [
       {
-        body:"I'll tell you lots of secrets if you find me enough cookies...",
+        body:"i'll tell you lots of secrets if you find me enough cookies...",
         nextTrigger:'timed'
       },
       {
-        body:"Need some help? I think there's at least one somewhere in her <a href onclick=\"() => window.top.location.href = 'https://maya.cloud/portfolio/'\">Portfolio</a>",
+        body:"need some help? i think there's at least one somewhere in her <a href onclick=(() => window.top.location.href = 'https://maya.cloud/portfolio/')>portfolio</a>",
         nextTrigger:'click'
       },
       {
-        body:"What are you still doing here? Go find me some cookies >:)",
+        body:"what are you still doing here? go find me some cookies >:)",
         nextTrigger:'timed'
       },
       {
-        body:"Pleaseeeeee 🥺",
+        body:"pleaseeeeee 🥺",
         nextTrigger:'timed'
       }
     ];
@@ -110,22 +110,22 @@
       overfull: {
         name: 'overfull',
         upperBound: Infinity,
-        lowerBound: 101,
+        lowerBound: 81,
         speed: 2,
         jumpHeight: 75,
         initialStateMessage:{
-            body:"Ok here's one little secret for you 😉 email me at <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a> for a surprise!",
+            body:"ok i'm pretty full! email me at <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a> for a surprise <3",
             nextTrigger:'click'
         }
       },
       full: { 
         name: 'full', 
-        upperBound: 100, 
+        upperBound: 80, 
         lowerBound: 51, 
         speed: 2, 
         jumpHeight: 75, 
         initialStateMessage:{
-            body:"Maya hid cookies everywhere and if you find them all I'll be able to break free of this digital prison!!",
+            body:"maya hid cookies all over her website and if you find them all i'll be the happiest monster in the worldddd!!",
             nextTrigger:'timed'
         }
       },
@@ -147,7 +147,7 @@
         speed: 0, 
         jumpHeight: 0, 
         initialStateMessage: {
-          body: "I'm hungry! I'm not doing anything else until you find me a cookie >:(",
+          body: "i'm hungry! i'm not doing anything else until you feed me a cookie >:(",
           nextTrigger: 'timed'
         }
       }
@@ -192,24 +192,23 @@
         switchAnimation(animations.idle);
       }
 
-      if (messageBubble.innerHTML !== message.body) {
+      clearTimeout(messageFadeTimeout); // Clear any ongoing fade
+      document.removeEventListener('click', updateHungerState)
 
-        clearTimeout(messageFadeTimeout); // Clear any ongoing fade
-        document.removeEventListener('click', updateHungerState)
+      if (messageBubble.innerText !== message.body){
+
         messageBubble.style.opacity = 0;
+        messageBubble.innerHTML = message.body; // Update the text
+        setTimeout(() => messageBubble.style.opacity = 1, 500);
 
-        setTimeout(() => {
-
-          messageBubble.innerHTML = message.body; // Update the text
-          messageBubble.style.opacity = 1; // Fade in the message
-
-          if (hungerState.name !== 'empty'){
-            if (message.nextTrigger == 'timed') messageFadeTimeout = setTimeout(updateHungerState, 5000);
-            else if (message.nextTrigger == 'click') document.addEventListener('click', updateHungerState);
-          }
-
-        },500)
       }
+
+      setTimeout(() => {
+
+        if (message.nextTrigger == 'timed') messageFadeTimeout = setTimeout(updateHungerState, 5000);
+        else if (message.nextTrigger == 'click') document.addEventListener('click', updateHungerState);
+
+      },500)
     }
 
     // Queue up next hunger state for next update interval
