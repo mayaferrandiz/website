@@ -122,7 +122,7 @@
       full: { 
         name: 'full', 
         upperBound: 80, 
-        lowerBound: 51, 
+        lowerBound: 31, 
         speed: 2, 
         jumpHeight: 75, 
         initialStateMessage:{
@@ -217,7 +217,11 @@
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
-      if (hungerState.name == 'empty' && currentAnimation !== 'idle') switchAnimation(animations.idle);
+      if (hungerState.name == 'empty' && currentAnimation !== 'idle') {
+        switchAnimation(animations.idle);
+        hungerCounter.innerText = "";
+        hungerCounter.style.opacity = 0
+      }
 
       clearTimeout(messageFadeTimeout); // Clear any ongoing timeout
       clearTimeout(hungerStateUpdateTimeout); // Clear any ongoing timeout
@@ -254,12 +258,7 @@
       if (hunger > 0) {
         hungerCounter.style.opacity = 1
         hungerCounter.innerText = "🍪".repeat( Math.ceil(hunger/10) );
-      }
-      else {
-        hungerCounter.innerText = "";
-        hungerCounter.style.opacity = 0
-      }
-      
+      }      
       localStorage.setItem('monsterHunger', hunger);
     }
 
@@ -269,11 +268,6 @@
       if (foodCollected) {
         hunger = localStorage.getItem('monsterHunger');
         localStorage.removeItem('foodCollected');
-
-        clearTimeout(messageFadeTimeout); // Clear any ongoing timeout
-        clearTimeout(hungerStateUpdateTimeout); // Clear any ongoing timeout
-        document.removeEventListener('click', updateHungerState)
-
         saveHunger();
         setNextHungerState();
         updateHungerState();
