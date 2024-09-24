@@ -21,7 +21,7 @@
     }
 
     body {
-      background: url('https://maya.cloud/media/files/monster-background.webp') no-repeat center center;
+      background: url('monster-background.webp') no-repeat center center;
       background-size: 100% 100%;
     }
 
@@ -165,9 +165,30 @@
     let message;
 
     const animations = {
-      idle: { frames: 4, frameInterval: 200, url: 'https://maya.cloud/media/files/Pink_Monster_Idle_4.png', name: 'idle' },
-      walk: { frames: 6, frameInterval: 100, url: 'https://maya.cloud/media/files/Pink_Monster_Walk_6.png', name: 'walk' },
-      jump: { frames: 8, frameInterval: 80, url: 'https://maya.cloud/media/files/Pink_Monster_Jump_8.png', name: 'jump' }
+      idle: { 
+        frames: 4, 
+        frameInterval: 200, 
+        url: 'Pink_Monster_Idle_4.png', 
+        name: 'idle' 
+      },
+      walk: { 
+        frames: 6, 
+        frameInterval: 100, 
+        url: 'Pink_Monster_Walk_6.png', 
+        name: 'walk' 
+      },
+      run: { 
+        frames: 6, 
+        frameInterval: 100, 
+        url: 'Pink_Monster_Run_6.png', 
+        name: 'run' 
+      },
+      jump: { 
+        frames: 8, 
+        frameInterval: 80, 
+        url: 'Pink_Monster_Jump_8.png', 
+        name: 'jump' 
+      }
     };
     let currentAnimation;
     let totalFrames;
@@ -257,7 +278,7 @@
     }
 
     // Handle hunger depletion from walking
-    function depleteHungerFromWalk() {
+    function depleteHungerFromMove() {
       const distanceTraveled = Math.abs(monsterX - previousMonsterX);
       walkedDistance += distanceTraveled;
       previousMonsterX = monsterX; // Update to the current position
@@ -323,17 +344,20 @@
         const deltaX = destinationX - monsterX;
 
         if (currentAnimation === 'jump') moveTo(speed * direction);
-        else if (currentAnimation === 'walk') {
+        else if (currentAnimation === 'walk' || currentAnimation === 'run') {
           if (Math.abs(deltaX) > movementThreshold) {
+            if (hungerState.name === 'hungry') switchAnimation(animations.walk);
+            else switchAnimation(animations.run);
             updateDirection();
-            depleteHungerFromWalk();
+            depleteHungerFromMove();
             moveTo(speed * Math.sign(deltaX));
           } else {
             switchAnimation(animations.idle);
           }
         } else if (currentAnimation === 'idle') {
           if (Math.abs(deltaX) > movementThreshold) {
-            switchAnimation(animations.walk);
+            if (hungerState.name === 'hungry') switchAnimation(animations.walk);
+            else switchAnimation(animations.run);
           }
         }
       }
