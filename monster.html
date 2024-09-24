@@ -211,7 +211,12 @@
     // Update monster properties and display a message
     function updateHungerState() {
 
+      console.log(currentHungerState)
+      console.log(messageQueue)
+
       if (messageQueue.length === 0) messageQueue.push(...currentHungerState.messages)
+
+      console.log(messageQueue)
 
       const message = messageQueue.shift()
       speed = currentHungerState.speed;
@@ -343,15 +348,16 @@
         if (currentAnimation.name === 'jump') moveTo(speed * direction);
         else if (currentAnimation.name === 'idle') {
           if (Math.abs(deltaX) > movementThreshold) {
-            if (currentHungerState.name === 'hungry') switchAnimation(animations.walk);
-            else switchAnimation(animations.run);
+            switchAnimation(animations.walk)
+            // if (currentHungerState.name === 'hungry') switchAnimation(animations.walk);
+            // else switchAnimation(animations.run);
           }
         }
         else {
           if (Math.abs(deltaX) > movementThreshold) {
-            
-            if (currentHungerState.name === 'hungry') switchAnimation(animations.walk);
-            else switchAnimation(animations.run);
+            switchAnimation(animations.walk)
+            // if (currentHungerState.name === 'hungry') switchAnimation(animations.walk);
+            // else switchAnimation(animations.run);
 
             updateDirection();
             depleteHungerFromMove();
