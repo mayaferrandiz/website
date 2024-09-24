@@ -161,7 +161,7 @@
     }
 
     let hunger = parseInt(localStorage.getItem('monsterHunger')) || 0; // Persist hunger
-    let hungerState;
+    let currentHungerState;
     let hungerStateUpdateTimeout;
     let speed;
     let jumpHeight;
@@ -211,13 +211,13 @@
     // Update monster properties and display a message
     function updateHungerState() {
 
-      if (messageQueue.length === 0) messageQueue.push(...hungerState.messages)
+      if (messageQueue.length === 0) messageQueue.push(...currentHungerState.messages)
 
       const message = messageQueue.shift()
-      speed = hungerState.speed;
-      jumpHeight = hungerState.jumpHeight;
+      speed = currentHungerState.speed;
+      jumpHeight = currentHungerState.jumpHeight;
 
-      if (hungerState.name == 'empty' && currentAnimation !== 'idle') {
+      if (currentHungerState.name == 'empty' && currentAnimation.name !== 'idle') {
         switchAnimation(animations.idle);
         hungerCounter.innerText = "";
         hungerCounter.style.opacity = 0
@@ -247,8 +247,8 @@
       for (let key in hungerStates) {
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound) {
-          if (hungerState === undefined || state.name !== hungerState.name) messageQueue.unshift(state.initialStateMessage);
-          hungerState = state;
+          if (currentHungerState === undefined || state.name !== currentHungerState.name) messageQueue.unshift(state.initialStateMessage);
+          currentHungerState = state;
         }
       }
     }
@@ -313,14 +313,14 @@
       monster.style.backgroundImage = `url('${animation.url}')`;
       totalFrames = animation.frames;
       frameInterval = animation.frameInterval;
-      currentAnimation = animation.name;
+      currentAnimation = animation;
       currentFrame = 0; // Reset frame to start
     }
 
     function updateDirection() {
       const deltaX = destinationX - monsterX;
 
-      if (currentAnimation === 'idle') direction = 0;
+      if (currentAnimation.name === 'idle') direction = 0;
       else if (deltaX < 0 && direction !== -1) {
         monster.style.transform = 'scaleX(-1)';
         direction = -1;
@@ -340,22 +340,24 @@
       if (speed > 0) {
         const deltaX = destinationX - monsterX;
 
-        if (currentAnimation === 'jump') moveTo(speed * direction);
-        else if (currentAnimation === 'walk' || currentAnimation === 'run') {
+        if (currentAnimation.name === 'jump') moveTo(speed * direction);
+        else if (currentAnimation.name === 'idle') {
           if (Math.abs(deltaX) > movementThreshold) {
-            if (hungerState.name === 'hungry') switchAnimation(animations.walk);
+            if (currentHungerState.name === 'hungry') switchAnimation(animations.walk);
             else switchAnimation(animations.run);
+          }
+        }
+        else {
+          if (Math.abs(deltaX) > movementThreshold) {
+            
+            if (currentHungerState.name === 'hungry') switchAnimation(animations.walk);
+            else switchAnimation(animations.run);
+
             updateDirection();
             depleteHungerFromMove();
             moveTo(speed * Math.sign(deltaX));
-          } else {
-            switchAnimation(animations.idle);
           }
-        } else if (currentAnimation === 'idle') {
-          if (Math.abs(deltaX) > movementThreshold) {
-            if (hungerState.name === 'hungry') switchAnimation(animations.walk);
-            else switchAnimation(animations.run);
-          }
+          else switchAnimation(animations.idle);
         }
       }
       requestAnimationFrame(moveMonster);
@@ -364,7 +366,7 @@
     // Jump the monster
     function jumpMonster() {
       if (jumpHeight > 0) {
-        if (currentAnimation !== 'jump') {
+        if (currentAnimation.name !== 'jump') {
           updateDirection();
           depleteHungerFromJump();
           switchAnimation(animations.jump);
