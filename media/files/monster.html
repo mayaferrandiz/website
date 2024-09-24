@@ -82,10 +82,10 @@
     const hungerDepletionPerJump = 10;
     const hungerDepletionPerScreenWalk = 10;
     let walkedDistance = 0;
+
     let lastMessageTime = Date.now();
     let messageFadeTimeout;
     let messageClickListener;
-
     const messageQueue = []
     const defaultMessages = [
       {
@@ -116,7 +116,8 @@
         initialStateMessage:{
             body:"yummmm thanks for all the cookies! email me at <a href='mailto:monster@maya.cloud'>monster@maya.cloud</a> for a surprise <3",
             nextTrigger:'click'
-        }
+        },
+        messages:defaultMessages
       },
       full: { 
         name: 'full', 
@@ -127,7 +128,8 @@
         initialStateMessage:{
             body:"maya hid cookies all over her website and if you find them all i'll be the happiest monster in the worldddd!!",
             nextTrigger:'timed'
-        }
+        },
+        messages:defaultMessages
       },
       hungry: { 
         name: 'hungry', 
@@ -138,7 +140,8 @@
         initialStateMessage: {
           body: "I'm getting hungry...",
           nextTrigger: 'timed'
-        }
+        },
+        messages:defaultMessages
       },
       empty: { 
         name: 'empty', 
@@ -149,12 +152,14 @@
         initialStateMessage: {
           body: "i'm hungry! i'm not doing anything else until you feed me a cookie >:(",
           nextTrigger: 'timed'
-        }
+        },
+        messages:[this.initialStateMessage]
       }
     }
 
-    let hungerState;
     let hunger = parseInt(localStorage.getItem('monsterHunger')) || 0; // Persist hunger
+    let hungerState;
+    let hungerStateUpdateTimeout;
     let speed;
     let jumpHeight;
     let message;
@@ -182,33 +187,31 @@
     // Update monster properties and display a message
     function updateHungerState() {
 
-      if (messageQueue.length === 0) messageQueue.push(...defaultMessages)
+      if (messageQueue.length === 0) messageQueue.push(...hungerState.messages)
 
-      const message = messageQueue.shift()
+      message = messageQueue.shift()
       speed = hungerState.speed;
       jumpHeight = hungerState.jumpHeight;
 
-      if (hungerState.name == 'empty' && currentAnimation !== 'idle') {
-        switchAnimation(animations.idle);
-      }
+      if (hungerState.name == 'empty' && currentAnimation !== 'idle') switchAnimation(animations.idle);
 
-      clearTimeout(messageFadeTimeout); // Clear any ongoing fade
+      clearTimeout(messageFadeTimeout); // Clear any ongoing timeout
+      clearTimeout(hungerStateUpdateTimeout); // Clear any ongoing timeout
       document.removeEventListener('click', updateHungerState)
 
       if (messageBubble.innerText !== message.body){
-
         messageBubble.style.opacity = 0;
         messageBubble.innerHTML = message.body; // Update the text
-        setTimeout(() => messageBubble.style.opacity = 1, 500);
-
       }
 
-      setTimeout(() => {
+      messageFadeTimeout = setTimeout(() => {
 
-        if (message.nextTrigger == 'timed') messageFadeTimeout = setTimeout(updateHungerState, 5000);
+        if (messageBubble.innerText !== message.body) messageBubble.style.opacity = 1
+
+        if (message.nextTrigger == 'timed') hungerStateUpdateTimeout = setTimeout(updateHungerState, 5000);
         else if (message.nextTrigger == 'click') document.addEventListener('click', updateHungerState);
 
-      },500)
+      }, 500)
     }
 
     // Queue up next hunger state for next update interval
@@ -242,8 +245,14 @@
       if (foodCollected) {
         hunger = localStorage.getItem('monsterHunger');
         localStorage.removeItem('foodCollected');
+
+        clearTimeout(messageFadeTimeout); // Clear any ongoing timeout
+        clearTimeout(hungerStateUpdateTimeout); // Clear any ongoing timeout
+        document.removeEventListener('click', updateHungerState)
+
         saveHunger();
         setNextHungerState();
+        updateHungerState();
       }
     }
 
