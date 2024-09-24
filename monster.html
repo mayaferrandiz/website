@@ -205,8 +205,9 @@
     function updateMessage() {
 
       if (messageQueue.length === 0){
-        if (currentHungerState.name !== 'empty') messageQueue.push(...defaultMessages)
-        else messageQueue.push(currentHungerState.initialStateMessage)
+        if (currentHungerState.name === 'empty') messageQueue.push(currentHungerState.initialStateMessage)
+        if (currentHungerState.name === 'overfull') messageQueue.push(currentHungerState.initialStateMessage)
+        else messageQueue.push(...defaultMessages)
       }
 
       const message = messageQueue.shift()
@@ -333,8 +334,8 @@
 
     function setMoveAnimation(){
       if (currentHungerState.name === 'hungry') switchAnimation(animations.walk);
-      else if (currentHungerState.name === 'full') switchAnimation(animations.run);
-      else if (currentHungerState.name === 'overfull') switchAnimation(animations.run);
+      else if (currentHungerState.name === 'full' || currentHungerState.name === 'overfull') switchAnimation(animations.run);
+      else if (currentHungerState.name === 'empty') switchAnimation(animations.idle);
     }
 
     // Move the monster based on destinationX
@@ -372,11 +373,8 @@
             monster.style.transform = monster.style.transform.replace(' translateY(-75px)', '');
 
             setTimeout(() => {
-              if (Math.abs(destinationX - monsterX) > movementThreshold) {
-                switchAnimation(animations.walk);
-              } else {
-                switchAnimation(animations.idle);
-              }
+              if (Math.abs(destinationX - monsterX) > movementThreshold) setMoveAnimation()
+              else switchAnimation(animations.idle);
             }, animations.jump.frameInterval * animations.jump.frames / 2);
           }, animations.jump.frameInterval * animations.jump.frames / 2);
         }
