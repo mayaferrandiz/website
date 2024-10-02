@@ -14,8 +14,8 @@
         <author>
             <name>Maya</name>
         </author>
-        <link href="https://maya.cloud/portfolio/laser-box-2/"/>
-        <id>https://maya.cloud/portfolio/laser-box-2/</id>
+        <link href="https://maya.cloud/laser-box-2/"/>
+        <id>https://maya.cloud/laser-box-2/</id>
         <media:content url="https://maya.cloud/media/posts/15/IMG_7051.JPG" medium="image" />
 
         <updated>2024-09-24T17:39:36-04:00</updated>
@@ -59,32 +59,32 @@
     <div class="gallery" data-columns="3">
       <figure class="gallery__item">
       <a href="https://maya.cloud/media/posts/15/gallery/IMG_7050.JPG" data-size="6240x4160">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7050-thumbnail.JPG" height="512" width="768" alt="" >
+        <img loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7050-thumbnail.JPG" height="512" width="768" alt="" >
       </a>
       
     </figure><figure class="gallery__item">
       <a href="https://maya.cloud/media/posts/15/gallery/IMG_7046.JPG" data-size="6240x4160">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7046-thumbnail.JPG" height="512" width="768" alt="" >
+        <img loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7046-thumbnail.JPG" height="512" width="768" alt="" >
       </a>
       
     </figure><figure class="gallery__item">
       <a href="https://maya.cloud/media/posts/15/gallery/IMG_7056.JPG" data-size="6240x4160">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7056-thumbnail.JPG" height="512" width="768" alt="" >
+        <img loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7056-thumbnail.JPG" height="512" width="768" alt="" >
       </a>
       
     </figure><figure class="gallery__item">
       <a href="https://maya.cloud/media/posts/15/gallery/IMG_7051.JPG" data-size="6240x4160">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7051-thumbnail.JPG" height="512" width="768" alt="" >
+        <img loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7051-thumbnail.JPG" height="512" width="768" alt="" >
       </a>
       
     </figure><figure class="gallery__item">
       <a href="https://maya.cloud/media/posts/15/gallery/IMG_7049.JPG" data-size="6240x4160">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7049-thumbnail.JPG" height="512" width="768" alt="" >
+        <img loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7049-thumbnail.JPG" height="512" width="768" alt="" >
       </a>
       
     </figure><figure class="gallery__item">
       <a href="https://maya.cloud/media/posts/15/gallery/IMG_7044.JPG" data-size="6240x4160">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7044-thumbnail.JPG" height="512" width="768" alt="" >
+        <img loading="lazy" src="https://maya.cloud/media/posts/15/gallery/IMG_7044-thumbnail.JPG" height="512" width="768" alt="" >
       </a>
       
     </figure>
@@ -121,8 +121,8 @@
         <author>
             <name>Maya</name>
         </author>
-        <link href="https://maya.cloud/portfolio/monster/"/>
-        <id>https://maya.cloud/portfolio/monster/</id>
+        <link href="https://maya.cloud/monster/"/>
+        <id>https://maya.cloud/monster/</id>
         <media:content url="https://maya.cloud/media/posts/11/Pink_Monster_Walk_6.png" medium="image" />
 
         <updated>2024-09-11T18:03:52-04:00</updated>
@@ -169,17 +169,17 @@
     <div class="gallery" data-columns="3">
       <figure class="gallery__item">
       <a href="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Idle_4.png" data-size="128x32">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Idle_4-thumbnail.png" height="32" width="128" alt="" >
+        <img loading="lazy" src="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Idle_4-thumbnail.png" height="32" width="128" alt="" >
       </a>
       
     </figure><figure class="gallery__item">
       <a href="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Jump_8.png" data-size="256x32">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Jump_8-thumbnail.png" height="32" width="256" alt="" >
+        <img loading="lazy" src="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Jump_8-thumbnail.png" height="32" width="256" alt="" >
       </a>
       
     </figure><figure class="gallery__item">
       <a href="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Walk_6.png" data-size="192x32">
-        <img decoding="async" loading="lazy" src="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Walk_6-thumbnail.png" height="32" width="192" alt="" >
+        <img loading="lazy" src="https://maya.cloud/media/posts/11/gallery/Pink_Monster_Walk_6-thumbnail.png" height="32" width="192" alt="" >
       </a>
       
     </figure>
