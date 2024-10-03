@@ -109,19 +109,6 @@
   </div>
   <div id="messageBubble"></div>
   <script>
-
-    // Initial monster state
-    switchAnimation(animations.idle);
-    setHungerState();
-    updateMessage();
-    saveHunger();
-
-    // Periodic updates
-    setInterval(handleHungerReplenished, 1000);
-
-    updateFrame();
-    requestAnimationFrame(moveMonster);
-
     const monster = document.getElementById('monster');
     const messageBubble = document.getElementById('messageBubble');
     const hungerCounter = document.getElementById('hungerCounter');
@@ -494,6 +481,18 @@
 
     window.addEventListener('load', sendIframeSize);
     window.addEventListener('resize', sendIframeSize);
+
+    // Initial monster state
+    switchAnimation(animations.idle);
+    setHungerState();
+    updateMessage();
+    saveHunger();
+
+    // Periodic updates
+    setInterval(handleHungerReplenished, 1000);
+
+    updateFrame();
+    requestAnimationFrame(moveMonster);
 
   </script>
 </body>
