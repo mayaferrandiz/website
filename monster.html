@@ -35,7 +35,7 @@ body, html {
 
 /* Message bubble styling */
 #messageBubble {
-  position: absolute;
+  position: fixed; /* Make sure it is separate from the content flow */
   top: 10px;
   left: 50%;
   transform: translateX(-50%);
@@ -47,7 +47,7 @@ body, html {
   border: 2px solid black;
   border-radius: 30px;
   padding: 10px 20px;
-  margin: 0; 
+  margin: 0;
   max-width: 80%;
   word-wrap: break-word; /* Ensure long words break onto the next line */
   overflow-wrap: break-word; /* Similar to word-wrap, ensures word breaks */
@@ -81,13 +81,20 @@ body, html {
     transform: translateX(-50%);
     width: auto; /* Adjust width to only be as wide as necessary */
     max-width: 90%;
-    z-index: 4; /* Ensure it's above other content */
+    z-index: 4; /* Ensure it's above other content but not covering the monster */
     box-sizing: border-box; /* Include padding in the width calculation */
+    height: auto; /* Allow the message bubble to resize based on content */
   }
 
   #backgroundContainer {
     height: calc(100vh - 70px); /* Adjust height to avoid overlap with the message bubble */
+    width: 100%;
     background-size: contain; /* Maintain the background proportions */
+    overflow: hidden;
+  }
+
+  body {
+    height: auto; /* Allow body height to grow with content */
   }
 }
 
