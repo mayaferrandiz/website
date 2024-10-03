@@ -11,143 +11,85 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-    }
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
 
-    /* Flex container to hold background and message bubble */
-    #flexContainer {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
+.monster-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
 
-    /* Background container */
-    #backgroundContainer {
-      flex-grow: 1; /* Make it take up remaining space */
-      position: relative;
-      width: 100%;
-      background: url('monster-background.webp') no-repeat center center;
-      background-size: contain;
-      z-index: 1;
-    }
+.background-container {
+  flex: 1;
+  position: relative;
+  background: url('monster-background.webp') no-repeat center center;
+  background-size: contain; /* Ensures the background is not cut off */
+}
 
-    /* Monster styling */
-    #monster {
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      background: no-repeat 0 0;
-      bottom: 10%;
-      transition: transform 0.3s ease-in-out;
-      will-change: transform, background-position;
-      z-index: 2;
-    }
+#monster {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: no-repeat 0 0;
+  will-change: transform, background-position;
+  transition: transform 0.3s ease-in-out;
+}
 
-    /* Message bubble styling */
-    #messageBubble {
-      text-align: left;
-      font-size: 20px;
-      color: black;
-      font-family: Figtree;
-      background-color: white;
-      border: 2px solid black;
-      border-radius: 30px;
-      padding: 10px 20px;
-      margin: 0;
-      max-width: 80%;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      opacity: 0;
-      z-index: 10;
-      transition: opacity 0.2s ease-in, opacity 3s ease-out;
-      display: inline-block;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    }
+#messageBubble {
+  text-align: left;
+  font-size: 20px;
+  color: black;
+  font-family: Figtree;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin: 6%;
+  max-width: 80%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  opacity: 0;
+  z-index: 10;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.2s ease-in, opacity 3s ease-out;
+}
 
-    /* Counter to show hunger level */
-    #hungerCounter {
-      text-align: right;
-      font-size: 20px;
-      background-color: white;
-      padding: 2px 5px;
-      border-radius: 10px;
-      position: absolute;
-      right: 0px;
-      top: 0px;
-      margin: 1%;
-      z-index: 5;
-    }
+/* Mobile Specific Adjustments */
+@media (max-width: 768px) {
+  .monster-wrapper {
+    flex-direction: column-reverse; /* Message bubble below the monster */
+  }
 
-    /* Mobile-specific styles */
-    @media (max-width: 768px) {
-      #messageBubble {
-        position: relative; /* Position it relative to the flex container */
-        bottom: 0;
-        width: auto;
-        max-width: 90%;
-        margin: auto; /* Center horizontally */
-        z-index: 4;
-        box-sizing: border-box;
-        height: auto;
-      }
+  #messageBubble {
+    align-self: center;
+    margin: 0 10%;
+    max-width: 80%;
+    width: auto;
+    margin-top: 10px;
+  }
+}
 
-      #backgroundContainer {
-        height: calc(100vh - 70px); /* Adjust height to avoid overlap with the message bubble */
-        width: 100%;
-        background-size: contain;
-        overflow: hidden;
-      }
-
-      body {
-        height: auto;
-      }
-    }
   </style>
 </head>
 <body>
 
-  <div id="flexContainer">
-    <div id="backgroundContainer">
+  <div class="monster-wrapper">
+    <div class="background-container">
       <div id="monster"></div>
-      <div id="hungerCounter"></div>
     </div>
     <div id="messageBubble"></div>
   </div>
 
   <script>
-
-    document.addEventListener('DOMContentLoaded', () => {
-      const backgroundContainer = document.getElementById('backgroundContainer');
-      const messageBubble = document.getElementById('messageBubble');
-
-      function adjustBackgroundHeight() {
-        if (window.innerWidth <= 768) {
-          // Get the height of the message bubble
-          const bubbleHeight = messageBubble.getBoundingClientRect().height;
-
-          // Get the remaining available height of the iframe (excluding the message bubble)
-          const totalHeight = window.innerHeight;
-          const adjustedHeight = totalHeight - bubbleHeight - 20; // Adjust for padding
-
-          // Apply the new height to the background container
-          backgroundContainer.style.height = `${adjustedHeight}px`;
-        } else {
-          // Reset height for larger screens
-          backgroundContainer.style.height = '';
-        }
-      }
-
-      // Adjust height on page load and resize
-      adjustBackgroundHeight();
-      window.addEventListener('resize', adjustBackgroundHeight);
-    });
-
-
     const monster = document.getElementById('monster');
     const messageBubble = document.getElementById('messageBubble');
     const hungerCounter = document.getElementById('hungerCounter');
