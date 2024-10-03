@@ -63,17 +63,23 @@
       }, 500); // Wait for the animation to complete before hiding
     }
 
-    function sendIframeSize(height=document.documentElement.scrollHeight, width=document.documentElement.scrollWidth) {
-      window.parent.postMessage(
-        {
-          type: 'resizeIframe',
-          iframeId: window.frameElement.id,
-          height: height,
-          width: width
-        },
-        '*'
-      );
-    }
+function sendIframeSize(height = document.documentElement.scrollHeight, width = document.documentElement.scrollWidth) {
+  try {
+    const iframeId = window.frameElement.id ? window.frameElement.id : 'defaultFood';
+    window.parent.postMessage(
+      {
+        type: 'resizeIframe',
+        iframeId: iframeId,
+        height: height,
+        width: width
+      },
+      '*'
+    );
+  } catch (error) {
+    console.error("Failed to send iframe size:", error);
+  }
+}
+
  
     // Event listener for clicking food item
     foodItem.addEventListener('click', () => {
