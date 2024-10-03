@@ -289,32 +289,50 @@ body, html {
     // Periodic updates
     setInterval(handleHungerReplenished, 1000);
 
+
+    // Utility function to determine device type and select the correct message bubble
+    function getMessageBubble() {
+      return window.innerWidth <= 768
+        ? document.querySelector("#messageBubble.mobile")
+        : document.querySelector("#messageBubble.desktop");
+    }
+
     // Update monster properties and display a message
     function updateMessage() {
+      const messageBubble = getMessageBubble();
 
-      if (messageQueue.length === 0){
-        if (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull') messageQueue.push(...currentHungerState.messages)
-        else messageQueue.push(...defaultMessages)
+      if (messageQueue.length === 0) {
+        if (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull') {
+          messageQueue.push(...currentHungerState.messages);
+        } else {
+          messageQueue.push(...defaultMessages);
+        }
       }
 
-      const message = messageQueue.shift()
+      const message = messageQueue.shift();
 
-      document.removeEventListener('click', updateMessage)
+      document.removeEventListener('click', updateMessage);
 
-      if (messageBubble.innerText !== message.body){
+      if (messageBubble && messageBubble.innerHTML !== message.body) {
         messageBubble.style.opacity = 0;
         messageBubble.innerHTML = message.body; // Update the text
 
         setTimeout(() => {
-          messageBubble.style.opacity = 1
-        }, 500)
+          messageBubble.style.opacity = 1;
+        }, 500);
       }
 
       setTimeout(() => {
-        if (message.nextTrigger === 'timed') setTimeout(updateMessage, 5000);
-        else if (message.nextTrigger == 'click') document.addEventListener('click', updateMessage);
-      }, 500)
+        if (message.nextTrigger === 'timed') {
+          setTimeout(updateMessage, 5000);
+        } else if (message.nextTrigger === 'click') {
+          document.addEventListener('click', updateMessage);
+        }
+      }, 500);
     }
+
+// Update the script to properly select and work with either desktop or mobile versions of the message bubble. 
+
 
     // Queue up next hunger state for next update interval
     function setHungerState() {
