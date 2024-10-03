@@ -17,16 +17,13 @@ body, html {
   flex-grow: 1;
   width: 100%;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
+  margin-bottom: 100px; /* Margin to leave space for the message bubble */
   box-sizing: border-box;
 }
 
 #backgroundImage {
   width: 100%;
-  height: auto; /* Allow the height to adjust based on the width */
-  max-height: 100%; /* Keep the background image within the bounds of the container */
+  height: 100%;
   object-fit: cover;
   object-position: top;
   z-index: 1;
@@ -48,7 +45,6 @@ body, html {
 #messageBubbleContainer {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 10px;
   z-index: 3;
 }
 
@@ -68,10 +64,7 @@ body, html {
 /* Mobile styles */
 @media (max-width: 767px) {
   #messageBubbleContainer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: relative;
     margin: 0;
     padding: 10px;
     box-sizing: border-box;
