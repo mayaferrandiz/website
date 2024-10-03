@@ -26,10 +26,10 @@ body, html {
 #backgroundContainer {
   position: relative;
   width: 100%;
-  min-height: 400px; /* Set this to a suitable value */
+  min-height: 400px;
   max-height: 600px;
-  aspect-ratio: 16 / 9; /* Ensures the aspect ratio is maintained */
-  overflow: hidden; /* Prevent overflow */
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
   background: #e6e6e6; /* Background color when image is not present */
 }
 
@@ -65,8 +65,8 @@ body, html {
   padding: 10px 20px;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  opacity: 1; /* Set initial opacity to 1 to ensure visibility */
-  visibility: hidden; /* Start hidden */
+  opacity: 1;
+  visibility: hidden;
   z-index: 15;
   transition: opacity 0.2s ease-in, opacity 3s ease-out;
   display: inline-block;
@@ -84,7 +84,7 @@ body, html {
   top: 0px;
   margin: 1%;
   opacity: 1; /* Ensure visibility */
-  z-index: 20; /* Ensures it's above the background */
+  z-index: 20;
 }
 
 /* Desktop styles */
@@ -100,11 +100,15 @@ body, html {
 
 /* Mobile styles */
 @media (max-width: 767px) {
+  #backgroundContainer {
+    margin-bottom: 60px; /* Allocate space for the message bubble below */
+  }
+
   #messageBubble {
     position: absolute;
-    bottom: 0px;
+    bottom: -20px; /* Offset the message bubble below the background container */
     left: 0px;
-    width: calc(100% - 20px); /* Fill most of the screen width */
+    width: calc(100% - 20px);
     margin: 0 1% 1% 1%;
     box-sizing: border-box;
     background-color: white;
