@@ -19,17 +19,17 @@
   <style>
 body, html {
   margin: 0;
-  overflow: hidden;
+  overflow: hidden; /* Prevent scrolling */
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #backgroundContainer {
   position: relative;
+  flex: 1 1 auto;
   width: 100%;
-  min-height: 400px;
-  max-height: 600px;
-  aspect-ratio: 16 / 9;
-  overflow: hidden;
+  overflow: hidden; /* Prevent scrolling within the container */
   background: #e6e6e6; /* Background color when image is not present */
 }
 
@@ -40,8 +40,8 @@ body, html {
   transform: translateX(-50%);
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: top;
+  object-fit: cover; /* Adjust image to cover the entire container */
+  object-position: top; /* Focus on the top of the image */
 }
 
 #monster {
@@ -66,13 +66,13 @@ body, html {
   word-wrap: break-word;
   overflow-wrap: break-word;
   opacity: 1;
-  visibility: hidden;
   z-index: 15;
   transition: opacity 0.2s ease-in, opacity 3s ease-out;
   display: inline-block;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 }
 
+/* Hunger Counter */
 #hungerCounter {
   text-align: right;
   font-size: 20px;
@@ -100,21 +100,14 @@ body, html {
 
 /* Mobile styles */
 @media (max-width: 767px) {
-  #backgroundContainer {
-    margin-bottom: 70px; /* Ensure enough space for message bubble */
-  }
-
   #messageBubble {
-    position: fixed;
-    bottom: 20px; /* Position fixed to ensure visibility */
-    left: 10px;
-    right: 10px;
-    max-width: calc(100% - 20px);
-    margin: 0 auto;
+    position: relative; /* Positioned relative to stay below the container */
+    margin: 10px auto; /* Center the bubble */
+    width: calc(100% - 20px);
+    box-sizing: border-box;
     background-color: white;
     border: 2px solid black;
     border-radius: 30px;
-    box-sizing: border-box;
     z-index: 15;
   }
 }
@@ -126,11 +119,9 @@ body, html {
 <div id="backgroundContainer">
   <img id="backgroundImage" src="https://maya.cloud/monster-background.webp" alt="Background Image">
   <div id="monster"></div>
-  <div id="messageBubble"></div>
-  <div id="hungerCounter"></div>
 </div>
-
-
+<div id="messageBubble"></div>
+<div id="hungerCounter"></div>
 
   <script>
     const monster = document.getElementById('monster');
