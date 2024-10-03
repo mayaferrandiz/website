@@ -309,7 +309,7 @@ body, html {
 
           if (currentHungerState === undefined) messageQueue.unshift(...state.messages);
           else if (state.name !== currentHungerState.name){
-            if (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull') messageQueue = []
+            if (currentHungerState.name === 'empty' || state.name === 'empty' || currentHungerState.name === 'overfull' || state.name === 'overfull') messageQueue = []
             messageQueue.unshift(...state.messages);
           }
           currentHungerState = state;
