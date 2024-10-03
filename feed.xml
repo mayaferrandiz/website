@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-10-02T22:29:39-04:00</updated>
+    <updated>2024-10-02T22:30:43-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -90,7 +90,7 @@
     </figure>
     </div>
   </div>
-<div><iframe loading="lazy" data-responsive="false" width="64px" height="64px" src="https://maya.cloud/monster-food.html?id=portfolio-laser" frameborder="0"></iframe></div>
+<div><iframe loading="lazy" data-responsive="false" class="monster-food" src="https://maya.cloud/monster-food.html?id=portfolio-laser" frameborder="0"></iframe></div>
 
     <h2 id="3d-model">
       3D Model
@@ -155,7 +155,7 @@
   <p>
     Monster also goes beyond this website - if you're able to get Monster to share it's email address, you might just have made a new friend!
   </p>
-<div><div class="post__iframe"><iframe loading="lazy" src="https://maya.cloud/monster.html" width="400px" height="200px" frameborder="0"></iframe></div></div>
+<div><div class="post__iframe"><iframe loading="lazy" class="monster-iframe" src="https://maya.cloud/monster.html" frameborder="0"></iframe></div></div>
 
     <h2 id="sprites">
       Sprites
@@ -200,7 +200,7 @@
       Cookies
     </h3>
 <div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" style="width:100%; height:500px;" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Fwebsite%2Fblob%2Fmain%2Fmonster-food.html&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
-<div><iframe loading="lazy" data-responsive="false" width="64px" height="64px" src="https://maya.cloud/monster-food.html?id=portfolio-monster" frameborder="0"></iframe></div>
+<div><iframe loading="lazy" data-responsive="false" class="monster-food" src="https://maya.cloud/monster-food.html?id=portfolio-monster" frameborder="0"></iframe></div>
             ]]>
         </content>
     </entry>
