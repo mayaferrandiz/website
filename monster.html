@@ -16,7 +16,7 @@ body, html {
   position: relative;
   flex-grow: 1;
   width: 100%;
-  height: 100%; /* Fill the entire viewport */
+  height: calc(100vh - 100px); /* Leaves space for the message bubble */
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -45,9 +45,8 @@ body, html {
 #messageBubbleContainer {
   width: 100%;
   box-sizing: border-box;
-  text-align: center;
-  padding: 10px 10px 0 10px;
-  z-index: 3; /* Ensure it stays on top */
+  padding: 0 10px;
+  z-index: 3;
 }
 
 /* Desktop styles */
@@ -55,9 +54,11 @@ body, html {
   #messageBubbleContainer {
     position: absolute;
     top: 10px;
-    left: 10px;
+    left: 0;
+    right: 0;
     max-width: 90%;
-    margin: 0;
+    margin: 6%;
+    text-align: left;
   }
 }
 
@@ -67,9 +68,10 @@ body, html {
     position: fixed;
     bottom: 0;
     left: 0;
+    right: 0;
     margin: 0;
-    width: calc(100% - 20px);
-    padding-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.8); /* Background for better readability */
   }
 }
@@ -104,7 +106,6 @@ body, html {
   opacity: 1;
   z-index: 20;
 }
-
   </style>
 </head>
 <body>
