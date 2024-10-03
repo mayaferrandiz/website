@@ -36,7 +36,7 @@
       const lastCollected = localStorage.getItem(`food_${id}`);
       currentHunger = localStorage.getItem('monsterHunger')
  
-      if (currentHunger && (!lastCollected || Date.now() - lastCollected > foodReappearTime)) {
+      if (currentHunger !== undefined && (!lastCollected || Date.now() - lastCollected > foodReappearTime)) {
         foodItem.style.display = 'block'; // Show the food
         foodItem.style.transform = 'scale(1)'; // Reset size in case it was previously collected
         foodItem.style.opacity = '1'; // Reset opacity
