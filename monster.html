@@ -32,9 +32,7 @@
 
 #messageBubble {
   position: absolute; /* Change to absolute to position relative to the parent container */
-  top: 20px; /* Space from the top */
-  left: 50%; /* Center horizontally */
-  transform: translateX(-50%); /* Center the bubble */
+  top: 0px; /* Space from the top */
   text-align: left;
   font-size: 20px;
   color: black;
@@ -136,10 +134,12 @@
         lowerBound: 81,
         speed: 2,
         jumpHeight: 75,
-        initialStateMessage:{
+        messages:[
+          {
             body:"yummmm thanks for all the cookies! email me at <a href=\"javascript:void(0)\" onclick=\"window.top.location.href='mailto:monster@maya.cloud'; return false;\">monster@maya.cloud</a> for a surprise <3",
             nextTrigger:'click'
-        }
+          }
+        ]
       },
       full: { 
         name: 'full', 
@@ -147,10 +147,16 @@
         lowerBound: 31, 
         speed: 2, 
         jumpHeight: 75, 
-        initialStateMessage:{
-            body:"maya hid cookies all over her website and if you find them all i'll be the happiest monster in the worldddd!! they look like 🍪 and you can click on them to feed me!",
+        messages:[
+          {
+            body:"maya hid cookies all over her website and if you find them all i'll be the happiest monster in the worldddd!!",
             nextTrigger:'timed'
-        }
+          },
+          {
+            body:"i'm pretty sure cookies look like 🍪 and you can click on them to feed me!",
+            nextTrigger:'timed'
+          },
+        ]
       },
       hungry: { 
         name: 'hungry', 
@@ -158,10 +164,12 @@
         lowerBound: 1, 
         speed: 1, 
         jumpHeight: 37.5, 
-        initialStateMessage: {
-          body: "i'm getting hungry...",
-          nextTrigger: 'timed'
-        }
+        messages:[
+          {
+            body: "i'm getting hungry...",
+            nextTrigger: 'timed'
+          }
+        ]
       },
       empty: { 
         name: 'empty', 
@@ -169,10 +177,17 @@
         lowerBound: -Infinity, 
         speed: 0, 
         jumpHeight: 0, 
-        initialStateMessage: {
-          body: "i'm hungry! i'm not doing anything else until you feed me a cookie >:( they look like 🍪 and you can click on them to feed me!",
-          nextTrigger: 'timed'
-        }
+        messages:[
+          {
+            body: "i'm hungry! i'm not doing anything else until you feed me a cookie >:(",
+            nextTrigger: 'timed'
+          },
+          {
+            body: "i'm pretty sure cookies look like 🍪 and you can click on them to feed me >:(",
+            nextTrigger: 'timed'
+          },
+
+        ]
       }
     }
 
@@ -228,8 +243,7 @@
     function updateMessage() {
 
       if (messageQueue.length === 0){
-        if (currentHungerState.name === 'empty') messageQueue.push(currentHungerState.initialStateMessage)
-        else if (currentHungerState.name === 'overfull') messageQueue.push(currentHungerState.initialStateMessage)
+        if (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull') messageQueue.push(...currentHungerState.messages)
         else messageQueue.push(...defaultMessages)
       }
 
@@ -257,7 +271,7 @@
       for (let key in hungerStates) {
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound) {
-          if (currentHungerState === undefined || state.name !== currentHungerState.name) messageQueue.unshift(state.initialStateMessage);
+          if (currentHungerState === undefined || state.name !== currentHungerState.name) messageQueue.unshift(...state.messages);
           currentHungerState = state;
 
           speed = currentHungerState.speed;
