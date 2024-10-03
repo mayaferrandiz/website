@@ -17,7 +17,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-
 body, html {
   margin: 0;
   overflow: hidden;
@@ -66,7 +65,8 @@ body, html {
   padding: 10px 20px;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  opacity: 0;
+  opacity: 1; /* Set initial opacity to 1 to ensure visibility */
+  visibility: hidden; /* Start hidden */
   z-index: 15;
   transition: opacity 0.2s ease-in, opacity 3s ease-out;
   display: inline-block;
@@ -113,8 +113,6 @@ body, html {
     z-index: 15;
   }
 }
-
-
 
   </style>
 <body>
@@ -281,50 +279,39 @@ body, html {
     // Periodic updates
     setInterval(handleHungerReplenished, 1000);
 
-
-    // Utility function to determine device type and select the correct message bubble
-    function getMessageBubble() {
-      return window.innerWidth <= 768
-        ? document.querySelector("#messageBubble.mobile")
-        : document.querySelector("#messageBubble.desktop");
+  // Update message display function
+  function updateMessage() {
+    if (messageQueue.length === 0) {
+      if (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull') {
+        messageQueue.push(...currentHungerState.messages);
+      } else {
+        messageQueue.push(...defaultMessages);
+      }
     }
 
-    // Update monster properties and display a message
-    function updateMessage() {
-      const messageBubble = getMessageBubble();
+    const message = messageQueue.shift();
 
-      if (messageQueue.length === 0) {
-        if (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull') {
-          messageQueue.push(...currentHungerState.messages);
-        } else {
-          messageQueue.push(...defaultMessages);
-        }
-      }
+    document.removeEventListener('click', updateMessage);
 
-      const message = messageQueue.shift();
-
-      document.removeEventListener('click', updateMessage);
-
-      if (messageBubble && messageBubble.innerHTML !== message.body) {
-        messageBubble.style.opacity = 0;
-        messageBubble.innerHTML = message.body; // Update the text
-
-        setTimeout(() => {
-          messageBubble.style.opacity = 1;
-        }, 500);
-      }
+    if (messageBubble.innerText !== message.body) {
+      messageBubble.style.visibility = 'hidden'; // Start hidden
+      messageBubble.style.opacity = 0;
 
       setTimeout(() => {
-        if (message.nextTrigger === 'timed') {
-          setTimeout(updateMessage, 5000);
-        } else if (message.nextTrigger === 'click') {
-          document.addEventListener('click', updateMessage);
-        }
+        messageBubble.innerHTML = message.body; // Update the text
+        messageBubble.style.visibility = 'visible'; // Ensure visibility
+        messageBubble.style.opacity = 1; // Fade in the message
       }, 500);
     }
 
-// Update the script to properly select and work with either desktop or mobile versions of the message bubble. 
-
+    setTimeout(() => {
+      if (message.nextTrigger === 'timed') {
+        setTimeout(updateMessage, 5000);
+      } else if (message.nextTrigger == 'click') {
+        document.addEventListener('click', updateMessage);
+      }
+    }, 500);
+  }
 
     // Queue up next hunger state for next update interval
     function setHungerState() {
