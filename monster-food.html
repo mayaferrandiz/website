@@ -1,3 +1,4 @@
+Copy
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,35 +9,33 @@
       margin: 0;
       overflow: hidden;
     }
-
+ 
     .food {
       font-size: 50px;
-      width: 100%;
-      height: 100%;
-      display: block;
+      display: inline-block;
       cursor: pointer;
       transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* Smooth shrinking and fading */
     }
   </style>
 </head>
 <body>
-
+ 
   <div id="foodItem" class="food">🍪</div>
-
+ 
   <script>
     const urlParams = new URLSearchParams(window.location.search);
     const foodId = urlParams.get('id') || 'defaultFood'; // Get food ID from iframe URL, use 'defaultFood' if none provided
     const foodReappearTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-
+ 
     const foodItem = document.getElementById('foodItem');
     let currentHunger
-
-
+ 
+ 
     // Check if the food item can be shown
     function checkFoodAvailability(id) {
       const lastCollected = localStorage.getItem(`food_${id}`);
       currentHunger = localStorage.getItem('monsterHunger')
-
+ 
       if (currentHunger && (!lastCollected || Date.now() - lastCollected > foodReappearTime)) {
         foodItem.style.display = 'block'; // Show the food
         foodItem.style.transform = 'scale(1)'; // Reset size in case it was previously collected
@@ -45,33 +44,34 @@
         foodItem.style.display = 'none'; // Hide the food
       }
     }
-
+ 
     // Handle food collection with shrinking animation and hunger replenishment
     function collectFood(id) {
       currentHunger = parseInt(localStorage.getItem('monsterHunger'))
-
+ 
       localStorage.setItem(`food_${id}`, Date.now()); // Record the time the food was collected
       localStorage.setItem('monsterHunger', currentHunger + 50); // Replenish hunger to 100
       foodItem.style.transform = 'scale(0)'; // Shrink to nothing
       foodItem.style.opacity = '0'; // Fade out
-
+ 
       // Send a signal to the monster iframe to update its hunger state
       localStorage.setItem('foodCollected', Date.now()); // Set a timestamp to notify the monster
-
+ 
       // After the animation ends, hide the element
       setTimeout(() => {
         foodItem.style.display = 'none';
       }, 500); // Wait for the animation to complete before hiding
     }
-
+ 
     // Event listener for clicking food item
     foodItem.addEventListener('click', () => {
       collectFood(foodId);
     });
-
+ 
     // Check food availability when the iframe loads
     checkFoodAvailability(foodId);
   </script>
-
+ 
 </body>
 </html>
+view rawmonster-food.html delivered with ❤ by emgithub
