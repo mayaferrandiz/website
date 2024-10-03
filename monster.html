@@ -152,7 +152,7 @@ body, html {
     let lastMessageTime = Date.now();
     let messageFadeTimeout;
     let messageClickListener;
-    const messageQueue = []
+    let messageQueue = []
     const defaultMessages = [
       {
         body:"i'll tell you a secret if you feed me enough cookies...",
