@@ -92,20 +92,19 @@
     /* Mobile styles */
     @media (max-width: 767px) {
       #messageBubble {
-        position: fixed; /* Make it fixed to prevent affecting the layout */
-        bottom: 10px; /* Align it above the monster */
+        position: absolute; /* Keep it below the background container */
+        bottom: -60px; /* Offset to make sure it is below the background image */
         left: 10px;
         width: calc(100% - 20px);
         box-sizing: border-box;
         z-index: 15;
       }
     }
-
   </style>
 </head>
 <body>
-<div id="backgroundContainer">
-    <img id="backgroundImage" src="your-background-image-url.png" alt="Background">
+  <div id="backgroundContainer">
+    <img id="backgroundImage" src="https://maya.cloud/monster-background.webp" alt="Background">
     <div id="monster"></div>
   </div>
   <div id="messageBubble"></div>
