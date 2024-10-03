@@ -10,6 +10,15 @@
       height: 100%;
     }
 
+    #backgroundContainer {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: url('monster-background.webp') no-repeat center center;
+      background-size: cover;
+      z-index: 1;
+    }
+
     #monster {
       position: absolute;
       width: 32px;
@@ -18,51 +27,62 @@
       bottom: 10%;
       transition: transform 0.3s ease-in-out;
       will-change: transform, background-position;
-    }
-
-    body {
-      background: url('monster-background.webp') no-repeat center center;
-      background-size: 100% 100%;
+      z-index: 2; /* Above the background */
     }
 
     #messageBubble {
       text-align: left;
       font-size: 20px;
       color: black;
-      font-family:Figtree;
+      font-family: Figtree;
       background-color: white;
       border: 2px solid black;
       border-radius: 30px;
       padding: 10px 20px;
-      margin:6%;
-      max-width:80%;
-      word-wrap: break-word; /* Ensure long words break onto the next line */
-      overflow-wrap: break-word; /* Similar to word-wrap, ensures word breaks */
+      margin: 6%;
+      max-width: 80%;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
       opacity: 0;
-      z-index: 10;
+      z-index: 3; /* Above the monster */
       transition: opacity 0.2s ease-in, opacity 3s ease-out;
       display: inline-block;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
     }
 
-    #hungerCounter{
-      text-align:right;
+    #hungerCounter {
+      text-align: right;
       font-size: 20px;
-      background-color:white;
-      padding:2px 5px;
-      border-radius:10px;
-      position:absolute;
-      right:0px;
-      top:0px;
-      margin:1%;
+      background-color: white;
+      padding: 2px 5px;
+      border-radius: 10px;
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: 1%;
+      z-index: 4; /* Above everything else */
     }
+
+    @media (max-width: 768px) {
+      #messageBubble {
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 0; /* Ensure it's below other elements on mobile */
+      }
+    }
+
 
   </style>
 </head>
 <body>
 
+  <div id="backgroundContainer">
+    <div id="monster"></div>
+  </div>
+
   <div id="messageBubble"></div>
-  <div id="monster"></div>
   <div id="hungerCounter"></div>
 
   <script>
