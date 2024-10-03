@@ -27,16 +27,16 @@ body, html {
 
 #backgroundContainer {
   width: 100%;
-  height: 100%;
-  position: relative; /* Relative positioning for internal elements */
-  flex-grow: 1;
+  height: calc(100vh - 60px); /* Leave space for the message bubble */
+  position: relative;
   background: url('monster-background.webp') no-repeat center center;
   background-size: cover;
+  flex-grow: 1;
 }
 
 #monster {
   position: absolute;
-  bottom: 10%;
+  bottom: 10%; /* Keep the monster near the bottom of the background */
   left: 50%;
   transform: translateX(-50%);
   width: 32px;
@@ -57,10 +57,10 @@ body, html {
   padding: 10px 20px;
   margin: 6%;
   max-width: 80%;
-  word-wrap: break-word; 
-  overflow-wrap: break-word; 
+  word-wrap: break-word;
+  overflow-wrap: break-word;
   opacity: 0;
-  z-index: 15; /* Make sure it's above other elements */
+  z-index: 15;
   transition: opacity 0.2s ease-in, opacity 3s ease-out;
   display: inline-block;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -93,7 +93,7 @@ body, html {
   top: 10px;
   margin: 1%;
   z-index: 15;
-  opacity: 1; /* Explicit opacity to ensure visibility */
+  opacity: 1; /* Ensure visibility */
 }
 
 @media (max-width: 768px) {
@@ -117,15 +117,17 @@ body, html {
 }
 
 
+
   </style>
 <body>
 
 <div id="backgroundContainer">
   <div id="monster"></div>
   <div id="hungerCounter"></div>
-  <div id="messageBubble" class="desktop"></div>
 </div>
+<div id="messageBubble" class="desktop"></div>
 <div id="messageBubble" class="mobile"></div>
+
 
 
   <script>
