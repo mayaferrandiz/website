@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+
 body, html {
   margin: 0;
-  height: 100%;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
+  height: 100%;
 }
 
+/* Background container for the monster animation */
 #backgroundContainer {
   position: relative;
   width: 100%;
@@ -20,8 +20,10 @@ body, html {
   background: url('monster-background.webp') no-repeat center center;
   background-size: cover;
   z-index: 1; /* Background layer */
+  transition: height 0.3s ease-in-out; /* Smooth height transition */
 }
 
+/* Monster styling */
 #monster {
   position: absolute;
   width: 32px;
@@ -33,6 +35,7 @@ body, html {
   z-index: 2; /* Above the background */
 }
 
+/* Message bubble styling */
 #messageBubble {
   text-align: left;
   font-size: 20px;
@@ -44,15 +47,16 @@ body, html {
   padding: 10px 20px;
   margin: 6%;
   max-width: 80%;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  z-index: 3; /* Above the background */
+  word-wrap: break-word; /* Ensure long words break onto the next line */
+  overflow-wrap: break-word; /* Similar to word-wrap, ensures word breaks */
+  opacity: 0;
+  z-index: 10;
   transition: opacity 0.2s ease-in, opacity 3s ease-out;
   display: inline-block;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-  opacity: 0; /* Hidden by default */
 }
 
+/* Counter to show the number of cookies or hunger level */
 #hungerCounter {
   text-align: right;
   font-size: 20px;
@@ -60,23 +64,13 @@ body, html {
   padding: 2px 5px;
   border-radius: 10px;
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 0px;
+  top: 0px;
   margin: 1%;
-  z-index: 4; /* Above everything else */
+  z-index: 5; /* Above the background */
 }
 
-@media (min-width: 769px) {
-  #messageBubble {
-    position: absolute; /* Float it at the top */
-    top: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4; /* Keep it above the background and monster */
-    margin-bottom: 0; /* Remove any bottom margin */
-  }
-}
-
+/* Mobile-specific styles */
 @media (max-width: 768px) {
   #messageBubble {
     position: fixed; /* Position at the bottom of the screen */
@@ -88,8 +82,11 @@ body, html {
     z-index: 4; /* Ensure it's above other content */
     margin: 0; /* No additional margin needed */
   }
-}
 
+  #backgroundContainer {
+    height: auto; /* Allow it to resize dynamically */
+  }
+}
 
   </style>
 </head>
@@ -103,6 +100,34 @@ body, html {
   <div id="hungerCounter"></div>
 
   <script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const backgroundContainer = document.getElementById('backgroundContainer');
+      const messageBubble = document.getElementById('messageBubble');
+
+      function adjustBackgroundHeight() {
+        if (window.innerWidth <= 768) {
+          // Get the height of the message bubble
+          const bubbleHeight = messageBubble.getBoundingClientRect().height;
+
+          // Get the remaining available height of the iframe (excluding the message bubble)
+          const totalHeight = window.innerHeight;
+          const adjustedHeight = totalHeight - bubbleHeight - 20; // Adjust for padding
+
+          // Apply the new height to the background container
+          backgroundContainer.style.height = `${adjustedHeight}px`;
+        } else {
+          // Reset height for larger screens
+          backgroundContainer.style.height = '';
+        }
+      }
+
+      // Adjust height on page load and resize
+      adjustBackgroundHeight();
+      window.addEventListener('resize', adjustBackgroundHeight);
+    });
+
+
     const monster = document.getElementById('monster');
     const messageBubble = document.getElementById('messageBubble');
     const hungerCounter = document.getElementById('hungerCounter');
