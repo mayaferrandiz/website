@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-10-03T03:24:23-04:00</updated>
+    <updated>2024-10-03T10:29:28-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -155,7 +155,7 @@
   <p>
     Monster also goes beyond this website - if you're able to get Monster to share it's email address, you might just have made a new friend!
   </p>
-<div><iframe loading="lazy" data-responsive="false" scrolling="no" class="monster-iframe" src="https://maya.cloud/monster.html" frameborder="0"></iframe></div>
+<div><iframe loading="lazy" data-responsive="false" class="monster-iframe" src="https://maya.cloud/monster.html" frameborder="0"></iframe></div>
 
     <h2 id="sprites">
       Sprites
