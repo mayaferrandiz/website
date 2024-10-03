@@ -48,7 +48,7 @@ body, html {
 }
 
 #messageBubble {
-  text-align: center;
+  text-align: left;
   font-size: 20px;
   color: black;
   font-family: Figtree, sans-serif;
@@ -56,8 +56,6 @@ body, html {
   border: 2px solid black;
   border-radius: 30px;
   padding: 10px 20px;
-  margin: 6%;
-  max-width: 90%;
   word-wrap: break-word;
   overflow-wrap: break-word;
   opacity: 0;
@@ -69,20 +67,18 @@ body, html {
 
 #messageBubble.desktop {
   position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
+  max-width: 90%;
+  margin: 6%;
+  top: 0px;
+  left: 0px;
 }
 
 #messageBubble.mobile {
-  position: fixed;
-  bottom: 10px; /* Set 10px from bottom for visibility */
-  left: 50%;
-  transform: translateX(-50%);
-  width: auto;
-  max-width: 90%;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  margin:0 1% 1% 1%;
   box-sizing: border-box;
-  padding: 10px 20px;
   background-color: white;
   border: 2px solid black;
   border-radius: 30px;
