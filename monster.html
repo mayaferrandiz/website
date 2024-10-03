@@ -6,20 +6,19 @@
   <style>
     body, html {
       margin: 0;
-      overflow: hidden;
+      overflow: hidden; /* Prevent scrolling */
       height: 100%;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
     }
 
     #backgroundContainer {
       position: relative;
       flex-grow: 1;
       width: 100%;
-      max-height: 400px; /* Limit background container height */
-      overflow: hidden;
+      height: calc(100vh - 100px); /* Set height dynamically to fill remaining space */
+      max-height: 400px; /* Limit background container height for smaller devices */
+      overflow: hidden; /* Ensure no overflow from this container */
       display: flex;
       justify-content: center;
       align-items: flex-end;
