@@ -17,94 +17,116 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body, html {
-      margin: 0;
-      overflow: hidden;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
+body, html {
+  margin: 0;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
 
-    #backgroundContainer {
-      width: 100%;
-      height: auto;
-      min-height: 60vh; /* Ensure a reasonable height for the background */
-      background: url('monster-background.webp') no-repeat center center;
-      background-size: cover;
-      position: relative; /* Relative positioning to position elements inside */
-    }
+#backgroundContainer {
+  width: 100%;
+  height: 100%;
+  position: relative; /* Relative positioning for internal elements */
+  flex-grow: 1;
+  background: url('monster-background.webp') no-repeat center center;
+  background-size: cover;
+}
 
-    #monster {
-      position: absolute;
-      bottom: 10%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 32px;
-      height: 32px;
-      background: no-repeat 0 0;
-      transition: transform 0.3s ease-in-out;
-      will-change: transform, background-position;
-    }
+#monster {
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32px;
+  height: 32px;
+  background: no-repeat 0 0;
+  transition: transform 0.3s ease-in-out;
+  will-change: transform, background-position;
+}
 
-    #messageBubble {
-      text-align: left;
-      font-size: 20px;
-      color: black;
-      font-family: Figtree, sans-serif;
-      background-color: white;
-      border: 2px solid black;
-      border-radius: 30px;
-      padding: 10px 20px;
-      margin: 6%;
-      max-width: 80%;
-      word-wrap: break-word; 
-      overflow-wrap: break-word; 
-      opacity: 0;
-      z-index: 10;
-      transition: opacity 0.2s ease-in, opacity 3s ease-out;
-      display: inline-block;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    }
+#messageBubble {
+  text-align: left;
+  font-size: 20px;
+  color: black;
+  font-family: Figtree, sans-serif;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin: 6%;
+  max-width: 80%;
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+  opacity: 0;
+  z-index: 15; /* Make sure it's above other elements */
+  transition: opacity 0.2s ease-in, opacity 3s ease-out;
+  display: inline-block;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
 
-    #hungerCounter {
-      text-align: right;
-      font-size: 20px;
-      background-color: white;
-      padding: 2px 5px;
-      border-radius: 10px;
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      margin: 1%;
-      z-index: 15;
-      opacity:0;
-    }
+#messageBubble.desktop {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
 
-    @media (max-width: 768px) {
-      #backgroundContainer {
-        min-height: 100vh;
-      }
+#messageBubble.mobile {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 20px;
+}
 
-      #messageBubble {
-        position: fixed;
-        bottom: 0;
-        width: calc(100% - 20px);
-        margin: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        box-sizing: border-box;
-      }
-    }
+#hungerCounter {
+  text-align: right;
+  font-size: 20px;
+  background-color: white;
+  padding: 2px 5px;
+  border-radius: 10px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  margin: 1%;
+  z-index: 15;
+  opacity: 1; /* Explicit opacity to ensure visibility */
+}
+
+@media (max-width: 768px) {
+  #messageBubble.desktop {
+    display: none;
+  }
+
+  #messageBubble.mobile {
+    display: block;
+  }
+}
+
+@media (min-width: 769px) {
+  #messageBubble.mobile {
+    display: none;
+  }
+
+  #messageBubble.desktop {
+    display: block;
+  }
+}
+
 
   </style>
 <body>
 
-  <div id="backgroundContainer">
-    <div id="monster"></div>
-    <div id="hungerCounter"></div>
-  </div>
-  <div id="messageBubble"></div>
+<div id="backgroundContainer">
+  <div id="monster"></div>
+  <div id="hungerCounter"></div>
+  <div id="messageBubble" class="desktop"></div>
+</div>
+<div id="messageBubble" class="mobile"></div>
+
 
   <script>
     const monster = document.getElementById('monster');
