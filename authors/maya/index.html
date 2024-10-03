@@ -14,7 +14,7 @@
     		const reappearTime = 2 * 60 * 60 * 1000;
     		let isFoodCollected = false;
     
-    		if (lastCollected && Date.now() - lastCollected > reappearTime) isFoodCollected = true;
+    		if (lastCollected && Date.now() - lastCollected < reappearTime) isFoodCollected = true;
 
             if (isFoodCollected) {
                 // Hide the iframe if the food has been collected
