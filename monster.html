@@ -79,16 +79,18 @@ body, html {
     bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 20px); /* Allow some margin from edges */
+    width: auto; /* Adjust width to only be as wide as necessary */
     max-width: 90%;
     z-index: 4; /* Ensure it's above other content */
+    box-sizing: border-box; /* Include padding in the width calculation */
   }
 
   #backgroundContainer {
     height: calc(100vh - 70px); /* Adjust height to avoid overlap with the message bubble */
-    background-size: cover; /* Adjust to fit the container without stretching */
+    background-size: contain; /* Maintain the background proportions */
   }
 }
+
 
 
   </style>
