@@ -10,14 +10,15 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      align-items: center;
     }
 
     #backgroundContainer {
       position: relative;
       flex-grow: 1;
       width: 100%;
-      height: 100%; /* Ensure it takes full height without overflow */
-      overflow: hidden; /* Ensure no overflow from this container */
+      max-height: 400px; /* Limit background container height */
+      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: flex-end;
@@ -30,9 +31,6 @@
       object-fit: cover;
       object-position: top;
       z-index: 1;
-      position: absolute;
-      top: 0;
-      left: 0;
     }
 
     #monster {
@@ -44,6 +42,13 @@
       transition: transform 0.3s ease-in-out;
       will-change: transform, background-position;
       z-index: 2;
+    }
+
+    #messageBubbleContainer {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      text-align: center;
     }
 
     #messageBubble {
@@ -81,24 +86,21 @@
 
     /* Desktop styles */
     @media (min-width: 768px) {
-      #messageBubble {
+      #messageBubbleContainer {
         position: absolute;
         top: 10px;
         left: 10px;
+        width: calc(100% - 20px);
         max-width: 90%;
-        margin: 6%;
       }
     }
 
     /* Mobile styles */
     @media (max-width: 767px) {
-      #messageBubble {
-        position: absolute;
-        bottom: 10px; /* Ensure it's just below the background image */
-        left: 10px;
-        width: calc(100% - 20px);
-        box-sizing: border-box;
-        z-index: 15;
+      #messageBubbleContainer {
+        position: relative;
+        margin-top: 10px;
+        width: 100%;
       }
     }
   </style>
@@ -107,9 +109,11 @@
   <div id="backgroundContainer">
     <img id="backgroundImage" src="https://maya.cloud/monster-background.webp" alt="Background">
     <div id="monster"></div>
+    <div id="hungerCounter"></div>
   </div>
-  <div id="messageBubble"></div>
-  <div id="hungerCounter"></div>
+  <div id="messageBubbleContainer">
+    <div id="messageBubble"></div>
+  </div>
   <script>
     const monster = document.getElementById('monster');
     const messageBubble = document.getElementById('messageBubble');
