@@ -306,7 +306,12 @@ body, html {
       for (let key in hungerStates) {
         const state = hungerStates[key];
         if (hunger > state.lowerBound && hunger <= state.upperBound) {
-          if (currentHungerState === undefined || state.name !== currentHungerState.name) messageQueue.unshift(...state.messages);
+
+          if (currentHungerState === undefined) messageQueue.unshift(...state.messages);
+          else if (state.name !== currentHungerState.name){
+            if (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull') messageQueue = []
+            messageQueue.unshift(...state.messages);
+          }
           currentHungerState = state;
 
           speed = currentHungerState.speed;
