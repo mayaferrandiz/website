@@ -5,74 +5,77 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body, html {
-      margin: 0;
-      overflow: hidden;
-      height: 100%;
-    }
+  margin: 0;
+  overflow: hidden;
+  height: 100%;
+}
 
-    #backgroundContainer {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      background: url('monster-background.webp') no-repeat center center;
-      background-size: cover;
-      z-index: 1;
-    }
+#backgroundContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: url('monster-background.webp') no-repeat center center;
+  background-size: cover;
+  z-index: 1; /* Background layer */
+}
 
-    #monster {
-      position: absolute;
-      width: 32px;
-      height: 32px;
-      background: no-repeat 0 0;
-      bottom: 10%;
-      transition: transform 0.3s ease-in-out;
-      will-change: transform, background-position;
-      z-index: 2; /* Above the background */
-    }
+#monster {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  background: no-repeat 0 0;
+  bottom: 10%;
+  transition: transform 0.3s ease-in-out;
+  will-change: transform, background-position;
+  z-index: 2; /* Above the background */
+}
 
-    #messageBubble {
-      text-align: left;
-      font-size: 20px;
-      color: black;
-      font-family: Figtree;
-      background-color: white;
-      border: 2px solid black;
-      border-radius: 30px;
-      padding: 10px 20px;
-      margin: 6%;
-      max-width: 80%;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      opacity: 0;
-      z-index: 3; /* Above the monster */
-      transition: opacity 0.2s ease-in, opacity 3s ease-out;
-      display: inline-block;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    }
+#messageBubble {
+  position: absolute; /* Change to absolute to position relative to the parent container */
+  top: 20px; /* Space from the top */
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Center the bubble */
+  text-align: left;
+  font-size: 20px;
+  color: black;
+  font-family: Figtree;
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 30px;
+  padding: 10px 20px;
+  margin: 6%;
+  max-width: 80%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  opacity: 0;
+  z-index: 3; /* Ensure it's above the monster and background */
+  transition: opacity 0.2s ease-in, opacity 3s ease-out;
+  display: inline-block;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
 
-    #hungerCounter {
-      text-align: right;
-      font-size: 20px;
-      background-color: white;
-      padding: 2px 5px;
-      border-radius: 10px;
-      position: absolute;
-      right: 0;
-      top: 0;
-      margin: 1%;
-      z-index: 4; /* Above everything else */
-    }
+#hungerCounter {
+  text-align: right;
+  font-size: 20px;
+  background-color: white;
+  padding: 2px 5px;
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 1%;
+  z-index: 4; /* Above everything else */
+}
 
-    @media (max-width: 768px) {
-      #messageBubble {
-        position: fixed;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 0; /* Ensure it's below other elements on mobile */
-      }
-    }
-
+@media (max-width: 768px) {
+  #messageBubble {
+    position: fixed; /* Ensure it stays visible at the bottom */
+    bottom: 0; /* Attach to the bottom of the viewport */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4; /* Bring it to the front on mobile */
+  }
+}
 
   </style>
 </head>
