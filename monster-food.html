@@ -65,16 +65,20 @@
 
     function sendIframeSize(height = document.documentElement.scrollHeight, width = document.documentElement.scrollWidth) {
       try {
-        const iframeId = typeof window.frameElement?.id === 'string' ? window.frameElement.id : 'defaultFood';
-        window.parent.postMessage(
-          {
-            type: 'resizeIframe',
-            iframeId: iframeId,
-            height: height,
-            width: width
-          },
-          '*'
-        );
+        const iframeId = window.frameElement?.id ? window.frameElement.id : 'defaultFood';
+        const parentHeight = window.parent.document.documentElement.scrollHeight;
+
+        if (height !== parentHeight) {
+          window.parent.postMessage(
+            {
+              type: 'resizeIframe',
+              iframeId: iframeId,
+              height: height,
+              width: width
+            },
+            '*'
+          );
+        }
       } catch (error) {
         console.error("Failed to send iframe size:", error);
       }

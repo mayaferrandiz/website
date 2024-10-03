@@ -16,6 +16,7 @@
       position: relative;
       flex-grow: 1;
       width: 100%;
+      height: 100%; /* Ensure it takes full height without overflow */
       overflow: hidden; /* Ensure no overflow from this container */
       display: flex;
       justify-content: center;
@@ -36,7 +37,7 @@
 
     #monster {
       position: absolute;
-      bottom: 10%; /* Keep the monster near the bottom of the background */
+      bottom: 10%;
       width: 32px;
       height: 32px;
       background: no-repeat 0 0;
@@ -92,8 +93,8 @@
     /* Mobile styles */
     @media (max-width: 767px) {
       #messageBubble {
-        position: absolute; /* Keep it below the background container */
-        bottom: -60px; /* Offset to make sure it is below the background image */
+        position: absolute;
+        bottom: 10px; /* Ensure it's just below the background image */
         left: 10px;
         width: calc(100% - 20px);
         box-sizing: border-box;
@@ -438,16 +439,25 @@
       }
     }
 
-    function sendIframeSize() {
-      window.parent.postMessage(
-        {
-          type: 'resizeIframe',
-          iframeId: window.frameElement.id,
-          height: document.documentElement.scrollHeight,
-          width: document.documentElement.scrollWidth
-        },
-        '*'
-      );
+    function sendIframeSize(height = document.documentElement.scrollHeight, width = document.documentElement.scrollWidth) {
+      try {
+        const iframeId = window.frameElement?.id ? window.frameElement.id : 'defaultFood';
+        const parentHeight = window.parent.document.documentElement.scrollHeight;
+
+        if (height !== parentHeight) {
+          window.parent.postMessage(
+            {
+              type: 'resizeIframe',
+              iframeId: iframeId,
+              height: height,
+              width: width
+            },
+            '*'
+          );
+        }
+      } catch (error) {
+        console.error("Failed to send iframe size:", error);
+      }
     }
 
     // Mouse and touch event listeners
@@ -480,8 +490,8 @@
       }
     });
 
-    window.addEventListener('load', sendIframeSize);
-    window.addEventListener('resize', sendIframeSize);
+    window.addEventListener('load', () => sendIframeSize());
+    window.addEventListener('resize', () => sendIframeSize());
 
     // Initial monster state
     switchAnimation(animations.idle);
