@@ -8,12 +8,14 @@
   margin: 0;
   overflow: hidden;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 #backgroundContainer {
+  flex: 1; /* Let the background container take all available space except for the message bubble */
   position: relative;
   width: 100%;
-  height: 100%;
   background: url('monster-background.webp') no-repeat center center;
   background-size: cover;
   z-index: 1; /* Background layer */
@@ -31,8 +33,6 @@
 }
 
 #messageBubble {
-  position: absolute; /* Change to absolute to position relative to the parent container */
-  top: 0px; /* Space from the top */
   text-align: left;
   font-size: 20px;
   color: black;
@@ -46,7 +46,7 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
   opacity: 0;
-  z-index: 3; /* Ensure it's above the monster and background */
+  z-index: 3; /* Ensure it's above the background */
   transition: opacity 0.2s ease-in, opacity 3s ease-out;
   display: inline-block;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
@@ -67,13 +67,13 @@
 
 @media (max-width: 768px) {
   #messageBubble {
-    position: fixed; /* Ensure it stays visible at the bottom */
-    bottom: 0; /* Attach to the bottom of the viewport */
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 4; /* Bring it to the front on mobile */
+    position: static; /* Allow the message bubble to be positioned based on the flex layout */
+    align-self: center; /* Center the message bubble horizontally */
+    margin-bottom: 10px; /* Add some space between the bubble and the bottom */
+    z-index: 4; /* Keep it above everything */
   }
 }
+
 
   </style>
 </head>
@@ -114,7 +114,7 @@
         nextTrigger:'timed'
       },
       {
-        body:"i think there's at least one cookie somewhere in her <a href=\"javascript:void(0)\" onclick=\"window.top.location.href='https://maya.cloud/portfolio/'; return false;\">portfolio</a>",
+        body:"i think there's at least one cookie somewhere in her <a href=\"javascript:void(0)\" onclick=\"window.top.location.href='https://maya.cloud/#portfolio/'; return false;\">portfolio</a>",
         nextTrigger:'click'
       },
       {
