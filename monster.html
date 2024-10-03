@@ -27,13 +27,16 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: bottom;
+      object-position: top;
       z-index: 1;
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
     #monster {
       position: absolute;
-      bottom: 10%;
+      bottom: 10%; /* Keep the monster near the bottom of the background */
       width: 32px;
       height: 32px;
       background: no-repeat 0 0;
@@ -89,25 +92,24 @@
     /* Mobile styles */
     @media (max-width: 767px) {
       #messageBubble {
-        position: relative;
-        margin: 10px auto;
+        position: fixed; /* Make it fixed to prevent affecting the layout */
+        bottom: 10px; /* Align it above the monster */
+        left: 10px;
         width: calc(100% - 20px);
         box-sizing: border-box;
-        background-color: white;
-        border: 2px solid black;
-        border-radius: 30px;
         z-index: 15;
       }
     }
+
   </style>
 </head>
 <body>
-  <div id="backgroundContainer">
-    <img id="backgroundImage" src="https://maya.cloud/monster-background.webp" alt="Background Image">
+<div id="backgroundContainer">
+    <img id="backgroundImage" src="your-background-image-url.png" alt="Background">
     <div id="monster"></div>
-    <div id="hungerCounter"></div>
   </div>
   <div id="messageBubble"></div>
+  <div id="hungerCounter"></div>
   <script>
     const monster = document.getElementById('monster');
     const messageBubble = document.getElementById('messageBubble');
