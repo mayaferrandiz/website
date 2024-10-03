@@ -14,6 +14,7 @@ body, html {
 
 #backgroundContainer {
   position: relative;
+  flex-grow: 1;
   width: 100%;
   height: 100%; /* Fill the entire viewport */
   overflow: hidden;
@@ -46,16 +47,35 @@ body, html {
   box-sizing: border-box;
   text-align: center;
   padding: 10px 10px 0 10px;
-  position: fixed; /* Fixed to prevent overlapping */
-  bottom: 0;
-  left: 0;
-  background-color: rgba(255, 255, 255, 0.8); /* Background for better readability */
   z-index: 3; /* Ensure it stays on top */
+}
+
+/* Desktop styles */
+@media (min-width: 768px) {
+  #messageBubbleContainer {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    max-width: 90%;
+    margin: 0;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 767px) {
+  #messageBubbleContainer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    margin: 0;
+    width: calc(100% - 20px);
+    padding-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Background for better readability */
+  }
 }
 
 #messageBubble {
   display: inline-block;
-  max-width: calc(100% - 20px);
   font-size: 20px;
   color: black;
   font-family: Figtree, sans-serif;
