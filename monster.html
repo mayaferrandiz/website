@@ -4,128 +4,124 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    body, html {
+      margin: 0;
+      overflow: hidden; /* Prevent scrolling entirely */
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-body, html {
-  margin: 0;
-  overflow: hidden; /* Prevent scrolling entirely */
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
+    #backgroundContainer {
+      position: relative;
+      flex-grow: 1;
+      width: 100%;
+      overflow: hidden; /* Ensure no overflow from this container */
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      box-sizing: border-box;
+    }
 
-#backgroundContainer {
-  position: relative;
-  flex-grow: 1;
-  width: 100%;
-  overflow: hidden; /* Ensure no overflow from this container */
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  box-sizing: border-box;
-}
+    #backgroundImage {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top;
+      z-index: 1;
+    }
 
-#backgroundImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  z-index: 1;
-}
+    #monster {
+      position: absolute;
+      bottom: 10%;
+      width: 32px;
+      height: 32px;
+      background: no-repeat 0 0;
+      transition: transform 0.3s ease-in-out;
+      will-change: transform, background-position;
+      z-index: 2;
+    }
 
-#monster {
-  position: absolute;
-  bottom: 10%;
-  width: 32px;
-  height: 32px;
-  background: no-repeat 0 0;
-  transition: transform 0.3s ease-in-out;
-  will-change: transform, background-position;
-  z-index: 2;
-}
+    #messageBubble {
+      text-align: left;
+      font-size: 20px;
+      color: black;
+      font-family: Figtree, sans-serif;
+      background-color: white;
+      border: 2px solid black;
+      border-radius: 30px;
+      padding: 10px 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      opacity: 0;
+      z-index: 15;
+      transition: opacity 0.2s ease-in, opacity 3s ease-out;
+      display: inline-block;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    }
 
-#messageBubble {
-  text-align: left;
-  font-size: 20px;
-  color: black;
-  font-family: Figtree, sans-serif;
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 30px;
-  padding: 10px 20px;
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  opacity: 0;
-  z-index: 15;
-  transition: opacity 0.2s ease-in, opacity 3s ease-out;
-  display: inline-block;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-}
+    /* Hunger Counter */
+    #hungerCounter {
+      text-align: right;
+      font-size: 20px;
+      background-color: white;
+      padding: 2px 5px;
+      border-radius: 10px;
+      position: absolute;
+      right: 0px;
+      top: 0px;
+      margin: 1%;
+      opacity: 1;
+      z-index: 20;
+    }
 
-/* Hunger Counter */
-#hungerCounter {
-  text-align: right;
-  font-size: 20px;
-  background-color: white;
-  padding: 2px 5px;
-  border-radius: 10px;
-  position: absolute;
-  right: 0px;
-  top: 0px;
-  margin: 1%;
-  opacity: 1;
-  z-index: 20;
-}
+    /* Desktop styles */
+    @media (min-width: 768px) {
+      #messageBubble {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        max-width: 90%;
+        margin: 6%;
+      }
+    }
 
-/* Desktop styles */
-@media (min-width: 768px) {
-  #messageBubble {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    max-width: 90%;
-    margin: 6%;
-  }
-}
-
-/* Mobile styles */
-@media (max-width: 767px) {
-  #messageBubble {
-    position: relative;
-    margin: 10px auto;
-    width: calc(100% - 20px);
-    box-sizing: border-box;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 30px;
-    z-index: 15;
-  }
-}
-
-
+    /* Mobile styles */
+    @media (max-width: 767px) {
+      #messageBubble {
+        position: relative;
+        margin: 10px auto;
+        width: calc(100% - 20px);
+        box-sizing: border-box;
+        background-color: white;
+        border: 2px solid black;
+        border-radius: 30px;
+        z-index: 15;
+      }
+    }
   </style>
+</head>
 <body>
-
-<div id="backgroundContainer">
-  <img id="backgroundImage" src="https://maya.cloud/monster-background.webp" alt="Background Image">
-  <div id="monster"></div>
-  <div id="hungerCounter"></div>
-</div>
-<div id="messageBubble"></div>
-
-
+  <div id="backgroundContainer">
+    <img id="backgroundImage" src="https://maya.cloud/monster-background.webp" alt="Background Image">
+    <div id="monster"></div>
+    <div id="hungerCounter"></div>
+  </div>
+  <div id="messageBubble"></div>
   <script>
+
+    // Initial monster state
+    switchAnimation(animations.idle);
+    setHungerState();
+    updateMessage();
+    saveHunger();
+
+    // Periodic updates
+    setInterval(handleHungerReplenished, 1000);
+
+    updateFrame();
+    requestAnimationFrame(moveMonster);
+
     const monster = document.getElementById('monster');
     const messageBubble = document.getElementById('messageBubble');
     const hungerCounter = document.getElementById('hungerCounter');
@@ -269,48 +265,39 @@ body, html {
     let lastFrameTime = Date.now();
     let currentFrame = 0;
 
-    // Initial monster state
-    switchAnimation(animations.idle);
-    setHungerState();
-    updateMessage();
-    saveHunger();
-
-    // Periodic updates
-    setInterval(handleHungerReplenished, 1000);
-
-  // Update message display function
-  function updateMessage() {
-    if (messageQueue.length === 0) {
-      if (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull') {
-        messageQueue.push(...currentHungerState.messages);
-      } else {
-        messageQueue.push(...defaultMessages);
+    // Update message display function
+    function updateMessage() {
+      if (messageQueue.length === 0) {
+        if (currentHungerState.name === 'empty' || currentHungerState.name === 'overfull') {
+          messageQueue.push(...currentHungerState.messages);
+        } else {
+          messageQueue.push(...defaultMessages);
+        }
       }
-    }
 
-    const message = messageQueue.shift();
+      const message = messageQueue.shift();
 
-    document.removeEventListener('click', updateMessage);
+      document.removeEventListener('click', updateMessage);
 
-    if (messageBubble.innerText !== message.body) {
-      messageBubble.style.visibility = 'hidden'; // Start hidden
-      messageBubble.style.opacity = 0;
+      if (messageBubble.innerText !== message.body) {
+        messageBubble.style.visibility = 'hidden'; // Start hidden
+        messageBubble.style.opacity = 0;
+
+        setTimeout(() => {
+          messageBubble.innerHTML = message.body; // Update the text
+          messageBubble.style.visibility = 'visible'; // Ensure visibility
+          messageBubble.style.opacity = 1; // Fade in the message
+        }, 500);
+      }
 
       setTimeout(() => {
-        messageBubble.innerHTML = message.body; // Update the text
-        messageBubble.style.visibility = 'visible'; // Ensure visibility
-        messageBubble.style.opacity = 1; // Fade in the message
+        if (message.nextTrigger === 'timed') {
+          setTimeout(updateMessage, 5000);
+        } else if (message.nextTrigger == 'click') {
+          document.addEventListener('click', updateMessage);
+        }
       }, 500);
     }
-
-    setTimeout(() => {
-      if (message.nextTrigger === 'timed') {
-        setTimeout(updateMessage, 5000);
-      } else if (message.nextTrigger == 'click') {
-        document.addEventListener('click', updateMessage);
-      }
-    }, 500);
-  }
 
     // Queue up next hunger state for next update interval
     function setHungerState() {
@@ -384,7 +371,6 @@ body, html {
       }
       requestAnimationFrame(updateFrame);
     }
-    updateFrame();
 
     // Switch animation function
     function switchAnimation(animation) {
@@ -464,6 +450,18 @@ body, html {
       }
     }
 
+    function sendIframeSize() {
+      window.parent.postMessage(
+        {
+          type: 'resizeIframe',
+          iframeId: window.frameElement.id,
+          height: document.documentElement.scrollHeight,
+          width: document.documentElement.scrollWidth
+        },
+        '*'
+      );
+    }
+
     // Mouse and touch event listeners
     document.addEventListener('mousemove', (e) => {
       movementThreshold = cursorThreshold;
@@ -494,7 +492,9 @@ body, html {
       }
     });
 
-    requestAnimationFrame(moveMonster);
+    window.addEventListener('load', sendIframeSize);
+    window.addEventListener('resize', sendIframeSize);
+
   </script>
 </body>
 </html>

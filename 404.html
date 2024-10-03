@@ -1,36 +1,15 @@
-<!DOCTYPE html><html lang="en-us"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Error 404 - Maya&#x27;s Cloud</title><meta name="robots" content="noindex, follow"><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="alternate" type="application/atom+xml" href="https://maya.cloud/feed.xml"><link rel="alternate" type="application/json" href="https://maya.cloud/feed.json"><meta property="og:title" content="Maya's Cloud"><meta property="og:image" content="https://maya.cloud/media/website/download-1.svg"><meta property="og:image:width" content="1024"><meta property="og:image:height" content="621"><meta property="og:site_name" content="Maya's Cloud"><meta property="og:description" content=""><meta property="og:url" content="https://maya.cloud/portfolio/"><meta property="og:type" content="website"><link rel="shortcut icon" href="https://maya.cloud/media/website/favicon-2.ico" type="image/x-icon"><link rel="preload" href="https://maya.cloud/assets/dynamic/fonts/figtree/figtree.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://maya.cloud/assets/dynamic/fonts/figtree/figtree-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://maya.cloud/assets/dynamic/fonts/gluten/gluten.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="https://maya.cloud/assets/css/style.css?v=1af3781e665486de376e86cc0a1008be"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Organization","name":"Maya's Cloud","logo":"https://maya.cloud/media/website/download-1.svg","url":"https://maya.cloud/"}</script><noscript><style>img[loading] {
+<!DOCTYPE html><html lang="en-us"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Error 404 - Maya&#x27;s Cloud</title><meta name="robots" content="noindex, follow"><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="alternate" type="application/atom+xml" href="https://maya.cloud/feed.xml"><link rel="alternate" type="application/json" href="https://maya.cloud/feed.json"><meta property="og:title" content="Maya's Cloud"><meta property="og:image" content="https://maya.cloud/media/website/download-1.svg"><meta property="og:image:width" content="1024"><meta property="og:image:height" content="621"><meta property="og:site_name" content="Maya's Cloud"><meta property="og:description" content=""><meta property="og:url" content="https://maya.cloud/portfolio/"><meta property="og:type" content="website"><link rel="shortcut icon" href="https://maya.cloud/media/website/favicon-2.ico" type="image/x-icon"><link rel="preload" href="https://maya.cloud/assets/dynamic/fonts/figtree/figtree.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://maya.cloud/assets/dynamic/fonts/figtree/figtree-italic.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="https://maya.cloud/assets/dynamic/fonts/gluten/gluten.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="https://maya.cloud/assets/css/style.css?v=2fb248fd32599869bee14266cb34a75b"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Organization","name":"Maya's Cloud","logo":"https://maya.cloud/media/website/download-1.svg","url":"https://maya.cloud/"}</script><noscript><style>img[loading] {
                     opacity: 1;
-                }</style></noscript><script>document.addEventListener("DOMContentLoaded", function () {
-	var frames = document.getElementsByClassName("monster-food");
+                }</style></noscript><script>function resizeIframe(iframe) {
+    iframe.style.height = iframe.contentWindow.document.documentElement.scrollHeight + 'px';
+  }
 
-    Array.prototype.forEach.call(frames, (frame) => {
-        // Extract the 'id' parameter from the iframe's src URL
-        const urlParams = new URLSearchParams(new URL(frame.src).search);
-        const foodId = urlParams.get('id');
-
-        if (foodId) {
-            // Use the extracted food ID to check if it's been collected
-            const lastCollected = localStorage.getItem("food_"+foodId);
-    		const reappearTime = 2 * 60 * 60 * 1000;
-    		let isFoodCollected = false;
-    
-    		if (lastCollected && Date.now() - lastCollected < reappearTime) isFoodCollected = true;
-
-            if (isFoodCollected) {
-                // Hide the iframe if the food has been collected
-                frame.style.display = 'none';
-            } else {
-                // Adjust iframe height and width based on content size if needed
-                frame.onload = function () {
-                    const frameBody = frame.contentWindow.document.body;
-                    if (frameBody && frameBody.scrollHeight > 0 && frameBody.scrollWidth > 0) {
-                        frame.style.height = frameBody.scrollHeight + 'px';
-                        frame.style.width = frameBody.scrollWidth + 'px';
-                    } else {
-                        frame.style.display = 'none';
-                    }
-                };
-            }
-        }
-    });
-})</script></head><body class="error-template"><div class="container"><header class="header" id="js-header"><a href="https://maya.cloud/" class="logo"><img src="https://maya.cloud/media/website/download-1.svg" alt="Maya&#x27;s Cloud" width="1024" height="621"></a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://maya.cloud/#portfolio" target="_self">Portfolio</a></li><li><a href="https://maya.cloud/contact/" target="_self">Contact</a></li></ul></nav></header><main class="page page--search"><article class="post align-center wrapper"><header class="hero"><h1>404</h1></header><p>The page you were looking for appears to have been moved, deleted or does not exist. You could go back to where you were or head straight to our home page.</p><p><a href="https://maya.cloud/" class="btn hero__cta btn--icon"><span>← Go home</span></a></p></article></main><footer class="footer"><div class="footer__copyright">© Maya Ferrandiz 2024 <a href="https://maya.cloud/privacy-policy">Privacy Policy</a></div></footer></div><script defer="defer" src="https://maya.cloud/assets/js/scripts.min.js?v=4268bfae06e330d473c424d50f09abda"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.navbar'};</script><script>/*<![CDATA[*/var images=document.querySelectorAll("img[loading]");for(var i=0;i<images.length;i++){if(images[i].complete){images[i].classList.add("is-loaded")}else{images[i].addEventListener("load",function(){this.classList.add("is-loaded")},false)}};/*]]>*/</script></body></html>
+  window.addEventListener('message', function(event) {
+    if (event.data.type === 'resizeIframe' && event.source === iframe.contentWindow) {
+      const iframe = document.getElementById(event.data.iframeId);
+      if (iframe) {
+        iframe.style.height = event.data.height + 'px';
+    	iframe.style.width = event.data.width + 'px';
+      }
+    }
+  });</script></head><body class="error-template"><div class="container"><header class="header" id="js-header"><a href="https://maya.cloud/" class="logo"><img src="https://maya.cloud/media/website/download-1.svg" alt="Maya&#x27;s Cloud" width="1024" height="621"></a><nav class="navbar js-navbar"><button class="navbar__toggle js-toggle" aria-label="Menu"><span class="navbar__toggle-box"><span class="navbar__toggle-inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://maya.cloud/#portfolio" target="_self">Portfolio</a></li><li><a href="https://maya.cloud/contact/" target="_self">Contact</a></li></ul></nav></header><main class="page page--search"><article class="post align-center wrapper"><header class="hero"><h1>404</h1></header><p>The page you were looking for appears to have been moved, deleted or does not exist. You could go back to where you were or head straight to our home page.</p><p><a href="https://maya.cloud/" class="btn hero__cta btn--icon"><span>← Go home</span></a></p></article></main><footer class="footer"><div class="footer__copyright">© Maya Ferrandiz 2024 <a href="https://maya.cloud/privacy-policy">Privacy Policy</a></div></footer></div><script defer="defer" src="https://maya.cloud/assets/js/scripts.min.js?v=4268bfae06e330d473c424d50f09abda"></script><script>window.publiiThemeMenuConfig={mobileMenuMode:'sidebar',animationSpeed:300,submenuWidth: 'auto',doubleClickTime:500,mobileMenuExpandableSubmenus:true,relatedContainerForOverlayMenuSelector:'.navbar'};</script><script>/*<![CDATA[*/var images=document.querySelectorAll("img[loading]");for(var i=0;i<images.length;i++){if(images[i].complete){images[i].classList.add("is-loaded")}else{images[i].addEventListener("load",function(){this.classList.add("is-loaded")},false)}};/*]]>*/</script></body></html>
