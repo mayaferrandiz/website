@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-09-24T17:50:06-04:00</updated>
+    <updated>2024-10-02T22:29:39-04:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -123,18 +123,18 @@
         </author>
         <link href="https://maya.cloud/monster/"/>
         <id>https://maya.cloud/monster/</id>
-        <media:content url="https://maya.cloud/media/posts/11/Pink_Monster_Walk_6.png" medium="image" />
+        <media:content url="https://maya.cloud/media/posts/11/monster-background.webp" medium="image" />
 
         <updated>2024-09-11T18:03:52-04:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://maya.cloud/media/posts/11/Pink_Monster_Walk_6.png" alt="" />
+                        <img src="https://maya.cloud/media/posts/11/monster-background.webp" alt="" />
                     Description There are lots of companies that use AI and cookie technologies&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
-                    <p><img src="https://maya.cloud/media/posts/11/Pink_Monster_Walk_6.png" class="type:primaryImage" alt="" /></p>
+                    <p><img src="https://maya.cloud/media/posts/11/monster-background.webp" class="type:primaryImage" alt="" /></p>
                 
   <div class="post__toc">
     
