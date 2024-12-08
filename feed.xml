@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-12-07T22:27:29-05:00</updated>
+    <updated>2024-12-07T23:43:48-05:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -19,12 +19,7 @@
         <media:content url="https://maya.cloud/media/posts/15/IMG_7051.JPG" medium="image" />
 
         <updated>2024-09-24T17:39:36-04:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://maya.cloud/media/posts/15/IMG_7051.JPG" alt="" />
-                    Model file Components Adafruit Trinket M0SparkFun Qwiic Alphanumeric Display - Pink Grove&hellip;
-                ]]>
-            </summary>
+            <summary></summary>
         <content type="html">
             <![CDATA[
                     <p><img src="https://maya.cloud/media/posts/15/IMG_7051.JPG" class="type:primaryImage" alt="" /></p>
@@ -77,7 +72,11 @@
 </div>
 
   <p>
-    <a href="https://github.com/mayanayza/laserbox/blob/main/laserbox.x_t" target="_blank">Model file</a><br>
+    <a href="https://github.com/mayanayza/laserbox/blob/main/laserbox.x_t" target="_blank">Model file</a>
+  </p>
+
+  <p>
+    
   </p>
 <div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Flaserbox%2Fblob%2Fmain%2Flaserbox.ino&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
 
@@ -102,12 +101,7 @@
         <media:content url="https://maya.cloud/media/posts/11/monster-background.webp" medium="image" />
 
         <updated>2024-09-11T18:03:52-04:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://maya.cloud/media/posts/11/monster-background.webp" alt="" />
-                    Sprites sourced from Craftpix.net.
-                ]]>
-            </summary>
+            <summary></summary>
         <content type="html">
             <![CDATA[
                     <p><img src="https://maya.cloud/media/posts/11/monster-background.webp" class="type:primaryImage" alt="" /></p>
@@ -115,6 +109,10 @@
 
   <p>
     Sprites sourced from <a href="https://craftpix.net/freebies/free-tiny-pixel-hero-sprites-with-melee-attacks/" target="_blank">Craftpix.net</a>.
+  </p>
+
+  <p>
+    
   </p>
 <div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Fwebsite%2Fblob%2Fmain%2Fmonster.html&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe>
 </div>
