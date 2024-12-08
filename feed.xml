@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-10-03T16:04:13-04:00</updated>
+    <updated>2024-12-07T22:16:18-05:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -22,37 +22,13 @@
             <summary>
                 <![CDATA[
                         <img src="https://maya.cloud/media/posts/15/IMG_7051.JPG" alt="" />
-                    Description This piece captures the effect of a laser cutting through fog&hellip;
+                    Model file Components Adafruit Trinket M0SparkFun Qwiic Alphanumeric Display - Pink Grove&hellip;
                 ]]>
             </summary>
         <content type="html">
             <![CDATA[
                     <p><img src="https://maya.cloud/media/posts/15/IMG_7051.JPG" class="type:primaryImage" alt="" /></p>
-                
-  <div class="post__toc">
-    
-    <ul>
-      <li><a href="#description">Description</a></li><li><a href="#media">Media</a></li><li><a href="#3d-model">3D Model</a></li><li><a href="#code">Code</a></li>
-    </ul>
-  </div>
-  
-
-    <h2 id="description">
-      Description
-    </h2>
-
-  <p>
-    This piece captures the effect of a laser cutting through fog and displays cryptic messages in the background. The casing is 3D printed from sparkly pink bioplastic, and is brought to life by the following components:
-  </p>
-
-  <ul>
-    <li><a href="https://www.adafruit.com/product/3500" target="_blank">Adafruit Trinket M0</a></li><li><a href="https://www.sparkfun.com/products/16919" target="_blank">SparkFun Qwiic Alphanumeric Display - Pink</a><br></li><li><a href="https://wiki.seeedstudio.com/Grove-Water_Atomization/" class="" target="_blank">Grove Water Atomization Module</a></li><li><a href="https://www.adafruit.com/product/169" target="_blank">SG92R Micro Servo</a></li><li>1" x 1" square mirrors</li><br>
-  </ul>
-
-    <h2 id="media">
-      Media
-    </h2>
-<div><video loading="lazy" width="100%" height="auto" controls="controls"><source src="/laserbox.webm" type="video/webm" /></video>
+                <div><video loading="lazy" width="100%" height="auto" controls="controls"><source src="/laserbox.webm" type="video/webm" /></video>
 </div>
 
   <div  class="gallery-wrapper gallery-wrapper--wide">
@@ -90,11 +66,6 @@
     </figure>
     </div>
   </div>
-<div><iframe loading="lazy" data-responsive="false" id="p-laser-food" class="monster-food" src="https://maya.cloud/monster-food.html" frameborder="0"></iframe></div>
-
-    <h2 id="3d-model">
-      3D Model
-    </h2>
 <div><!-- Import the component -->
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 <!-- Use it like any other HTML element -->
@@ -105,14 +76,19 @@
 ></model-viewer>
 </div>
 
-    <h2 id="code">
-      Code
-    </h2>
+  <p>
+    <a href="https://github.com/mayanayza/laserbox/blob/main/laserbox.x_t" target="_blank">Model file</a><br>
+  </p>
 <div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Flaserbox%2Fblob%2Fmain%2Flaserbox.ino&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
 
-  <p>
-    
-  </p>
+    <h2 id="components">
+      Components
+    </h2>
+
+  <ul>
+    <li><a href="https://www.adafruit.com/product/3500" target="_blank">Adafruit Trinket M0</a></li><li><a href="https://www.sparkfun.com/products/16919" target="_blank">SparkFun Qwiic Alphanumeric Display - Pink</a><br></li><li><a href="https://wiki.seeedstudio.com/Grove-Water_Atomization/" class="" target="_blank">Grove Water Atomization Module</a></li><li><a href="https://www.adafruit.com/product/169" target="_blank">SG92R Micro Servo</a></li><li>1" x 1" square mirrors</li><br>
+  </ul>
+<div><iframe loading="lazy" data-responsive="false" id="p-laser-food" class="monster-food" src="https://maya.cloud/monster-food.html" frameborder="0"></iframe></div>
             ]]>
         </content>
     </entry>
