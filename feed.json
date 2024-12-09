@@ -20,9 +20,10 @@
                 "name": "Maya"
             },
             "tags": [
+                   "Sculpture"
             ],
             "date_published": "2024-09-24T17:39:36-04:00",
-            "date_modified": "2024-12-07T23:43:41-05:00"
+            "date_modified": "2024-12-09T09:54:42-05:00"
         },
         {
             "id": "https://maya.cloud/portfolio/monster/",
@@ -34,9 +35,10 @@
                 "name": "Maya"
             },
             "tags": [
+                   "Digital"
             ],
             "date_published": "2024-09-11T18:03:52-04:00",
-            "date_modified": "2024-12-07T23:43:48-05:00"
+            "date_modified": "2024-12-09T09:54:50-05:00"
         }
     ]
 }
