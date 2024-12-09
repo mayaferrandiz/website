@@ -73,7 +73,7 @@
 </div>
 
   <p>
-    <a href="https://github.com/mayanayza/laserbox/blob/main/laserbox.x_t" target="_blank">Model file</a>
+    <a href="https://github.com/mayanayza/laserbox/blob/main/laserbox.x_t" target="_blank" class="extlink extlink-icon-1 "  >Model file</a>
   </p>
 
   <p>
@@ -86,7 +86,7 @@
     </h2>
 
   <ul>
-    <li><a href="https://www.adafruit.com/product/3500" target="_blank">Adafruit Trinket M0</a></li><li><a href="https://www.sparkfun.com/products/16919" target="_blank">SparkFun Qwiic Alphanumeric Display - Pink</a><br></li><li><a href="https://wiki.seeedstudio.com/Grove-Water_Atomization/" class="" target="_blank">Grove Water Atomization Module</a></li><li><a href="https://www.adafruit.com/product/169" target="_blank">SG92R Micro Servo</a></li><li>1" x 1" square mirrors</li><br>
+    <li><a href="https://www.adafruit.com/product/3500" target="_blank" class="extlink extlink-icon-1 "  >Adafruit Trinket M0</a></li><li><a href="https://www.sparkfun.com/products/16919" target="_blank" class="extlink extlink-icon-1 "  >SparkFun Qwiic Alphanumeric Display - Pink</a><br></li><li><a href="https://wiki.seeedstudio.com/Grove-Water_Atomization/" target="_blank" class=" extlink extlink-icon-1 "  >Grove Water Atomization Module</a></li><li><a href="https://www.adafruit.com/product/169" target="_blank" class="extlink extlink-icon-1 "  >SG92R Micro Servo</a></li><li>1" x 1" square mirrors</li><br>
   </ul>
 <div><iframe loading="lazy" data-responsive="false" id="p-laser-food" class="monster-food" src="https://maya.cloud/monster-food.html" frameborder="0"></iframe></div>
             ]]>
@@ -110,7 +110,7 @@
                 <div><iframe loading="lazy" data-responsive="false" id="p-monster" class="monster-iframe" src="https://maya.cloud/monster.html" frameborder="0"></iframe></div>
 
   <p>
-    Sprites sourced from <a href="https://craftpix.net/freebies/free-tiny-pixel-hero-sprites-with-melee-attacks/" target="_blank">Craftpix.net</a>.
+    Sprites sourced from <a href="https://craftpix.net/freebies/free-tiny-pixel-hero-sprites-with-melee-attacks/" target="_blank" class="extlink extlink-icon-1 "  >Craftpix.net</a>.
   </p>
 
   <p>
