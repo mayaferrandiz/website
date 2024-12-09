@@ -1520,8 +1520,8 @@ textarea {
   width: 100%;
 }
 .c-card:hover .c-card__image img {
-  -webkit-transform: scale(1.6) rotate(-10deg);
-          transform: scale(1.6) rotate(-10deg);
+  -webkit-transform: scale( var(--card-scale) ) rotate( var(--card-rotate) );
+          transform: scale( var(--card-scale) ) rotate( var(--card-rotate) );
 }
 .c-card__header {
   position: absolute;
