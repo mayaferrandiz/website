@@ -1273,6 +1273,7 @@ textarea {
   background: var(--hero-bg);
   margin-bottom: var(--grid-gap);
   min-height: 0;
+  border-radius:2rem;
   position: relative;
   text-align: center;
   top: 0;
@@ -2278,7 +2279,7 @@ textarea {
 .footer__social svg {
   fill:var(--body-font);
   opacity:1;
-  margin:2rem .375rem 2rem
+  margin:2rem .375rem 2rem;
   height: 1rem;
   -webkit-transition: all 0.12s linear 0s;
   transition: all 0.12s linear 0s;
