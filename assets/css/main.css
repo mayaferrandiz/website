@@ -1272,11 +1272,14 @@ textarea {
 .hero {
   background: var(--hero-bg);
   margin-bottom: var(--grid-gap);
-  min-height: var(--hero-min-height);
+  min-height: 0;
   position: relative;
   text-align: center;
   top: 0;
   z-index: 1;
+}
+.hero__post{
+  min-height: var(--hero-min-height);
 }
 .hero:after {
   content: " ";
