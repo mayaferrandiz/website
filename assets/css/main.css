@@ -1281,6 +1281,7 @@ textarea {
 }
 .hero__post{
   min-height: var(--hero-min-height);
+  margin-bottom: calc(2.25rem + .5vw);
 }
 .hero:after {
   content: " ";
