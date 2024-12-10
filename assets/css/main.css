@@ -1317,7 +1317,7 @@ textarea {
   }
 }
 .hero__header * {
-  color: var(--white);
+/*  color: var(--white);*/
 }
 .hero__header h1 {
   margin-top: 0.5rem;
@@ -2250,38 +2250,39 @@ textarea {
 }
 
 .footer {
-  background: var(--dark);
+  background: var(--lighter);
   overflow: hidden;
   padding: calc(2.25rem + 1vw) 0 calc(3rem + 1.5vw);
   margin: calc(2.25rem + 0.5vw) 0 0;
   text-align: center;
 }
 .footer a {
-  color: var(--white);
+  color:var(--body-font);
 }
 .footer a:hover {
-  color: rgba(255, 255, 255, 0.7);
+  color:var(--link-color);
+  text-decoration: underline;
 }
 .footer__wrapper {
   padding: 0 var(--page-margin);
 }
 .footer__copyright {
-  color: var(--gray-2);
+  color:var(--body-font);
   font-size: 0.6789341556rem;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 .footer__social svg {
-  fill: var(--white);
+  fill:var(--body-font);
+  opacity:1;
+  margin:2rem .375rem 2rem
   height: 1rem;
-  margin: 1.5rem 0.375rem 0;
-  opacity: 0.6;
   -webkit-transition: all 0.12s linear 0s;
   transition: all 0.12s linear 0s;
   width: 1rem;
 }
 .footer__social svg:hover {
-  opacity: 1;
+  fill:var(--link-color);
 }
 .footer__bttop {
   bottom: 1.25rem;
