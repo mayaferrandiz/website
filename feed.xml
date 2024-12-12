@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-12-09T09:54:50-05:00</updated>
+    <updated>2024-12-11T22:28:19-05:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -80,14 +80,6 @@
     
   </p>
 <div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Flaserbox%2Fblob%2Fmain%2Flaserbox.ino&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
-
-    <h2 id="components">
-      Components
-    </h2>
-
-  <ul>
-    <li><a href="https://www.adafruit.com/product/3500" target="_blank" class="extlink extlink-icon-1 "  >Adafruit Trinket M0</a></li><li><a href="https://www.sparkfun.com/products/16919" target="_blank" class="extlink extlink-icon-1 "  >SparkFun Qwiic Alphanumeric Display - Pink</a><br></li><li><a href="https://wiki.seeedstudio.com/Grove-Water_Atomization/" target="_blank" class=" extlink extlink-icon-1 "  >Grove Water Atomization Module</a></li><li><a href="https://www.adafruit.com/product/169" target="_blank" class="extlink extlink-icon-1 "  >SG92R Micro Servo</a></li><li>1" x 1" square mirrors</li><br>
-  </ul>
 <div><iframe loading="lazy" data-responsive="false" id="p-laser-food" class="monster-food" src="https://maya.cloud/monster-food.html" frameborder="0"></iframe></div>
             ]]>
         </content>
