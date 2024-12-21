@@ -3,19 +3,19 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-12-16T20:52:33-05:00</updated>
+    <updated>2024-12-21T15:27:02-05:00</updated>
     <author>
         <name>Maya</name>
     </author>
     <id>https://maya.cloud</id>
 
     <entry>
-        <title>Laser Box</title>
+        <title>Paralysis</title>
         <author>
             <name>Maya</name>
         </author>
-        <link href="https://maya.cloud/portfolio/laser-box-2/"/>
-        <id>https://maya.cloud/portfolio/laser-box-2/</id>
+        <link href="https://maya.cloud/portfolio/paralysis/"/>
+        <id>https://maya.cloud/portfolio/paralysis/</id>
         <media:content url="https://maya.cloud/media/posts/15/IMG_7051.JPG" medium="image" />
             <category term="Sculpture"/>
 
@@ -81,37 +81,6 @@
   </p>
 <div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Flaserbox%2Fblob%2Fmain%2Flaserbox.ino&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
 <div><iframe loading="lazy" data-responsive="false" id="p-laser-food" class="monster-food" src="https://maya.cloud/monster-food.html" frameborder="0"></iframe></div>
-            ]]>
-        </content>
-    </entry>
-    <entry>
-        <title>Monster</title>
-        <author>
-            <name>Maya</name>
-        </author>
-        <link href="https://maya.cloud/portfolio/monster/"/>
-        <id>https://maya.cloud/portfolio/monster/</id>
-        <media:content url="https://maya.cloud/media/posts/11/monster-background.webp" medium="image" />
-            <category term="Digital"/>
-
-        <updated>2024-09-11T18:03:52-04:00</updated>
-            <summary></summary>
-        <content type="html">
-            <![CDATA[
-                    <p><img src="https://maya.cloud/media/posts/11/monster-background.webp" class="type:primaryImage" alt="" /></p>
-                <div><iframe loading="lazy" data-responsive="false" id="p-monster" class="monster-iframe" src="https://maya.cloud/monster.html" frameborder="0"></iframe></div>
-
-  <p>
-    Sprites sourced from <a href="https://craftpix.net/freebies/free-tiny-pixel-hero-sprites-with-melee-attacks/" target="_blank" class="extlink extlink-icon-1 "  >Craftpix.net</a>.
-  </p>
-
-  <p>
-    
-  </p>
-<div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Fwebsite%2Fblob%2Fmain%2Fmonster.html&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe>
-</div>
-<div><iframe loading="lazy" frameborder="0" data-responsive="false" scrolling="yes" allow="clipboard-write" src="https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Fwebsite%2Fblob%2Fmain%2Fmonster-food.html&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on"></iframe></div>
-<div><iframe loading="lazy" data-responsive="false" id="p-monster-food" class="monster-food" src="https://maya.cloud/monster-food.html" frameborder="0"></iframe></div>
             ]]>
         </content>
     </entry>

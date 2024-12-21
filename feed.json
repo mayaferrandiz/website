@@ -11,9 +11,9 @@
     },
     "items": [
         {
-            "id": "https://maya.cloud/portfolio/laser-box-2/",
-            "url": "https://maya.cloud/portfolio/laser-box-2/",
-            "title": "Laser Box",
+            "id": "https://maya.cloud/portfolio/paralysis/",
+            "url": "https://maya.cloud/portfolio/paralysis/",
+            "title": "Paralysis",
             "content_html": "<div><video loading=\"lazy\" width=\"100%\" height=\"auto\" controls=\"controls\"><source src=\"/laserbox.webm\" type=\"video/webm\" /></video>\n</div>\n\n  <div  class=\"gallery-wrapper gallery-wrapper--wide\">\n    <div class=\"gallery\" data-columns=\"3\">\n      <figure class=\"gallery__item\">\n      <a href=\"https://maya.cloud/media/posts/15/gallery/IMG_7050.JPG\" data-size=\"6240x4160\">\n        <img loading=\"lazy\" src=\"https://maya.cloud/media/posts/15/gallery/IMG_7050-thumbnail.JPG\" height=\"512\" width=\"768\" alt=\"\" >\n      </a>\n      \n    </figure><figure class=\"gallery__item\">\n      <a href=\"https://maya.cloud/media/posts/15/gallery/IMG_7046.JPG\" data-size=\"6240x4160\">\n        <img loading=\"lazy\" src=\"https://maya.cloud/media/posts/15/gallery/IMG_7046-thumbnail.JPG\" height=\"512\" width=\"768\" alt=\"\" >\n      </a>\n      \n    </figure><figure class=\"gallery__item\">\n      <a href=\"https://maya.cloud/media/posts/15/gallery/IMG_7056.JPG\" data-size=\"6240x4160\">\n        <img loading=\"lazy\" src=\"https://maya.cloud/media/posts/15/gallery/IMG_7056-thumbnail.JPG\" height=\"512\" width=\"768\" alt=\"\" >\n      </a>\n      \n    </figure><figure class=\"gallery__item\">\n      <a href=\"https://maya.cloud/media/posts/15/gallery/IMG_7051.JPG\" data-size=\"6240x4160\">\n        <img loading=\"lazy\" src=\"https://maya.cloud/media/posts/15/gallery/IMG_7051-thumbnail.JPG\" height=\"512\" width=\"768\" alt=\"\" >\n      </a>\n      \n    </figure><figure class=\"gallery__item\">\n      <a href=\"https://maya.cloud/media/posts/15/gallery/IMG_7049.JPG\" data-size=\"6240x4160\">\n        <img loading=\"lazy\" src=\"https://maya.cloud/media/posts/15/gallery/IMG_7049-thumbnail.JPG\" height=\"512\" width=\"768\" alt=\"\" >\n      </a>\n      \n    </figure><figure class=\"gallery__item\">\n      <a href=\"https://maya.cloud/media/posts/15/gallery/IMG_7044.JPG\" data-size=\"6240x4160\">\n        <img loading=\"lazy\" src=\"https://maya.cloud/media/posts/15/gallery/IMG_7044-thumbnail.JPG\" height=\"512\" width=\"768\" alt=\"\" >\n      </a>\n      \n    </figure>\n    </div>\n  </div>\n<div><!-- Import the component -->\n<script type=\"module\" src=\"https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js\"></script>\n<!-- Use it like any other HTML element -->\n<model-viewer\n  id=\"mv-laserbox\"\n  src=\"/laserbox.glb\"\n  camera-controls\n></model-viewer>\n</div>\n\n  <p>\n    <a href=\"https://github.com/mayanayza/laserbox/blob/main/laserbox.x_t\" target=\"_blank\" class=\"extlink extlink-icon-1 \"  >Model file</a>\n  </p>\n\n  <p>\n    \n  </p>\n<div><iframe loading=\"lazy\" frameborder=\"0\" data-responsive=\"false\" scrolling=\"yes\" allow=\"clipboard-write\" src=\"https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Flaserbox%2Fblob%2Fmain%2Flaserbox.ino&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on\"></iframe></div>\n<div><iframe loading=\"lazy\" data-responsive=\"false\" id=\"p-laser-food\" class=\"monster-food\" src=\"https://maya.cloud/monster-food.html\" frameborder=\"0\"></iframe></div>",
             "image": "https://maya.cloud/media/posts/15/IMG_7051.JPG",
             "author": {
@@ -23,22 +23,7 @@
                    "Sculpture"
             ],
             "date_published": "2024-09-24T17:39:36-04:00",
-            "date_modified": "2024-12-16T20:52:33-05:00"
-        },
-        {
-            "id": "https://maya.cloud/portfolio/monster/",
-            "url": "https://maya.cloud/portfolio/monster/",
-            "title": "Monster",
-            "content_html": "<div><iframe loading=\"lazy\" data-responsive=\"false\" id=\"p-monster\" class=\"monster-iframe\" src=\"https://maya.cloud/monster.html\" frameborder=\"0\"></iframe></div>\n\n  <p>\n    Sprites sourced from <a href=\"https://craftpix.net/freebies/free-tiny-pixel-hero-sprites-with-melee-attacks/\" target=\"_blank\" class=\"extlink extlink-icon-1 \"  >Craftpix.net</a>.\n  </p>\n\n  <p>\n    \n  </p>\n<div><iframe loading=\"lazy\" frameborder=\"0\" data-responsive=\"false\" scrolling=\"yes\" allow=\"clipboard-write\" src=\"https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Fwebsite%2Fblob%2Fmain%2Fmonster.html&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on\"></iframe>\n</div>\n<div><iframe loading=\"lazy\" frameborder=\"0\" data-responsive=\"false\" scrolling=\"yes\" allow=\"clipboard-write\" src=\"https://emgithub.com/iframe.html?target=https%3A%2F%2Fgithub.com%2Fmayanayza%2Fwebsite%2Fblob%2Fmain%2Fmonster-food.html&style=default&type=code&showBorder=on&showLineNumbers=on&showFileMeta=on&showFullPath=on&showCopy=on\"></iframe></div>\n<div><iframe loading=\"lazy\" data-responsive=\"false\" id=\"p-monster-food\" class=\"monster-food\" src=\"https://maya.cloud/monster-food.html\" frameborder=\"0\"></iframe></div>",
-            "image": "https://maya.cloud/media/posts/11/monster-background.webp",
-            "author": {
-                "name": "Maya"
-            },
-            "tags": [
-                   "Digital"
-            ],
-            "date_published": "2024-09-11T18:03:52-04:00",
-            "date_modified": "2024-12-09T09:54:50-05:00"
+            "date_modified": "2024-12-21T15:27:02-05:00"
         }
     ]
 }
