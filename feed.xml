@@ -3,7 +3,7 @@
     <title>Maya&#x27;s Cloud</title>
     <link href="https://maya.cloud/feed.xml" rel="self" />
     <link href="https://maya.cloud" />
-    <updated>2024-12-22T10:54:02-05:00</updated>
+    <updated>2024-12-22T11:09:27-05:00</updated>
     <author>
         <name>Maya</name>
     </author>
@@ -24,7 +24,7 @@
         <content type="html">
             <![CDATA[
                     <p><img src="https://maya.cloud/media/posts/15/IMG_7051.JPG" class="type:primaryImage" alt="" /></p>
-                <div><video loading="lazy" width="100%" height="auto" controls="controls"><source src="/media/paralysis.webm" type="video/webm" /></video>
+                <div><video loading="lazy" width="100%" height="auto" controls="controls"><source src="/media/files/paralysis.webm" type="video/webm" /></video>
 </div>
 
   <div  class="gallery-wrapper gallery-wrapper--wide">
@@ -62,12 +62,10 @@
     </figure>
     </div>
   </div>
-<div><!-- Import the component -->
-<script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-<!-- Use it like any other HTML element -->
+<div><script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
 <model-viewer
   id="mv-paralysis"
-  src="https://github.com/mayaferrandiz/paralysis/blob/main/paralysis.glb"
+  src="/media/files/paralysis.glb"
   camera-controls
 ></model-viewer>
 </div>
